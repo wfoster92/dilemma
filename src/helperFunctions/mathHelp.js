@@ -29,29 +29,25 @@ export function makeColorArray(colorBase, outputLength, arenaObject){
 
     colorGradient.setGradient(...colorBase);
     const colorArray = colorGradient.getArray();
-    console.log(`arenaObject ${arenaObject}`)
-    arenaObject.forEach(row => 
-        {console.log("row");
-        console.log(row);
-            console.log(`in color array arena object row ${row}`)
-        row.forEach(element => 
-            console.log(`element arena object ${element}`))});
+    // console.log(`arenaObject ${arenaObject}`)
+    // arenaObject.forEach(row => 
+    //     {console.log("row");
+    //     console.log(row);
+            // console.log(`in color array arena object row ${row}`)
+        // row.forEach(element => 
+        //     console.log(`element arena object ${element}`))});
     const outputArray = arenaObject.map((row, idx) => {    
         // console.log(`row ${row} \nrow length ${row.length}`);
         let rowLength = row.length;
         // reverse the list if the row is of an odd index
-        console.log(`colorArray length ${colorArray.length} to subtract ${rowLength}`)
+        // console.log(`colorArray length ${colorArray.length} to subtract ${rowLength}`)
         let colorRow = (idx % 2 === 0) ? colorArray.splice(0, rowLength) : colorArray.splice(0, rowLength).reverse();  
-        console.log(`color row = ${colorRow}`);
+        // console.log(`color row = ${colorRow}`);
         // append a color onto each element in the row
         row.forEach((element, i) => element.push(colorRow[i]))
-        console.log(`newRow ${row}`);
         return row;
     })
-    // outputArray.forEach(row => 
-    //     {console.log(`in color array row ${row}`)
-    //     row.forEach(element => 
-    //         console.log(`element output array ${element}`))});
+
     console.log(outputArray);
     return outputArray
 }
