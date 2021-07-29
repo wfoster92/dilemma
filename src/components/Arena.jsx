@@ -87,35 +87,31 @@ function Arena () {
         });
 
         console.log(`elementToRemove ${elementToRemove}`);
-        (elementToRemove > -1) && updateSingleColor(elementToRemove);
+        (elementToRemove > -1) && updateSingleColor(elementToRemove, colorArray[elementToRemove], 1);
         console.log("exiting update players array");
         return true
     }
 
     function updateColors(){
-        console.log("We are in update colors");
+        console.log("In update colors");
         let pid = 0;
+        let opacityMultiplier = (PAMax > 1) ? (1/(PAMax - 1)) : 0;
         playersArray[pid].forEach((value, idx) => {
             let backgroundColor = "black";
-            let opacity = 1 - .2 * idx;
-            console.log(`background color ${backgroundColor} opacity ${opacity}`)
-            document.getElementById(`${value}`).style.backgroundColor = backgroundColor;
-            document.getElementById(`${value}_0`).style.backgroundColor = backgroundColor;
-            document.getElementById(`${value}_1`).style.backgroundColor = backgroundColor;
-            document.getElementById(`${value}`).style.opacity = opacity;
-            document.getElementById(`${value}_0`).style.opacity = opacity;
-            document.getElementById(`${value}_1`).style.opacity = opacity;
+            let opacity = 1 - opacityMultiplier * idx;
+            console.log(`background color ${backgroundColor} opacity ${opacity} opacityMultiplier ${opacityMultiplier}`);
+            updateSingleColor(value, backgroundColor, opacity);
         })
     }
 
-    function updateSingleColor(elementID) {
+    function updateSingleColor(elementID, backgroundColor, opacity) {
         console.log(`In update single color. color ${colorArray[elementID]}`);
-        document.getElementById(`${elementID}`).style.backgroundColor = colorArray[elementID];
-        document.getElementById(`${elementID}`).style.opacity = 1;
-        document.getElementById(`${elementID}_0`).style.backgroundColor = colorArray[elementID];
-        document.getElementById(`${elementID}_0`).style.opacity = 1;
-        document.getElementById(`${elementID}_1`).style.backgroundColor = colorArray[elementID];
-        document.getElementById(`${elementID}_1`).style.opacity = 1;
+        document.getElementById(`${elementID}`).style.backgroundColor = backgroundColor;
+        document.getElementById(`${elementID}`).style.opacity = opacity;
+        document.getElementById(`${elementID}_0`).style.backgroundColor = backgroundColor;
+        document.getElementById(`${elementID}_0`).style.opacity = opacity;
+        document.getElementById(`${elementID}_1`).style.backgroundColor = backgroundColor;
+        document.getElementById(`${elementID}_1`).style.opacity = opacity;
     }
 
 
@@ -127,27 +123,18 @@ function Arena () {
         return console.log("exited handleClick!")
     }
 
-    // const {width, height} = useWindowDimensions();
-    // console.log(`w ${width} h ${height}`);
-    // const arenaWidth = Math.ceil(Math.min(width, height) * (squareSize/100));
-    // const paddingBottom = Math.ceil(Math.min(width, height) * (((100-squareSize)/100) / 4));
-    // console.log(`arenaWidth ${arenaWidth}`);
     const {minSide, maxSide} = useWindowDimensions();
     // set the width to 80% of the smallest side of the viewport
     const arenaWidth = Math.ceil(minSide * (squareSize/100));
-    const paddingBottom = Math.ceil(minSide * (((100-squareSize)/100) / 4));
+    // const paddingBottom = Math.ceil(minSide * (((100-squareSize)/100) / 4));
     console.log(`arenaWidth ${arenaWidth}`);
     
 
-    return (<div style={{width:arenaWidth, paddingBottom:paddingBottom}} id="spacer">
+    return (<div style={{width:arenaWidth, backgroundColor:"white"}} id="spacer">
             {completeArray.map(row => {
                 return <Row row={row} squareSize={squareSize} handleClick={handleClick}/>
             })}
         </div>)
-        // rows.map((r, idx) =>
-        //     <Row height={r} rowIdx={idx}/>
-        // )
-    
     
 }
 

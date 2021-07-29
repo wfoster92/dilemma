@@ -3,8 +3,7 @@ body {
     border:0;
     padding: 0;
     font-size: 0;
-    /* opacity: 20%; */
-    /* border: 3px; */
+    background-color: tan;
 }
 
 #root{
