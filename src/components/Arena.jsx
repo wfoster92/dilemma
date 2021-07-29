@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Row from "./Row"
-import { createSegments, makeColorArray } from "../helperFunctions/mathHelp";
+import { createSegments, makeCompleteArray } from "../helperFunctions/mathHelp";
 import useWindowDimensions from "../helperFunctions/windowDimensions";
 
 function Arena () {
@@ -37,7 +37,10 @@ function Arena () {
     const [isClaimed, setIsClaimed] = useState(initialIsClaimed)
     const [isGameOver, setIsGameOver] = useState(false)
     const [isBetweenRounds, setIsBetweenRounds] = useState(false)
+    // const [paIndex, ]
 
+    let [completeArray, colorArray] = makeCompleteArray(colorBase = colorBase, totalUnits, arenaObject = arenaObject);
+    console.log(`from Arena, completeArray ${completeArray}\ncolorArray ${colorArray}`);
 
     function updateIsPAFull(pid, aBoolean) {
         setIsPAFull((prevState) => {
@@ -52,7 +55,9 @@ function Arena () {
         
         let idxA = playersArray[pid].findIndex((element) => element === elementID);
         console.log(`idxA ${idxA}`)
+        let elementToRemove = -1;
 
+    
         setPlayersArray((prevState) => {
             // console.log("prevState before " + prevState);
             let data = prevState;
@@ -62,26 +67,55 @@ function Arena () {
             if (idx > 0) {
                 let temp = data[pid][idx];
                 data[pid][idx] = data[pid][idx - 1];
-                data[pid][idx - 1] = temp
+                data[pid][idx - 1] = temp;
             } else if (idx === 0) {
                 // follow up on this one
-                data[pid].shift()
+                elementToRemove = data[pid].shift();
             } else if (idx < 0) {
                 console.log(`isPAFull[${pid}] ${isPAFull[pid]} data[${pid}] ${data[pid]} elementID ${elementID}`)
                 if (isPAFull[pid]){
-                    data[pid].pop()
-                    updateIsPAFull(pid, false)
+                    elementToRemove = data[pid].pop()
+                    updateIsPAFull(pid, false);
                 } 
-                // data[pid].push(77);
-                console.log(`About to push ${elementID}`)
+                console.log(`About to push ${elementID}`);
                 data[pid].push(elementID);
                 console.log(data[0], data[1]);
                 (data[pid].length === PAMax) && updateIsPAFull(pid, true)
             }
-            console.log("playersArray after " + data);
-            // prevState = data
-            return data;
+            console.log(`playersArray after ${data} elementToRemove ${elementToRemove}`);
+            return data; 
+        });
+
+        console.log(`elementToRemove ${elementToRemove}`);
+        (elementToRemove > -1) && updateSingleColor(elementToRemove);
+        console.log("exiting update players array");
+        return true
+    }
+
+    function updateColors(){
+        console.log("We are in update colors");
+        let pid = 0;
+        playersArray[pid].forEach((value, idx) => {
+            let backgroundColor = "black";
+            let opacity = 1 - .2 * idx;
+            console.log(`background color ${backgroundColor} opacity ${opacity}`)
+            document.getElementById(`${value}`).style.backgroundColor = backgroundColor;
+            document.getElementById(`${value}_0`).style.backgroundColor = backgroundColor;
+            document.getElementById(`${value}_1`).style.backgroundColor = backgroundColor;
+            document.getElementById(`${value}`).style.opacity = opacity;
+            document.getElementById(`${value}_0`).style.opacity = opacity;
+            document.getElementById(`${value}_1`).style.opacity = opacity;
         })
+    }
+
+    function updateSingleColor(elementID) {
+        console.log(`In update single color. color ${colorArray[elementID]}`);
+        document.getElementById(`${elementID}`).style.backgroundColor = colorArray[elementID];
+        document.getElementById(`${elementID}`).style.opacity = 1;
+        document.getElementById(`${elementID}_0`).style.backgroundColor = colorArray[elementID];
+        document.getElementById(`${elementID}_0`).style.opacity = 1;
+        document.getElementById(`${elementID}_1`).style.backgroundColor = colorArray[elementID];
+        document.getElementById(`${elementID}_1`).style.opacity = 1;
     }
 
 
@@ -89,21 +123,9 @@ function Arena () {
     function handleClick(id){
         console.log(`in handle click index = ${id} is claimed ${isClaimed[id]}`);
         // console.log(`${isLive}  ${!(isClaimed[id])}`)
-        isLive&&!isClaimed[id]&&updatePlayersArray(id, 0);
+        isLive&&!isClaimed[id]&&updatePlayersArray(id, 0)&&updateColors();
         return console.log("exited handleClick!")
     }
-
-
-
-
-
-
-
-    let colorArray = makeColorArray(colorBase = colorBase, totalUnits, arenaObject = arenaObject);
-    console.log(`from Arena, colorArray ${colorArray}`);
-
-
-
 
     // const {width, height} = useWindowDimensions();
     // console.log(`w ${width} h ${height}`);
@@ -117,10 +139,8 @@ function Arena () {
     console.log(`arenaWidth ${arenaWidth}`);
     
 
-
-
     return (<div style={{width:arenaWidth, paddingBottom:paddingBottom}} id="spacer">
-            {colorArray.map(row => {
+            {completeArray.map(row => {
                 return <Row row={row} squareSize={squareSize} handleClick={handleClick}/>
             })}
         </div>)
