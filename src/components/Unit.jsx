@@ -39,7 +39,6 @@ function Unit(props) {
             <span onClick={clickEvent} id={index} style={{backgroundColor:color, opacity:opacity}}>
                 <span id={index+"_0"}
                     style={{width:halfWidth, height:height, display:"inline-block", backgroundColor:color, opacity:opacity}} >
-                    
                 </span>
                 <span id={index+"_1"}
                     style={{width:halfWidth, height:height, display:"inline-block", backgroundColor:color, opacity:opacity}} >

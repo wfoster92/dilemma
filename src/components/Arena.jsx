@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Row from "./Row"
+import Header from "./Header"
 import { createSegments, makeCompleteArray } from "../helperFunctions/mathHelp";
 import useWindowDimensions from "../helperFunctions/windowDimensions";
 
@@ -129,12 +130,17 @@ function Arena () {
     // const paddingBottom = Math.ceil(minSide * (((100-squareSize)/100) / 4));
     console.log(`arenaWidth ${arenaWidth}`);
     
-
-    return (<div style={{width:arenaWidth, backgroundColor:"white"}} id="spacer">
-            {completeArray.map(row => {
-                return <Row row={row} squareSize={squareSize} handleClick={handleClick}/>
-            })}
-        </div>)
+    // const flankWidth = 
+    return (
+        <div>
+                <Header height ={(100-squareSize)/2+"vh"}/>
+                <div style={{width:arenaWidth, backgroundColor:"white"}} id="spacer">
+                {completeArray.map(row => {
+                        return <Row row={row} squareSize={squareSize} handleClick={handleClick}/>
+                    })}
+                </div>
+        </div>
+            )
     
 }
 
