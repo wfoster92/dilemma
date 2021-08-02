@@ -1,23 +1,30 @@
 import React from "react"
+import { Link } from "react-router-dom"
+import { squareSize } from "../helperFunctions/globals"
 
 
 function Header (props) {
-    // const headerElements = [
-    //     {title: "Rules", link:<Rules />},
-    //     {title: "Dilemma"},
-    //     {title: "New Game"}
-    // ]
-
     return (
-    <div className="header" style={{width: "100vw", height: props.height}}>
-        
-        <h1>Rules</h1>
-        <h1>Dilemma</h1>
-        <h1>New Game</h1>
-        {/* <li><a href="about.asp">About</a></li> */}
+    <div className="row header" style={{height:(100-squareSize)/2+"vh"}}> 
+        <div className="col-2"></div>
+        <div className="col-2 align-self-center">
+            <Link exact to="/rules">
+                <h1>How To Play</h1>
+            </Link>
+        </div>
+        <div className="col-4 align-self-center">
+            <Link to="/">
+                <h1>Dilemma</h1>
+            </Link>
+        </div>
+        <div className="col-2 align-self-center">
+            <Link exact to="/arena">
+                <h1>New Game</h1>
+            </Link>
+        </div>
+        <div className="col-2"></div>
     </div>
     )
 }
-
 
 export default Header;
