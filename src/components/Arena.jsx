@@ -10,7 +10,10 @@ import {useWindowDimensions, getWindowMinMax} from "../helperFunctions/windowDim
 function Arena () {
 
 
-    const pid = 0;
+    const humanPid = 0;
+    const botGame = true;
+    // the strength of the bot from 0-2 with 0 being the hardest
+    const difficulty = 0;
     let kelly = "../images/kelly.jpg"
 
     function makeArenaObject() {
@@ -86,15 +89,82 @@ function Arena () {
         })
     }
 
+    function makeBotMove(difficulty) {
+        setPlayersArray((prevState) => {
+            let randomIndexMin = 0;
+            let randomIndexMax;
+            switch (difficulty) {
+                case 0:
+                    randomIndexMax = 2;
+                    break;
+                case 1:
+                    randomIndexMax = 4;
+                    break
+                case 2:
+                    randomIndexMin = 1;
+                    randomIndexMax = 6;
+                    break
+                case 3:
+                    randomIndexMin = 2;
+                    randomIndexMax = 8;
+                    break
+                default:
+                    break;
+            }
+
+            let data = prevState;
+            let tempAreaArray = areaArray;
+            console.log(`area array, no elements filtered out ${tempAreaArray}`);
+            // return the areaArray elements that are still available in the controlArray
+            let availableAreaArray = tempAreaArray.map((element, idx) =>  (controlArray[idx] < 0) ? [element, idx] : [element, -100]);
+            console.log(`unsorted availableAreaArray filtered out control array ${availableAreaArray}`);
+            // map the areaArray to arrays of [area, index]
+            // availableAreaArray = availableAreaArray.map((e, idx) => [e, idx])
+            // console.log(`unsorted availableAreaArray each element us array ${availableAreaArray}`);
+            // sort in descending order by area
+            let sortedAvailableAreaArray = availableAreaArray.sort((a,b) => b[0]-a[0]);
+            console.log(`sortedAvailableAreaArray each element array ${sortedAvailableAreaArray}`);
+            // filter out the elements that are not in the controlArray 
+            sortedAvailableAreaArray = sortedAvailableAreaArray.filter((e) => e[1] > -1);
+            // map the sortedAvailableAreaArray back to and array of index values (sorted by area)
+            sortedAvailableAreaArray = sortedAvailableAreaArray.map((e) => e[1])
+            console.log(`sortedAvailableAreaArray final, no longer array ${sortedAvailableAreaArray}`);
+            let choicesLeft = PAMax;
+            let unitsLeft = sortedAvailableAreaArray.length;
+            // the elementIDs to add to the bot's player array
+            let choices = [];
+            let chosenElement, initialSelection, idxChoice;
+            // make selections until the bot's player array is complete
+            let maxminDiff = randomIndexMax-randomIndexMin;
+            while (choicesLeft > 0) {
+                // choose index at random given the results of the above switch statement
+                initialSelection = Math.floor((Math.random() * maxminDiff ) + randomIndexMin);
+                // make a selection controlling the case in which the initialSelection was out of bounds of the sortedAvailableAreaArray
+                idxChoice = Math.min(initialSelection, unitsLeft-1)
+                // append the elementid to the choices array
+                choices.push(sortedAvailableAreaArray[idxChoice])
+                // remove the elementid from the sortedAvailableAreaArray
+                sortedAvailableAreaArray.splice(idxChoice, 1);
+                unitsLeft--;
+                choicesLeft--;
+                console.log(`choices ${choices} unitsLeft ${unitsLeft}`)
+            }
+            data[1] = choices;
+            return data
+        })
+    }
+
     function endRound() {
         console.log(`in endRound a total units ${totalUnits}`)
+        botGame && makeBotMove(difficulty);
+        console.log(`after bot move, playersArray ${playersArray}`)
         // this one doesn't break 
         updateControlArray();
-        console.log(`in endRound b total units ${totalUnits}`)
+        // console.log(`in endRound b total units ${totalUnits}`)
         updateScoreBoard();
-        console.log(`in endRound c total units ${totalUnits}`)
+        // console.log(`in endRound c total units ${totalUnits}`)
         resetPlayersArray();
-        console.log(`in endRound d total units ${totalUnits}`)
+        // console.log(`in endRound d total units ${totalUnits}`)
     }
 
     function updateControlArray() {
@@ -103,37 +173,42 @@ function Arena () {
             let data = prevState;
             let tempPA = playersArray;
             let longestPA = Math.max(tempPA[0].length, tempPA[1].length);
-            let pid0, pid1, val0, val1;
+            let val0, val1;
             let seen = [];
             for(let i=0; i < longestPA; i++){
                 val0 = tempPA[0].shift();
                 val1 = tempPA[1].shift();
+                console.log(`from setControlArray, choices -> pid0 ${val0} pid1 ${val1}`)
+                // if pid0 entered nothing
                 if (isNaN(val0)) {
                     if (!seen.includes(val1)){
                         data[val1] = 1
-                        seen.push(pid1)
-                        updateSingleImage(val1, kelly, 1);
+                        seen.push(val1)
+                        updateSingleImage(val1, 1);
                     }
+                // if pid0 entered nothing
                 } else if (isNaN(val1)) {
                     if (!seen.includes(val0)){
                         data[val0] = 0
-                        seen.push(pid0)
-                        updateSingleImage(val0, kelly, 1);
+                        seen.push(val0)
+                        updateSingleImage(val0, 0);
 
                     }
+                    // if pid0 and pid1 entered the same value
                 } else if (!isNaN(val0) && !isNaN(val1)) {
                     if (val0===val1){
-                        // do nothing
+                        // reset color for next round
+                        updateSingleColor(val0, colorArray[val0], 1);
                     } else {
                         if (!seen.includes(val0)) {
                             data[val0] = 0
-                            seen.push(pid0)
-                            updateSingleImage(val0, kelly, 1);
+                            seen.push(val0)
+                            updateSingleImage(val0, 0);
                         }
                         if (!seen.includes(val1)) {
                             data[val1] = 1
-                            seen.push(pid1)
-                            updateSingleImage(val1, kelly, 1);
+                            seen.push(val1)
+                            updateSingleImage(val1, 1);
                         } 
                     }
                 }
@@ -172,7 +247,7 @@ function Arena () {
             // console.log("prevState before " + prevState);
             let data = prevState;
             let idx = data[pid].findIndex((element) => element === elementID);
-            console.log(`in set player array idx ${idx} elementID ${elementID}`);
+            console.log(`in set player array idx ${idx} elementID ${elementID} playerArray[0] ${data[pid]}`);
 
             if (idx > 0) {
                 let temp = data[pid][idx];
@@ -206,7 +281,7 @@ function Arena () {
         console.log("In update colors");
         // let pid = 0;
         let opacityMultiplier = (PAMax > 1) ? (1/(PAMax - 1)) : 0;
-        playersArray[pid].forEach((value, idx) => {
+        playersArray[humanPid].forEach((value, idx) => {
             let backgroundColor = "black";
             let opacity = 1 - opacityMultiplier * idx;
             console.log(`in updateColors background color ${backgroundColor} opacity ${opacity} opacityMultiplier ${opacityMultiplier}`);
@@ -225,7 +300,7 @@ function Arena () {
         document.getElementById(`${elementID}_1`).style.opacity = opacity;
     }
 
-    function updateSingleImage(elementID, backgroundImg, opacity) {
+    function updateSingleImage(elementID, pid) {
         console.log(`In update single IMAGE elementID ${elementID}`);
         const e = document.getElementById(elementID).style;
         const e0 = document.getElementById(`${elementID}_0`).style;
@@ -234,10 +309,11 @@ function Arena () {
         removeAttribuesFromElement(e0, ["background-color", "opacity"]);
         removeAttribuesFromElement(e1, ["background-color", "opacity"]);
 
-
-        document.getElementById(`${elementID}`).className = "bricks";
-        document.getElementById(`${elementID}_0`).className = "bricks";
-        document.getElementById(`${elementID}_1`).className = "bricks";
+        e0.display = "none";
+        e1.display = "none";
+        document.getElementById(`${elementID}`).className = (pid === 0) ? "kelly" : "nelly";
+        // document.getElementById(`${elementID}_0`).className = (pid === 0) ? "kelly" : "nelly";
+        // document.getElementById(`${elementID}_1`).className = (pid === 0) ? "kelly" : "nelly";
         // document.getElementById(`${elementID}_0`).className = "kelly";
         // document.getElementById(`${elementID}_1`).className = "kelly";
         // document.getElementById(`${elementID}`).style.opacity = opacity;
@@ -258,7 +334,7 @@ function Arena () {
     function handleClick(id){
         console.log(`in handle click index = ${id} is element id ${id} claimed? -> ${!(controlArray[id] === -1)}`);
         // console.log(`${isLive}  ${!(isClaimed[id])}`)
-        isLive && (controlArray[id] === -1) && updatePlayersArray(id, pid) && updateColors();
+        isLive && (controlArray[id] === -1) && updatePlayersArray(id, humanPid) && updateColors();
         return console.log("exited handleClick!")
     }
 

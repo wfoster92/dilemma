@@ -44,7 +44,7 @@ body {
 }
 
 .bricks {
-    background-color: maroon; 
+    background-color: silver; 
     background-image: linear-gradient(335deg, rgb(0, 0, 187) 23px, transparent 23px), linear-gradient(155deg, rgb(10, 10, 256) 23px, transparent 23px), linear-gradient(335deg, rgb(187, 0, 0) 23px, transparent 23px), linear-gradient(155deg, rgb(221, 0, 0) 23px, transparent 23px); 
     background-size: 58px 58px; 
     background-position: 0px 2px, 4px 35px, 29px 31px, 34px 6px; 
@@ -54,9 +54,9 @@ body {
 
 .kelly {
     background-image: url("images/kelly.jpg");
-    border-radius: 20%;
+    /* border-radius: 20%; */
     /* background-image: url("images/eagleConstitution.jpg"); */
-    background-size:contain;
+    background-size:cover;
     opacity: 1;
 }
 

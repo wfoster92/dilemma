@@ -8,6 +8,7 @@ function Unit(props) {
 
     // let opacity = 1; 
     let halfWidth = (width * squareSize / 2) + "vmin";
+    let fullWidth = (width * squareSize) + "vmin";
 
     height = height * squareSize + "vmin";
     // console.log(`in unit w ${width} h ${height} index ${index} color ${color}`)
@@ -21,11 +22,11 @@ function Unit(props) {
 
     return (
             // <span onClick={clickEvent} id={index} style={colorStyle}> 
-            <span onClick={clickEvent} id={index} style={{backgroundColor:color}}>
-                <span id={index+"_0"}
+            <span id={index} style={{width:fullWidth, height:height, display:"inline-block", backgroundColor:color}}>
+                <span id={index+"_0"} onClick={clickEvent}
                     style={{width:halfWidth, height:height, display:"inline-block", backgroundColor:color}} >
                 </span>
-                <span id={index+"_1"}
+                <span id={index+"_1"} onClick={clickEvent}
                     style={{width:halfWidth, height:height, display:"inline-block", backgroundColor:color}} >
                     
                 </span>
