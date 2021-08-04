@@ -43,19 +43,34 @@ body {
     text-align: center;
 }
 
+/* Pattern Ideas http://projects.verou.me/css3patterns/ */
+
+.japanese-cube {
+    background-color: rgb(85, 85, 102); 
+    background-image: linear-gradient(30deg, rgb(68, 68, 85) 12%, transparent 12.5%, transparent 87%, rgb(68, 68, 85) 87.5%, rgb(68, 68, 85)), linear-gradient(150deg, rgb(68, 68, 85) 12%, transparent 12.5%, transparent 87%, rgb(68, 68, 85) 87.5%, rgb(68, 68, 85)), linear-gradient(30deg, rgb(68, 68, 85) 12%, transparent 12.5%, transparent 87%, rgb(68, 68, 85) 87.5%, rgb(68, 68, 85)), linear-gradient(150deg, rgb(68, 68, 85) 12%, transparent 12.5%, transparent 87%, rgb(68, 68, 85) 87.5%, rgb(68, 68, 85)), linear-gradient(60deg, rgb(153, 153, 170) 25%, transparent 25.5%, transparent 75%, rgb(153, 153, 170) 75%, rgb(153, 153, 170)), linear-gradient(60deg, rgb(153, 153, 170) 25%, transparent 25.5%, transparent 75%, rgb(153, 153, 170) 75%, rgb(153, 153, 170)); 
+    background-size: 80px 140px; 
+    --darkreader-inline-bgcolor: #464c4f; 
+    --darkreader-inline-bgimage: linear-gradient(30deg, #3a3e41 12%, rgba(0, 0, 0, 0) 12.5%, rgba(0, 0, 0, 0) 87%, #3a3e41 87.5%, #3a3e41), linear-gradient(150deg, #3a3e41 12%, rgba(0, 0, 0, 0) 12.5%, rgba(0, 0, 0, 0) 87%, #3a3e41 87.5%, #3a3e41), linear-gradient(30deg, #3a3e41 12%, rgba(0, 0, 0, 0) 12.5%, rgba(0, 0, 0, 0) 87%, #3a3e41 87.5%, #3a3e41), linear-gradient(150deg, #3a3e41 12%, rgba(0, 0, 0, 0) 12.5%, rgba(0, 0, 0, 0) 87%, #3a3e41 87.5%, #3a3e41), linear-gradient(60deg, #4d5356 25%, rgba(0, 0, 0, 0) 25.5%, rgba(0, 0, 0, 0) 75%, #4d5356 75%, #4d5356), linear-gradient(60deg, #4d5356 25%, rgba(0, 0, 0, 0) 25.5%, rgba(0, 0, 0, 0) 75%, #4d5356 75%, #4d5356); 
+    background-position: 0px 0px, 0px 0px, 40px 70px, 40px 70px, 0px 0px, 40px 70px;
+}
 .bricks {
     background-color: silver; 
-    background-image: linear-gradient(335deg, rgb(0, 0, 187) 23px, transparent 23px), linear-gradient(155deg, rgb(10, 10, 256) 23px, transparent 23px), linear-gradient(335deg, rgb(187, 0, 0) 23px, transparent 23px), linear-gradient(155deg, rgb(221, 0, 0) 23px, transparent 23px); 
-    background-size: 58px 58px; 
-    background-position: 0px 2px, 4px 35px, 29px 31px, 34px 6px; 
-    --darkreader-inline-bgcolor:#434441; 
-    --darkreader-inline-bgimage:linear-gradient(335deg, #7f0d0a 23px, rgba(0, 0, 0, 0) 23px), linear-gradient(155deg, #960f0c 23px, rgba(0, 0, 0, 0) 23px), linear-gradient(335deg, #7f0d0a 23px, rgba(0, 0, 0, 0) 23px), linear-gradient(155deg, #960f0c 23px, rgba(0, 0, 0, 0) 23px);
+    background-image: linear-gradient(335deg, rgb(187, 0, 0) 23px, transparent 23px), linear-gradient(155deg, rgb(221, 0, 0) 23px, transparent 23px), linear-gradient(335deg, rgb(187, 0, 0) 23px, transparent 23px), linear-gradient(155deg, rgb(221, 0, 0) 23px, transparent 23px); 
+    background-size: 58px 58px; --darkreader-inline-bgcolor: #3c4143; 
+    --darkreader-inline-bgimage: linear-gradient(335deg, #960000 23px, rgba(0, 0, 0, 0) 23px), linear-gradient(155deg, #b10000 23px, rgba(0, 0, 0, 0) 23px), linear-gradient(335deg, #960000 23px, rgba(0, 0, 0, 0) 23px), linear-gradient(155deg, #b10000 23px, rgba(0, 0, 0, 0) 23px); 
+    background-position: 0px 2px, 4px 35px, 29px 31px, 34px 6px;
 }
 
+.marrakesh {
+    background-color: white; 
+    background-image: radial-gradient(midnightblue 9px, transparent 10px), repeating-radial-gradient(midnightblue 0px, midnightblue 4px, transparent 5px, transparent 20px, midnightblue 21px, midnightblue 25px, transparent 26px, transparent 50px); 
+    background-size: 30px 30px, 90px 90px; 
+    --darkreader-inline-bgcolor: #181a1b; 
+    --darkreader-inline-bgimage: radial-gradient(#14145a 9px, rgba(0, 0, 0, 0) 10px), repeating-radial-gradient(#14145a 0px, #14145a 4px, rgba(0, 0, 0, 0) 5px, rgba(0, 0, 0, 0) 20px, #14145a 21px, #14145a 25px, rgba(0, 0, 0, 0) 26px, rgba(0, 0, 0, 0) 50px); 
+    background-position: 0px 0px;
+}
 .kelly {
     background-image: url("images/kelly.jpg");
-    /* border-radius: 20%; */
-    /* background-image: url("images/eagleConstitution.jpg"); */
     background-size:cover;
     opacity: 1;
 }

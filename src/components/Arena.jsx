@@ -14,7 +14,7 @@ function Arena () {
     const botGame = true;
     // the strength of the bot from 0-2 with 0 being the hardest
     const difficulty = 0;
-    let kelly = "../images/kelly.jpg"
+    const playerDesigns = ["japanese-cube", "bricks"]
 
     function makeArenaObject() {
         let arenaObject = [];
@@ -157,7 +157,8 @@ function Arena () {
     function endRound() {
         console.log(`in endRound a total units ${totalUnits}`)
         botGame && makeBotMove(difficulty);
-        console.log(`after bot move, playersArray ${playersArray}`)
+        // console.log(`after bot move, playersArray ${playersArray}`)
+        doAnimation();
         // this one doesn't break 
         updateControlArray();
         // console.log(`in endRound b total units ${totalUnits}`)
@@ -167,55 +168,163 @@ function Arena () {
         // console.log(`in endRound d total units ${totalUnits}`)
     }
 
+    function doAnimation() {
+        let data = playersArray;
+        console.log(`start of do animation playersArray ${playersArray}`)
+
+        let [playerArray0, playerArray1] = data;
+        let interval = 2000;
+        // console.log(`in do animation player0 ${player0} player1 ${player1}`)
+        let elementId0, elementId1;
+        let claimed = [];
+        let setTimeouts = [];
+        let longestPA = Math.max(playerArray0.length, playerArray1.length);
+        for(let idx=0; idx < longestPA; idx++) {
+            elementId0 = (playerArray0.length >= idx+1) ? playerArray0[idx] : undefined;
+            elementId1 = (playerArray1.length >= idx+1) ? playerArray1[idx] : undefined;
+            console.log(`do animation round ${idx} ele0 ${elementId0} ele1 ${elementId1}`)
+            // elementId1 = playerArray1.shift();
+            // if pid0 entered nothing
+            if (isNaN(elementId0)) {
+                console.log(`elementId0 ${elementId0} is not a number`)
+                if (!claimed.includes(elementId1)){
+                    claimed.push(elementId1)
+                    // updateHalfImage(elementId1, 1, 1)
+                    setTimeouts.push(updateHalfImage(elementId1, 1, 1), interval * idx);
+                }
+            // if pid0 entered nothing
+            } else if (isNaN(elementId1)) {
+                if (!claimed.includes(elementId0)){
+                    claimed.push(elementId0)
+                    // updateHalfImage(elementId0, 0, 1)
+                    setTimeouts.push(updateHalfImage(elementId0, 0, 1), interval * idx);
+                }
+            // if pid0 and pid1 entered the same value
+            } else if (!isNaN(elementId0) && !isNaN(elementId1)) {
+                if (elementId0===elementId1){
+                    // show both in half image
+                    // updateHalfImage(elementId0, 0, 1)
+                    // updateHalfImage(elementId1, 1, 1)
+                    setTimeouts.push(updateHalfImage(elementId0, 0, 1), interval * idx);
+                    setTimeouts.push(updateHalfImage(elementId1, 1, 1), interval * idx);
+                } else {
+                    // Does claimed array include element? if so element will be pushed && set half image full opacity
+                    !claimed.includes(elementId0) ? 
+                    // updateHalfImage(elementId0, 0, 1) && claimed.push(elementId0) :
+                        setTimeouts.push(updateHalfImage(elementId0, 0, 1), interval * idx) && claimed.push(elementId0):
+                    // else, set image at half opacity
+                    // updateHalfImage(elementId0, 0, 0.5)
+                        setTimeouts.push(updateHalfImage(elementId0, 0, 0.5), interval * idx);
+
+                    // Does claimed array include element? if so element will be pushed && set half image full opacity
+                    !claimed.includes(elementId1) ? 
+                    // updateHalfImage(elementId1, 1, 1) && claimed.push(elementId1):
+                        setTimeouts.push(updateHalfImage(elementId1, 1, 1), interval * idx) && claimed.push(elementId1):
+                    // else, set image at half opacity
+                    // updateHalfImage(elementId1, 1, 0.5)
+                        setTimeouts.push(updateHalfImage(elementId1, 1, 0.5), interval * idx);
+                }
+            } 
+        }
+        console.log(`end of do animation playersArray ${playersArray}`)
+    }
+
+    // to abstract doAnimation and setControlArray functions
+    // function compareChoices(tempPA) {
+    //     let longestPA = Math.max(tempPA[0].length, tempPA[1].length);
+    //     let elementId0, elementId1;
+    //     let seen = [];
+    //     for(let i=0; i < longestPA; i++){
+    //         elementId0 = tempPA[0].shift();
+    //         elementId1 = tempPA[1].shift();
+    //         console.log(`from setControlArray, choices -> pid0 ${elementId0} pid1 ${elementId1}`)
+    //         // if pid0 entered nothing
+    //         if (isNaN(elementId0)) {
+    //             if (!seen.includes(elementId1)){
+    //                 data[elementId1] = 1
+    //                 seen.push(elementId1)
+    //                 updateSingleImage(elementId1, 1);
+    //             }
+    //         // if pid0 entered nothing
+    //         } else if (isNaN(elementId1)) {
+    //             if (!seen.includes(elementId0)){
+    //                 data[elementId0] = 0
+    //                 seen.push(elementId0)
+    //                 updateSingleImage(elementId0, 0);
+    //             }
+    //             // if pid0 and pid1 entered the same value
+    //         } else if (!isNaN(elementId0) && !isNaN(elementId1)) {
+    //             if (elementId0===elementId1){
+    //                 // reset color for next round
+    //                 updateSingleColor(elementId0, colorArray[elementId0], 1);
+    //             } else {
+    //                 if (!seen.includes(elementId0)) {
+    //                     data[elementId0] = 0
+    //                     seen.push(elementId0)
+    //                     updateSingleImage(elementId0, 0);
+    //                 }
+    //                 if (!seen.includes(elementId1)) {
+    //                     data[elementId1] = 1
+    //                     seen.push(elementId1)
+    //                     updateSingleImage(elementId1, 1);
+    //                 } 
+    //             }
+    //         }
+    //     }
+    // }
+
     function updateControlArray() {
         // update the control array
         setControlArray(prevState => {
             let data = prevState;
+            console.log(`from setControlArray, playersArray ${playersArray}`)
             let tempPA = playersArray;
             let longestPA = Math.max(tempPA[0].length, tempPA[1].length);
-            let val0, val1;
+            let elementId0, elementId1;
             let seen = [];
             for(let i=0; i < longestPA; i++){
-                val0 = tempPA[0].shift();
-                val1 = tempPA[1].shift();
-                console.log(`from setControlArray, choices -> pid0 ${val0} pid1 ${val1}`)
+                elementId0 = tempPA[0].shift();
+                elementId1 = tempPA[1].shift();
+                console.log(`from setControlArray, choices -> pid0 ${elementId0} pid1 ${elementId1}`)
                 // if pid0 entered nothing
-                if (isNaN(val0)) {
-                    if (!seen.includes(val1)){
-                        data[val1] = 1
-                        seen.push(val1)
-                        updateSingleImage(val1, 1);
+                if (isNaN(elementId0)) {
+                    if (!seen.includes(elementId1)){
+                        data[elementId1] = 1
+                        seen.push(elementId1)
+                        updateSingleImage(elementId1, 1);
                     }
                 // if pid0 entered nothing
-                } else if (isNaN(val1)) {
-                    if (!seen.includes(val0)){
-                        data[val0] = 0
-                        seen.push(val0)
-                        updateSingleImage(val0, 0);
-
+                } else if (isNaN(elementId1)) {
+                    if (!seen.includes(elementId0)){
+                        data[elementId0] = 0
+                        seen.push(elementId0)
+                        updateSingleImage(elementId0, 0);
                     }
                     // if pid0 and pid1 entered the same value
-                } else if (!isNaN(val0) && !isNaN(val1)) {
-                    if (val0===val1){
+                } else if (!isNaN(elementId0) && !isNaN(elementId1)) {
+                    if (elementId0===elementId1){
+                        // remove the classes from do animation
+                        removeClassFromElementHalf(elementId0, 0) 
+                        removeClassFromElementHalf(elementId1, 1)
                         // reset color for next round
-                        updateSingleColor(val0, colorArray[val0], 1);
+                        updateSingleColor(elementId0, colorArray[elementId0], 1);
                     } else {
-                        if (!seen.includes(val0)) {
-                            data[val0] = 0
-                            seen.push(val0)
-                            updateSingleImage(val0, 0);
+                        if (!seen.includes(elementId0)) {
+                            data[elementId0] = 0
+                            seen.push(elementId0)
+                            updateSingleImage(elementId0, 0);
                         }
-                        if (!seen.includes(val1)) {
-                            data[val1] = 1
-                            seen.push(val1)
-                            updateSingleImage(val1, 1);
+                        if (!seen.includes(elementId1)) {
+                            data[elementId1] = 1
+                            seen.push(elementId1)
+                            updateSingleImage(elementId1, 1);
                         } 
                     }
                 }
-
             }
-
             console.log(`from update control array controlArray ${controlArray}`)
+            console.log(`end update control array playersArray ${playersArray}`)
+
             return data;            
         })
 
@@ -309,16 +418,23 @@ function Arena () {
         removeAttribuesFromElement(e0, ["background-color", "opacity"]);
         removeAttribuesFromElement(e1, ["background-color", "opacity"]);
 
+        document.getElementById(`${elementID}_${pid}`).classList.remove(playerDesigns[pid]);
         e0.display = "none";
         e1.display = "none";
-        document.getElementById(`${elementID}`).className = (pid === 0) ? "kelly" : "nelly";
-        // document.getElementById(`${elementID}_0`).className = (pid === 0) ? "kelly" : "nelly";
-        // document.getElementById(`${elementID}_1`).className = (pid === 0) ? "kelly" : "nelly";
-        // document.getElementById(`${elementID}_0`).className = "kelly";
-        // document.getElementById(`${elementID}_1`).className = "kelly";
-        // document.getElementById(`${elementID}`).style.opacity = opacity;
-        // document.getElementById(`${elementID}_0`).style.opacity = opacity;
-        // document.getElementById(`${elementID}_1`).style.opacity = opacity;
+
+        document.getElementById(`${elementID}`).className = (pid === 0) ? playerDesigns[0] : playerDesigns[1];
+    }
+
+    function updateHalfImage(elementID, pid, opacity) {
+        console.log(`In update half IMAGE elementID ${elementID}`);
+        const e = document.getElementById(`${elementID}_${pid}`);
+        e.style.removeProperty("background-color");
+        e.className = playerDesigns[pid];
+        e.style.opacity = opacity;
+    }
+
+    function removeClassFromElementHalf(elementID, pid) {
+        document.getElementById(`${elementID}_${pid}`).classList.remove(playerDesigns[pid]);
     }
 
     function removeAttribuesFromElement(element, attributeList) {
