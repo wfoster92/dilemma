@@ -1,6 +1,6 @@
 import React from "react";
 import Unit from "./Unit";
-import { createSegments } from "../helperFunctions/mathHelp";
+import { createSegments } from "../helperFunctions/creationHelp";
 
 
 function Row(props) {

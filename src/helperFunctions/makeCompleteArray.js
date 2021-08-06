@@ -1,9 +1,11 @@
 import Gradient from "javascript-color-gradient";
+import { colorBase } from "./globals";
+import { arenaObject, totalUnits } from "../components/Arena";
 
-export function makeCompleteArray(colorBase, outputLength, arenaObject){
+export function makeCompleteArray(){
     const colorGradient = new Gradient();
         
-    colorGradient.setMidpoint(outputLength);
+    colorGradient.setMidpoint(totalUnits);
     // colorGradient.setGradient(color1, color2, color3, color4) PREVIOUS
 
     colorGradient.setGradient(...colorBase);
