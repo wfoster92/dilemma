@@ -18,12 +18,10 @@ function Header (props) {
         console.log(window.location.href === "http://localhost:3000/arena");
 
 
-        // if (window.location.href === lastPage) {
         console.log(`in Header - restart. `);
+        // we must end the current game before we start a new one
+        props.setIsGameOver(true);
         props.startNewGame();
-            // console.log(`in Header - restart. about to setHasBegun before hasBegun - ${hasBegun}`);
-            // setHasBegun(false);
-        // }
         updateLastPage();
     }
 

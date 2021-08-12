@@ -28,7 +28,8 @@ function Arena (props) {
 
     let [stateScoreBoard, setStateScoreBoard, isLive, setIsLive, 
         currentMessage, setCurrentMessage, triggerNewGame, setTriggerNewGame, 
-        isFirstGame, setIsFirstGame, finishedFirstGame, setFinishedFirstGame] = props.stateArrayForArena;
+        isFirstGame, setIsFirstGame, finishedFirstGame, setFinishedFirstGame,
+        isGameOver, setIsGameOver] = props.stateArrayForArena;
 
     if (isFirstGame) {
         startNextGame();
@@ -39,7 +40,7 @@ function Arena (props) {
     const humanPid = 0;
     const botGame = true;
     let scoreBoard = [0,0]
-    let isGameOver = false;
+    // let isGameOver = false;
     let animationTimeouts = [];
  
 
@@ -83,9 +84,9 @@ function Arena (props) {
     }, [isLive])
 
 
-    function flipIsLive() {
-        setIsLive(prevState => !prevState);
-    }
+    // function flipIsLive(aBoolean) {
+    //     setIsLive(prevState => !prevState);
+    // }
 
     function updateScoreBoard() {
         let sb = [0,0];
@@ -107,9 +108,10 @@ function Arena (props) {
     }
 
     function handleEndRoundClick() {
+        console.log(`inside endRound submit button isGameOver ${isGameOver} isLive ${isLive}`);
         if(!isGameOver && isLive) {
             console.log(`inside endRound isGameOver ${isGameOver} isLive ${isLive}`);
-            flipIsLive();
+            setIsLive(false);
         } 
     }
 
@@ -127,14 +129,14 @@ function Arena (props) {
         noChangeRounds = scoreChange() ? 0 : noChangeRounds++;
 
         console.log(`about to runRest, interval ${interval} playersArray ${playersArray}`)
-        setTimeout(endRoundB, totalDelay);
+        let roundBTimeout = setTimeout(endRoundB, totalDelay);
+        animationTimeouts.push(roundBTimeout);
     }
 
 
     function endRoundB(){
         controlArray = updateControlArray();
         
-        // bad code, a workaround for async methods not working
         updateScoreBoard()
         endRoundC();
     }
@@ -143,16 +145,18 @@ function Arena (props) {
     function endRoundC(){
         console.log(`noChangeRounds ${noChangeRounds} endroundB scoreboard ${scoreBoard}`)
 
-        isGameOver = updateIsGameOver();
-        console.log(`endRoundC isGameOver ${isGameOver}`)
-        isGameOver ?  endGameRoutine() : continueGameRoutine();
+        // set isGameOver with the boolean output of updateIsGameOver
+        let isGameOverBool = updateIsGameOver()
+        
+        console.log(`endRoundC isGameOver ${isGameOver}`);
+        isGameOverBool ?  endGameRoutine() : continueGameRoutine();
     }
 
     function continueGameRoutine() {
         PAMax = updatePAMax();
         playersArray = resetPlayersArray(); 
-        flipIsLive()
-        // setIsLive(prevState => !prevState); 
+        setIsLive(true);
+        setIsGameOver(false);
     }
 
     // check for a round with no score change
@@ -189,7 +193,8 @@ function Arena (props) {
         console.log(`omg it's all over\nFinal Score \nPlayer 1 ${roundNumber(100*scoreBoard[0], 2)} Player 2 ${roundNumber(100*scoreBoard[1], 2)}`);
         let summary = <p>omg it's all over <br/>Final Score <br/>Player 1 {roundNumber(100*scoreBoard[0], 2)} <br/>Player 2 {roundNumber(100*scoreBoard[1], 2)}</p>
         setCurrentMessage(<div>{first}{summary}</div>)
-    
+        setIsLive(false); 
+        setIsGameOver(true);   
     }
 
 
@@ -225,7 +230,7 @@ function Arena (props) {
     return (
         <div>
             <span className="spacer" >
-                <Timer isLive={isLive} flipIsLive={flipIsLive} triggerNewGame={triggerNewGame}/>
+                <Timer isLive={isLive} setIsLive={setIsLive} triggerNewGame={triggerNewGame}/>
                 <button id="submit" onClick={handleEndRoundClick}>Submit</button>
             </span>
             <span id="gameboard">

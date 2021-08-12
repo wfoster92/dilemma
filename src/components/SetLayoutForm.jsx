@@ -1,5 +1,5 @@
 import React from "react"
-import { Link } from "react-router-dom"
+// import { Link } from "react-router-dom"
 
 
 function SetLayoutForm(props) {
@@ -17,13 +17,13 @@ function SetLayoutForm(props) {
         <div>
         {rowArray.map((num) => {
             if (num === numRows) {
-                {console.log(`num ${num} numRows ${numRows} true`)}
+                {/* {console.log(`num ${num} numRows ${numRows} true`)} */}
                 return (<span>
                             <input type="radio" id={"row".concat(num.toString())} name="rowCount" value={num.toString()} defaultChecked/>
                             <label htmlFor={"row".concat(num.toString())}>{num}</label>
                         </span>)
             } else {
-                {console.log(`num ${num} numRows ${numRows} false`)}
+                {/* {console.log(`num ${num} numRows ${numRows} false`)} */}
                 return (<span>
                             <input type="radio" id={"row".concat(num.toString())} name="rowCount" value={num.toString()}/>
                             <label htmlFor={"row".concat(num.toString())}>{num}</label>
@@ -36,14 +36,14 @@ function SetLayoutForm(props) {
         {colArray.map((num) => {
 
             if (num === numCols) {
-                {console.log(`num ${num} numCols ${numCols} true`)}
+                {/* {console.log(`num ${num} numCols ${numCols} true`)} */}
 
                 return (<span>
                     <input type="radio" id={"col".concat(num.toString())} name="colCount" value={num.toString()} defaultChecked/>
                     <label htmlFor={"col".concat(num.toString())}>{num}</label>
                 </span>)
             } else {
-                {console.log(`num ${num} numCols ${numCols} false`)}
+                {/* {console.log(`num ${num} numCols ${numCols} false`)} */}
                 return (<span>
                             <input type="radio" id={"col".concat(num.toString())} name="colCount" value={num.toString()}/>
                             <label htmlFor={"col".concat(num.toString())}>{num}</label>
@@ -55,14 +55,14 @@ function SetLayoutForm(props) {
         
         {difficultyArray.map((num) => {
             if (num === difficulty) {
-                {console.log(`num ${num} difficulty ${difficulty} true`)}
+                {/* {console.log(`num ${num} difficulty ${difficulty} true`)} */}
 
                 return (<span>
                             <input type="radio" id={"bot".concat(num.toString())} name="botDifficulty" value={num.toString()} defaultChecked/>
                             <label htmlFor={"bot".concat(num.toString())}>{num}</label>)
                         </span>)           
             } else {
-                {console.log(`num ${num} difficulty ${difficulty} false`)}
+                {/* {console.log(`num ${num} difficulty ${difficulty} false`)} */}
                 return (<span>
                             <input type="radio" id={"bot".concat(num.toString())} name="botDifficulty" value={num.toString()}/>
                             <label htmlFor={"bot".concat(num.toString())}>{num}</label>

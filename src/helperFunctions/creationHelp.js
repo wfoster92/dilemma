@@ -1,5 +1,3 @@
-// import { numRows, numCols} from "./globals";
-
 export function createSegments(numSegments){
     let segments = [];
     for (let i=0; i < numSegments; i++){

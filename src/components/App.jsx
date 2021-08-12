@@ -20,11 +20,12 @@ function App() {
     const [triggerNewGame, setTriggerNewGame] = useState(false);
     const [isFirstGame, setIsFirstGame] = useState(true);
     const [finishedFirstGame, setFinishedFirstGame] = useState(false);
+    const [isGameOver, setIsGameOver] = useState(false);
 
 
     const stateArrayForArena = [stateScoreBoard, setStateScoreBoard, isLive, setIsLive,
         currentMessage, setCurrentMessage, triggerNewGame, setTriggerNewGame, 
-        isFirstGame, setIsFirstGame, finishedFirstGame, setFinishedFirstGame];
+        isFirstGame, setIsFirstGame, finishedFirstGame, setFinishedFirstGame, isGameOver, setIsGameOver];
 
     function layoutChange(newRows, newCols, newDifficulty){
         setNumRows(parseInt(newRows));
@@ -40,14 +41,15 @@ function App() {
         }
         setStateScoreBoard([0,0]);
 
-        setIsLive(true);
         setCurrentMessage(<div></div>);
         setTriggerNewGame(true);
+        setIsLive(true);
+        setIsGameOver(false);
     }
     
     return (
         <Router>
-            <Header startNewGame={startNewGame}/>
+            <Header startNewGame={startNewGame} setIsGameOver={setIsGameOver}/>
             <Switch>
                 <Route exact path="/">
                     <Home />
