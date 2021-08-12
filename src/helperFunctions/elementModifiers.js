@@ -1,7 +1,7 @@
-import { PAMax, playersArray, colorArray } from "../components/Arena"
+import { PAMax, colorArray } from "../components/Arena"
 import { playerDesigns } from "./globals";
 
-export function updateColors(humanPid){
+export function updateColors(playersArray, humanPid){
     console.log("In update colors");
     // let pid = 0;
     let opacityMultiplier = (PAMax > 1) ? (1/(PAMax - 1)) : 0;
@@ -40,7 +40,8 @@ export function updateSingleImage(elementID, pid) {
     document.getElementById(`${elementID}`).className = (pid === 0) ? playerDesigns[0] : playerDesigns[1];
 }
 
-export function updateHalfImage(elementID, pid, opacity) {
+
+export function animateStepUpdateHalfImage(elementID, pid, opacity) {
     console.log(`In update half IMAGE elementID ${elementID}`);
     const e = document.getElementById(`${elementID}_${pid}`);
     e.style.removeProperty("background-color");

@@ -1,9 +1,7 @@
-import { minRows, maxRows, minCols, maxCols } from "./globals";
+// import { numRows, numCols} from "./globals";
 
-export function createSegments(minSegments, maxSegments){
+export function createSegments(numSegments){
     let segments = [];
-    // get a random number of elements to output between the min and max
-    let numSegments =  minSegments + Math.floor(Math.random() * ((maxSegments + 1) - minSegments));
     for (let i=0; i < numSegments; i++){
         segments.push(Math.random())
     }
@@ -22,18 +20,18 @@ export function createSegments(minSegments, maxSegments){
 }
 
 
-export function makeArenaObject() {
+export function makeArenaObject(numRows, numCols) {
     let arenaObject = [];
     let areaArray = [];
-    let rows = createSegments(minRows,maxRows);
+    let rows = createSegments(numRows);
     let totalUnits = 0;
 
     // create the arenaObject list
     for (let r=0; r < rows.length; r++) {
-        let newCol = createSegments(minCols, maxCols);
+        let newCol = createSegments(numCols);
         let newRow = [];
         newCol.forEach((c, idx) => 
-            {console.log(c);
+        {
             let newElement = [c, rows[r], totalUnits+idx];
             areaArray.push(c * rows[r]);
             newRow.push(newElement)}
@@ -41,5 +39,6 @@ export function makeArenaObject() {
         arenaObject.push(newRow);
         totalUnits += newCol.length;
     }
+    console.log(`areaArray ${areaArray}`)
     return [arenaObject, totalUnits, areaArray];
 }

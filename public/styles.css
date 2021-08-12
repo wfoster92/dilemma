@@ -1,11 +1,22 @@
-
 body {
     margin: 0px;
     border:0;
     padding: 0;
+    width: 100vw;
+    height: 100vh;
     overflow-x: hidden; /* Hide horizontal scrollbar */
-    background-color: #9ba4a8;
+    /* background-color: #9ba4a8; */
+    background-color: #111;
 }
+/* 
+.starryNight {
+    background-color: rgb(58, 14, 100); 
+    background-image: radial-gradient(white, rgba(255, 255, 255, 0.2) 2px, transparent 40px), radial-gradient(white, rgba(255, 255, 255, 0.15) 1px, transparent 30px), radial-gradient(white, rgba(255, 255, 255, 0.1) 2px, transparent 40px), radial-gradient(rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.1) 2px, transparent 30px); 
+    background-size: 550px 550px, 350px 350px, 250px 250px, 150px 150px; 
+    --darkreader-inline-bgcolor: white; 
+    /* --darkreader-inline-bgimage: radial-gradient(#181a1b, rgba(24, 26, 27, 0.2) 2px, rgba(0, 0, 0, 0) 40px), radial-gradient(#181a1b, rgba(24, 26, 27, 0.15) 1px, rgba(0, 0, 0, 0) 30px), radial-gradient(#181a1b, rgba(24, 26, 27, 0.1) 2px, rgba(0, 0, 0, 0) 40px), radial-gradient(rgba(24, 26, 27, 0.4), rgba(24, 26, 27, 0.1) 2px, rgba(0, 0, 0, 0) 30px);  */
+    /* background-position: 0px 0px, 40px 60px, 130px 270px, 70px 100px; */
+/* } */ 
 
 #root{
     margin: auto;
@@ -41,6 +52,14 @@ body {
 .header{
     color:black;
     text-align: center;
+}
+
+#submit {
+    width: 20vmin;
+    height: 20vmin;
+    background-color: rgb(187, 0, 0);
+    color: rgb(107, 219, 97);
+    font-size: large;
 }
 
 /* Pattern Ideas http://projects.verou.me/css3patterns/ */
@@ -85,6 +104,10 @@ body {
     display: inline-block;
     vertical-align: middle;
     line-height: normal;
+}
+
+.table, #timer{
+    color:white;
 }
 
 div{
