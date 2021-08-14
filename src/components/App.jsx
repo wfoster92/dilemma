@@ -21,11 +21,16 @@ function App() {
     const [isFirstGame, setIsFirstGame] = useState(true);
     const [finishedFirstGame, setFinishedFirstGame] = useState(false);
     const [isGameOver, setIsGameOver] = useState(false);
+    const [PAMax, setPAMax] = useState(
+        (numRows*numCols < 12) ? 3 :
+        (numRows*numCols < 24) ? 4 :
+        (numRows*numCols < 36) ? 5 : 6);
 
 
-    const stateArrayForArena = [stateScoreBoard, setStateScoreBoard, isLive, setIsLive,
+    const stateDictForArena = {stateScoreBoard, setStateScoreBoard, isLive, setIsLive,
         currentMessage, setCurrentMessage, triggerNewGame, setTriggerNewGame, 
-        isFirstGame, setIsFirstGame, finishedFirstGame, setFinishedFirstGame, isGameOver, setIsGameOver];
+        isFirstGame, setIsFirstGame, finishedFirstGame, setFinishedFirstGame, isGameOver, setIsGameOver,
+        PAMax, setPAMax};
 
     function layoutChange(newRows, newCols, newDifficulty){
         setNumRows(parseInt(newRows));
@@ -57,7 +62,7 @@ function App() {
                     <Rules />
                 </Route>
                 <Route exact path="/arena">
-                    <Arena layoutSettings={[numRows, numCols, difficulty]} stateArrayForArena={stateArrayForArena} />
+                    <Arena layoutSettings={[numRows, numCols, difficulty]} stateDictForArena={stateDictForArena} />
                 </Route>
                 <Route exact path="/setLayout">
                     <SetLayout layoutChange={layoutChange} startNewGame={startNewGame} layoutSettings={[numRows, numCols, difficulty]}/>

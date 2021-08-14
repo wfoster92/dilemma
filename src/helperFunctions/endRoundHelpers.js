@@ -1,5 +1,4 @@
-import React from "react";
-import { PAMax, playersArray, colorArray, areaArray, controlArray, isPAFull } from "../components/Arena"
+import { playersArray, colorArray, areaArray, controlArray, isPAFull } from "../components/Arena"
 import { updateSingleColor, updateSingleImage, animateStepUpdateHalfImage, removeClassFromElementHalf } from "./elementModifiers";
 
 
@@ -118,7 +117,7 @@ export function updateControlArray() {
     return data;           
 }
 
-export function makeBotMove(difficulty) {
+export function makeBotMove(difficulty, PAMax) {
     let randomIndexMin, randomIndexMax;
     switch (difficulty) {
         case 4:
@@ -160,6 +159,7 @@ export function makeBotMove(difficulty) {
     console.log(`sortedAvailableAreaArray final, no longer array ${sortedAvailableAreaArray}`);
     // This may be where things break, assigning the hook to a variable
     let choicesLeft = PAMax;
+    console.log(`in bot move choicesLeft = ${choicesLeft}`);
     let unitsLeft = sortedAvailableAreaArray.length;
     // the elementIDs to add to the bot's player array
     let choices = [];
@@ -187,7 +187,7 @@ export function makeBotMove(difficulty) {
 
 
 
-export function updatePlayersArray(elementID, pid){
+export function updatePlayersArray(elementID, pid, PAMax){
 
     let elementToRemove = -1;
     let data = playersArray;

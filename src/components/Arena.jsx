@@ -12,7 +12,6 @@ import { resetColors } from "../helperFunctions/resetGameHelp";
 
 export let controlArray = 0; // new Array(totalUnits).fill(-1);
 export let playersArray = [[],[]]; //keeping variable outside Arena
-export let PAMax = maxSelections; //keeping variable outside Arena
 export let isPAFull = [false, false];
 export let noChangeRounds = 0;
 export let [arenaObject, totalUnits, areaArray] = [0,0,0];
@@ -24,14 +23,17 @@ export let [completeArray, colorArray] = [0,0];
 
 function Arena (props) {
     console.log("in arena")
-    const [animationTimeouts, setAnimationTimeouts] = useState([]);
+    const [numRows, numCols, difficulty] = props.layoutSettings;
 
-    let [numRows, numCols, difficulty] = props.layoutSettings;
-
-    let [stateScoreBoard, setStateScoreBoard, isLive, setIsLive, 
+    const {stateScoreBoard, setStateScoreBoard, isLive, setIsLive, 
         currentMessage, setCurrentMessage, triggerNewGame, setTriggerNewGame, 
         isFirstGame, setIsFirstGame, finishedFirstGame, setFinishedFirstGame,
-        isGameOver, setIsGameOver] = props.stateArrayForArena;
+        isGameOver, setIsGameOver, PAMax, setPAMax} = props.stateDictForArena;
+
+    const [animationTimeouts, setAnimationTimeouts] = useState([]);
+    const [choicesLeft, setChoicesLeft] = useState(PAMax)
+
+
 
     // isFirstGame is necessary since we need to create the completeArray before render is called
     if (isFirstGame) {
@@ -44,6 +46,7 @@ function Arena (props) {
     let scoreBoard = [0,0]
  
 
+    
     useEffect(() =>{
         if(!isFirstGame && triggerNewGame) {
             console.log(`new game triggered animationTimeouts ${animationTimeouts} animationTimeouts length ${animationTimeouts.length}`)
@@ -54,11 +57,17 @@ function Arena (props) {
     }, [triggerNewGame])
 
     useEffect(() => {
+        console.log(`outside useEffectArena isLive ${isLive} isGameOver ${isGameOver}`)
+
         if(!isLive && !isGameOver) {
-            console.log(`inside useEffectArena isLive ${isLive} isGameOver ${isGameOver}`)
+            console.log(`inside useEffectArena isLive ${isLive} isGameOver ${isGameOver} PAMax ${PAMax}`)
             endRoundA();
         }
     }, [isLive])
+
+    useEffect(() => {
+        setPAMax(startingPAMax())
+    }, [numRows, numCols])
 
     function startNextGame() {
         console.log(`inside startNewGame finishedFirstGame ${finishedFirstGame}`);
@@ -76,9 +85,17 @@ function Arena (props) {
         isFirstGame && setIsFirstGame(false);
     }
 
+    function startingPAMax() {
+        let newPAMax = (numRows*numCols < 12) ? 3 :
+                        (numRows*numCols < 24) ? 4 :
+                        (numRows*numCols < 36) ? 5 : 6;
+        console.log(`PAMax is ${newPAMax}`)
+        return newPAMax;
+    }
+
     function resetTopLevelVariables() {
         playersArray = [[],[]];
-        PAMax = maxSelections; 
+        setPAMax(startingPAMax());
         isPAFull = [false, false];
         noChangeRounds = 0;
     }
@@ -120,7 +137,7 @@ function Arena (props) {
     function endRoundA() {
 
         if (botGame) {
-            playersArray = makeBotMove(difficulty);
+            playersArray = makeBotMove(difficulty, PAMax);
         } 
         // console.log(`after bot move, playersArray ${playersArray}`)
         let interval = 1500;
@@ -155,10 +172,12 @@ function Arena (props) {
     }
 
     function continueGameRoutine() {
-        PAMax = updatePAMax();
+        setPAMax(updatePAMax());
         playersArray = resetPlayersArray(); 
         setIsLive(true);
         setIsGameOver(false);
+        setChoicesLeft(PAMax);
+        setAnimationTimeouts([]);
     }
 
     // check for a round with no score change
@@ -208,7 +227,7 @@ function Arena (props) {
                 unitsLeft+=1;
             }
         }
-        return Math.min(unitsLeft, PAMax);
+        return Math.min(unitsLeft, startingPAMax());
     }
 
     function resetPlayersArray() {
@@ -223,15 +242,16 @@ function Arena (props) {
 
         if (isLive && (controlArray[id] === -1)) {
             console.log(`inside handleClick if statement id = ${id}`);
-            playersArray = updatePlayersArray(id, humanPid) 
-            updateColors(playersArray, humanPid);
+            playersArray = updatePlayersArray(id, humanPid, PAMax) 
+            setChoicesLeft(PAMax - playersArray[humanPid].length);
+            updateColors(playersArray, humanPid, PAMax);
         }
         return console.log("exited handleClick!")
     }
 
     return (
         <div>
-            <span className="spacer" >
+            <span className="spacer" choicesLeft={choicesLeft} >
                 <Timer isLive={isLive} setIsLive={setIsLive} triggerNewGame={triggerNewGame}/>
                 <button id="submit" onClick={handleEndRoundClick}>Submit</button>
             </span>

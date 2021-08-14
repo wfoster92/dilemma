@@ -1,5 +1,5 @@
 import React from "react"
-// import { Link } from "react-router-dom"
+import { Link } from "react-router-dom"
 
 
 function SetLayoutForm(props) {
@@ -71,7 +71,9 @@ function SetLayoutForm(props) {
                 }
             })}
         </div>
-        <input type="submit" value="Submit"></input> 
+        {/* <Link exact to="/arena" onClick={props.startNewGame}> */}
+        <input type="submit" value="Submit"></input>       
+        {/* </Link> */}
 
     </div>
     )

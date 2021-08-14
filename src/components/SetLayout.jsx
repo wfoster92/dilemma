@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom"
+import React, { useEffect, useState, useCallback } from "react";
+import { Link, useHistory } from "react-router-dom"
 import SetLayoutForm from "./SetLayoutForm";
 
 
 
 
 function SetLayout(props) {
-    console.log(`in setLayout - layoutSettings ${props.layoutSettings}`)
+    // history object allows redirection at the end of submit form
+    let history = useHistory();
     let [numRows, numCols, difficulty] = props.layoutSettings;
     console.log(`in setLayout - layoutSettings rows ${numRows} cols ${numCols} difficulty ${difficulty}`)
 
@@ -21,6 +22,8 @@ function SetLayout(props) {
         let newDifficulty = event.target.botDifficulty.value;
         props.layoutChange(newRows, newCols, newDifficulty);
         console.log(`rows ${newRows} numCols ${newCols} difficulty ${newDifficulty}`)
+        history.push("/arena");
+        props.startNewGame();
     }
 
 
@@ -28,12 +31,12 @@ function SetLayout(props) {
     return (
         <div>
             <h1>Select Your Board Layout</h1>
-            <form className="layoutForm" onSubmit={submitForm}>
-                <SetLayoutForm layoutSettings = {props.layoutSettings} />
+            <form className="layoutForm" onSubmit={submitForm} action="./arena">
+                <SetLayoutForm layoutSettings = {props.layoutSettings} startNewGame={props.startNewGame}/>
             </form>
-            <Link exact to="/arena" onClick={props.startNewGame}>
+            {/* <Link exact to="/arena" onClick={props.startNewGame}>
                 <button>Start New Game</button>
-            </Link>;
+            </Link>; */}
         </div>
     )
 }
