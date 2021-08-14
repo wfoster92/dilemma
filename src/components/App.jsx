@@ -40,7 +40,6 @@ function App() {
             setFinishedFirstGame(true);
         }
         setStateScoreBoard([0,0]);
-
         setCurrentMessage(<div></div>);
         setTriggerNewGame(true);
         setIsLive(true);
@@ -49,7 +48,7 @@ function App() {
     
     return (
         <Router>
-            <Header startNewGame={startNewGame} setIsGameOver={setIsGameOver}/>
+            <Header startNewGame={startNewGame} setIsGameOver={setIsGameOver} setIsLive={setIsLive}/>
             <Switch>
                 <Route exact path="/">
                     <Home />
@@ -61,7 +60,7 @@ function App() {
                     <Arena layoutSettings={[numRows, numCols, difficulty]} stateArrayForArena={stateArrayForArena} />
                 </Route>
                 <Route exact path="/setLayout">
-                    <SetLayout layoutChange={layoutChange} layoutSettings={[numRows, numCols, difficulty]} startNewGame={startNewGame}/>
+                    <SetLayout layoutChange={layoutChange} startNewGame={startNewGame} layoutSettings={[numRows, numCols, difficulty]}/>
                 </Route>
             </Switch>
         </Router>

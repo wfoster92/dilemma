@@ -8,15 +8,7 @@ body {
     /* background-color: #9ba4a8; */
     background-color: #111;
 }
-/* 
-.starryNight {
-    background-color: rgb(58, 14, 100); 
-    background-image: radial-gradient(white, rgba(255, 255, 255, 0.2) 2px, transparent 40px), radial-gradient(white, rgba(255, 255, 255, 0.15) 1px, transparent 30px), radial-gradient(white, rgba(255, 255, 255, 0.1) 2px, transparent 40px), radial-gradient(rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.1) 2px, transparent 30px); 
-    background-size: 550px 550px, 350px 350px, 250px 250px, 150px 150px; 
-    --darkreader-inline-bgcolor: white; 
-    /* --darkreader-inline-bgimage: radial-gradient(#181a1b, rgba(24, 26, 27, 0.2) 2px, rgba(0, 0, 0, 0) 40px), radial-gradient(#181a1b, rgba(24, 26, 27, 0.15) 1px, rgba(0, 0, 0, 0) 30px), radial-gradient(#181a1b, rgba(24, 26, 27, 0.1) 2px, rgba(0, 0, 0, 0) 40px), radial-gradient(rgba(24, 26, 27, 0.4), rgba(24, 26, 27, 0.1) 2px, rgba(0, 0, 0, 0) 30px);  */
-    /* background-position: 0px 0px, 40px 60px, 130px 270px, 70px 100px; */
-/* } */ 
+
 
 #root{
     margin: auto;
@@ -32,6 +24,13 @@ body {
     font-size: 0;
 }
 
+.layoutForm{
+    color: white;
+}
+
+.layoutForm > input,label{
+    padding: 0 2px;
+}
 
 .spacer{
     display:inline-block;
@@ -62,7 +61,24 @@ body {
     font-size: large;
 }
 
-/* Pattern Ideas http://projects.verou.me/css3patterns/ */
+.header h1{
+    display: inline-block;
+    vertical-align: middle;
+    line-height: normal;
+}
+
+.table, #timer{
+    color:white;
+}
+
+div{
+    opacity: 100%;
+}
+
+
+/* Pattern Ideas http://projects.verou.me/css3patterns/
+https://www.magicpattern.design/tools/css-backgrounds */
+
 
 .japanese-cube {
     background-color: rgb(85, 85, 102); 
@@ -72,6 +88,48 @@ body {
     --darkreader-inline-bgimage: linear-gradient(30deg, #3a3e41 12%, rgba(0, 0, 0, 0) 12.5%, rgba(0, 0, 0, 0) 87%, #3a3e41 87.5%, #3a3e41), linear-gradient(150deg, #3a3e41 12%, rgba(0, 0, 0, 0) 12.5%, rgba(0, 0, 0, 0) 87%, #3a3e41 87.5%, #3a3e41), linear-gradient(30deg, #3a3e41 12%, rgba(0, 0, 0, 0) 12.5%, rgba(0, 0, 0, 0) 87%, #3a3e41 87.5%, #3a3e41), linear-gradient(150deg, #3a3e41 12%, rgba(0, 0, 0, 0) 12.5%, rgba(0, 0, 0, 0) 87%, #3a3e41 87.5%, #3a3e41), linear-gradient(60deg, #4d5356 25%, rgba(0, 0, 0, 0) 25.5%, rgba(0, 0, 0, 0) 75%, #4d5356 75%, #4d5356), linear-gradient(60deg, #4d5356 25%, rgba(0, 0, 0, 0) 25.5%, rgba(0, 0, 0, 0) 75%, #4d5356 75%, #4d5356); 
     background-position: 0px 0px, 0px 0px, 40px 70px, 40px 70px, 0px 0px, 40px 70px;
 }
+
+.isometric-green {
+    background-color: #47e95b;
+    opacity: 1;
+    background-image:  linear-gradient(30deg, #1c5d24 12%, transparent 12.5%, transparent 87%, #1c5d24 87.5%, #1c5d24), linear-gradient(150deg, #1c5d24 12%, transparent 12.5%, transparent 87%, #1c5d24 87.5%, #1c5d24), linear-gradient(30deg, #1c5d24 12%, transparent 12.5%, transparent 87%, #1c5d24 87.5%, #1c5d24), linear-gradient(150deg, #1c5d24 12%, transparent 12.5%, transparent 87%, #1c5d24 87.5%, #1c5d24), linear-gradient(60deg, #1c5d2477 25%, transparent 25.5%, transparent 75%, #1c5d2477 75%, #1c5d2477), linear-gradient(60deg, #1c5d2477 25%, transparent 25.5%, transparent 75%, #1c5d2477 75%, #1c5d2477);
+    background-size: 20px 35px;
+    background-position: 0 0, 0 0, 10px 18px, 10px 18px, 0 0, 10px 18px;
+}
+
+.isometric-red {
+    background-color: #ff0000;
+    opacity: 1;
+    background-image:  linear-gradient(30deg, #ff7f7f 12%, transparent 12.5%, transparent 87%, #ff7f7f 87.5%, #ff7f7f), linear-gradient(150deg, #ff7f7f 12%, transparent 12.5%, transparent 87%, #ff7f7f 87.5%, #ff7f7f), linear-gradient(30deg, #ff7f7f 12%, transparent 12.5%, transparent 87%, #ff7f7f 87.5%, #ff7f7f), linear-gradient(150deg, #ff7f7f 12%, transparent 12.5%, transparent 87%, #ff7f7f 87.5%, #ff7f7f), linear-gradient(60deg, #ff7f7f77 25%, transparent 25.5%, transparent 75%, #ff7f7f77 75%, #ff7f7f77), linear-gradient(60deg, #ff7f7f77 25%, transparent 25.5%, transparent 75%, #ff7f7f77 75%, #ff7f7f77);
+    background-size: 20px 35px;
+    background-position: 0 0, 0 0, 10px 18px, 10px 18px, 0 0, 10px 18px;
+}
+
+.isometric-amber-violet {
+    background-color: #ffbf00;
+    opacity: 1;
+    background-image:  linear-gradient(30deg, #8F00FF 12%, transparent 12.5%, transparent 87%, #8F00FF 87.5%, #8F00FF), linear-gradient(150deg, #8F00FF 12%, transparent 12.5%, transparent 87%, #8F00FF 87.5%, #8F00FF), linear-gradient(30deg, #8F00FF 12%, transparent 12.5%, transparent 87%, #8F00FF 87.5%, #8F00FF), linear-gradient(150deg, #8F00FF 12%, transparent 12.5%, transparent 87%, #8F00FF 87.5%, #8F00FF), linear-gradient(60deg, #8F00FF77 25%, transparent 25.5%, transparent 75%, #8F00FF77 75%, #8F00FF77), linear-gradient(60deg, #8F00FF77 25%, transparent 25.5%, transparent 75%, #8F00FF77 75%, #8F00FF77);
+    background-size: 20px 35px;
+    background-position: 0 0, 0 0, 10px 18px, 10px 18px, 0 0, 10px 18px;
+}
+.wavy-red-green {
+    background-color: #940909;
+    opacity: 1;
+    background-image:  repeating-radial-gradient( circle at 0 0, transparent 0, #940909 10px ), repeating-linear-gradient( #47e95b55, #47e95b);
+}
+.wavy-yellow-purple {
+    background-color: #800080;
+    opacity: 1;
+    background-image:  repeating-radial-gradient( circle at 0 0, transparent 0, #800080 10px ), repeating-linear-gradient( #ffff0055, #ffff00);
+}
+
+
+
+
+
+
+
+
 .bricks {
     background-color: silver; 
     background-image: linear-gradient(335deg, rgb(187, 0, 0) 23px, transparent 23px), linear-gradient(155deg, rgb(221, 0, 0) 23px, transparent 23px), linear-gradient(335deg, rgb(187, 0, 0) 23px, transparent 23px), linear-gradient(155deg, rgb(221, 0, 0) 23px, transparent 23px); 
@@ -88,6 +146,18 @@ body {
     --darkreader-inline-bgimage: radial-gradient(#14145a 9px, rgba(0, 0, 0, 0) 10px), repeating-radial-gradient(#14145a 0px, #14145a 4px, rgba(0, 0, 0, 0) 5px, rgba(0, 0, 0, 0) 20px, #14145a 21px, #14145a 25px, rgba(0, 0, 0, 0) 26px, rgba(0, 0, 0, 0) 50px); 
     background-position: 0px 0px;
 }
+
+
+.starryNight {
+    background-color: rgb(58, 14, 100); 
+    background-image: radial-gradient(white, rgba(255, 255, 255, 0.2) 2px, transparent 40px), radial-gradient(white, rgba(255, 255, 255, 0.15) 1px, transparent 30px), radial-gradient(white, rgba(255, 255, 255, 0.1) 2px, transparent 40px), radial-gradient(rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.1) 2px, transparent 30px); 
+    background-size: 550px 550px, 350px 350px, 250px 250px, 150px 150px; 
+    --darkreader-inline-bgcolor: white; 
+    --darkreader-inline-bgimage: radial-gradient(#181a1b, rgba(24, 26, 27, 0.2) 2px, rgba(0, 0, 0, 0) 40px), radial-gradient(#181a1b, rgba(24, 26, 27, 0.15) 1px, rgba(0, 0, 0, 0) 30px), radial-gradient(#181a1b, rgba(24, 26, 27, 0.1) 2px, rgba(0, 0, 0, 0) 40px), radial-gradient(rgba(24, 26, 27, 0.4), rgba(24, 26, 27, 0.1) 2px, rgba(0, 0, 0, 0) 30px);  
+    background-position: 0px 0px, 40px 60px, 130px 270px, 70px 100px;
+} 
+
+
 .kelly {
     background-image: url("images/kelly.jpg");
     background-size:cover;
@@ -100,16 +170,3 @@ body {
     opacity: 1;
 } 
 
-.header h1{
-    display: inline-block;
-    vertical-align: middle;
-    line-height: normal;
-}
-
-.table, #timer{
-    color:white;
-}
-
-div{
-    opacity: 100%;
-}

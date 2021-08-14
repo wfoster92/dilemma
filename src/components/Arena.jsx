@@ -24,6 +24,8 @@ export let [completeArray, colorArray] = [0,0];
 
 function Arena (props) {
     console.log("in arena")
+    const [animationTimeouts, setAnimationTimeouts] = useState([]);
+
     let [numRows, numCols, difficulty] = props.layoutSettings;
 
     let [stateScoreBoard, setStateScoreBoard, isLive, setIsLive, 
@@ -31,38 +33,47 @@ function Arena (props) {
         isFirstGame, setIsFirstGame, finishedFirstGame, setFinishedFirstGame,
         isGameOver, setIsGameOver] = props.stateArrayForArena;
 
+    // isFirstGame is necessary since we need to create the completeArray before render is called
     if (isFirstGame) {
         startNextGame();
-        setIsFirstGame(false);
     }
     
 
     const humanPid = 0;
     const botGame = true;
     let scoreBoard = [0,0]
-    // let isGameOver = false;
-    let animationTimeouts = [];
  
 
     useEffect(() =>{
-        if(triggerNewGame) {
+        if(!isFirstGame && triggerNewGame) {
             console.log(`new game triggered animationTimeouts ${animationTimeouts} animationTimeouts length ${animationTimeouts.length}`)
+            // if a new game is triggered, clear out the animation timeouts
             animationTimeouts.forEach(timeout => clearTimeout(timeout));
             startNextGame();
         }
     }, [triggerNewGame])
 
+    useEffect(() => {
+        if(!isLive && !isGameOver) {
+            console.log(`inside useEffectArena isLive ${isLive} isGameOver ${isGameOver}`)
+            endRoundA();
+        }
+    }, [isLive])
+
     function startNextGame() {
         console.log(`inside startNewGame finishedFirstGame ${finishedFirstGame}`);
-        // props.startNewGame()
         [arenaObject, totalUnits, areaArray] = makeArenaObject(numRows, numCols);
         [completeArray, colorArray] = makeCompleteArray(arenaObject, totalUnits);
         if (finishedFirstGame){
             resetColors(colorArray);
         }
         controlArray = makeNewControlArray(totalUnits);
-        resetTopLevelVariables()
+        resetTopLevelVariables();
+        if (animationTimeouts.length > 0){
+            setAnimationTimeouts([]);
+        }
         setTriggerNewGame(false);
+        isFirstGame && setIsFirstGame(false);
     }
 
     function resetTopLevelVariables() {
@@ -76,17 +87,8 @@ function Arena (props) {
         return new Array(totalUnits).fill(-1);
     }
     
-    useEffect(() => {
-        if(!isLive && !isGameOver) {
-            console.log(`inside useEffectArena isLive ${isLive} isGameOver ${isGameOver}`)
-            endRoundA();
-        }
-    }, [isLive])
 
 
-    // function flipIsLive(aBoolean) {
-    //     setIsLive(prevState => !prevState);
-    // }
 
     function updateScoreBoard() {
         let sb = [0,0];
@@ -123,14 +125,14 @@ function Arena (props) {
         // console.log(`after bot move, playersArray ${playersArray}`)
         let interval = 1500;
         let [totalDelay, outputAnimationTimeouts] = doAnimation(interval);
-        animationTimeouts = outputAnimationTimeouts;
-        console.log(`inside endRoundA, animationTimeouts ${animationTimeouts} outputAnimationTimeouts ${outputAnimationTimeouts}`)
+        setAnimationTimeouts([...outputAnimationTimeouts]);
+        // console.log(`inside endRoundA, animationTimeouts ${animationTimeouts} outputAnimationTimeouts ${outputAnimationTimeouts}`)
 
         noChangeRounds = scoreChange() ? 0 : noChangeRounds++;
 
         console.log(`about to runRest, interval ${interval} playersArray ${playersArray}`)
-        let roundBTimeout = setTimeout(endRoundB, totalDelay);
-        animationTimeouts.push(roundBTimeout);
+        let roundBTimeoutID = setTimeout(endRoundB, totalDelay);
+        setAnimationTimeouts((prevState) => [...prevState, roundBTimeoutID]);
     }
 
 

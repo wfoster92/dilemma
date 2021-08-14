@@ -52,7 +52,7 @@ export function doAnimation(interval) {
 
                 setTimeouts.push(setTimeout(animateStepUpdateHalfImage, delay, elementId1, 1, 1)) && claimed.push(elementId1):
                     // else, set image at 0.2 opacity
-                    setTimeouts.push(setTimeout(animateStepUpdateHalfImage, delay, elementId1, 1, 0.2));
+                setTimeouts.push(setTimeout(animateStepUpdateHalfImage, delay, elementId1, 1, 0.2));
             }
         } 
         delaySegments++;

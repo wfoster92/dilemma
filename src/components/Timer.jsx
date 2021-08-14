@@ -40,8 +40,8 @@ function Timer(props) {
 
     function startTimer() {
         let duration = secondsPerRound;
-        let display = document.getElementById("timer")
-        let start = Date.now()
+        let display = document.getElementById("timer");
+        let start = Date.now();
         let diff, seconds;
         display.textContent = duration; 
 
