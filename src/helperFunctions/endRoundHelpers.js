@@ -73,8 +73,11 @@ export function updateControlArray() {
 
         let longestPA = Math.max(playerArray0.length, playerArray1.length);
         for(let i=0; i < longestPA; i++){
-            elementId0 = playerArray0.shift();
-            elementId1 = playerArray1.shift();
+            // if the index i is in the array return the element, else return undefined which is NaN
+            elementId0 = (i < playerArray0.length) ? playerArray0[i] : undefined;
+            elementId1 = (i < playerArray1.length) ? playerArray1[i] : undefined;
+            // elementId0 = playerArray0.shift();
+            // elementId1 = playerArray1.shift();
             console.log(`from setControlArray, choices -> pid0 ${elementId0} pid1 ${elementId1}`)
             // if pid0 entered nothing
             if (isNaN(elementId0)) {
@@ -111,6 +114,8 @@ export function updateControlArray() {
                     } 
                 }
             }
+            console.log(`end rounds ${i} update control array playersArray ${playersArray}`)
+
         }
     console.log(`from update control array controlArray copy = ${data}`)
     console.log(`end update control array playersArray ${playersArray}`)
@@ -118,27 +123,31 @@ export function updateControlArray() {
 }
 
 export function makeBotMove(difficulty, PAMax) {
-    let randomIndexMin, randomIndexMax;
-    switch (difficulty) {
-        case 4:
-            randomIndexMin = 0;
-            randomIndexMax = 2;
-            break;
-        case 3:
-            randomIndexMin = 0;
-            randomIndexMax = 4;
-            break
-        case 2:
-            randomIndexMin = 1;
-            randomIndexMax = 6;
-            break
-        case 1:
-            randomIndexMin = 2;
-            randomIndexMax = 8;
-            break
-        default:
-            break;
+    function getrandomIndexMinMax(difficulty, unitsRemaining){
+        let randomIndexMin, randomIndexMax;
+        switch (difficulty) {
+            case 4:
+                randomIndexMin = 0;
+                randomIndexMax = 0;
+                break;
+            case 3:
+                randomIndexMin = 0;
+                randomIndexMax = (unitsRemaining < 5) ? 1 : Math.floor(unitsRemaining * 0.25) 
+                break
+            case 2:
+                randomIndexMin = 0;
+                randomIndexMax = (unitsRemaining < 5) ? 2 : Math.floor(unitsRemaining * 0.6) 
+                break
+            case 1:
+                randomIndexMin = 0;
+                randomIndexMax = unitsRemaining-1;
+                break
+            default:
+                break;
+        }
+        return [randomIndexMin, randomIndexMax]
     }
+
 
     let data = playersArray;
     let tempAreaArray = areaArray;
@@ -146,9 +155,6 @@ export function makeBotMove(difficulty, PAMax) {
     // return the areaArray elements that are still available in the controlArray
     let availableAreaArray = tempAreaArray.map((element, idx) =>  (controlArray[idx] < 0) ? [element, idx] : [element, -100]);
     console.log(`unsorted availableAreaArray filtered out control array ${availableAreaArray}`);
-    // map the areaArray to arrays of [area, index]
-    // availableAreaArray = availableAreaArray.map((e, idx) => [e, idx])
-    // console.log(`unsorted availableAreaArray each element us array ${availableAreaArray}`);
     // sort in descending order by area
     let sortedAvailableAreaArray = availableAreaArray.sort((a,b) => b[0]-a[0]);
     console.log(`sortedAvailableAreaArray each element array ${sortedAvailableAreaArray}`);
@@ -161,11 +167,13 @@ export function makeBotMove(difficulty, PAMax) {
     let choicesLeft = PAMax;
     console.log(`in bot move choicesLeft = ${choicesLeft}`);
     let unitsLeft = sortedAvailableAreaArray.length;
+
+    let [randomIndexMin, randomIndexMax] = getrandomIndexMinMax(difficulty, unitsLeft);
+    let maxminDiff = randomIndexMax - randomIndexMin;
     // the elementIDs to add to the bot's player array
     let choices = [];
     let initialSelection, idxChoice;
     // make selections until the bot's player array is complete
-    let maxminDiff = randomIndexMax-randomIndexMin;
     while (choicesLeft > 0) {
         // choose index at random given the results of the above switch statement
         initialSelection = Math.floor((Math.random() * maxminDiff ) + randomIndexMin);

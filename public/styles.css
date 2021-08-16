@@ -5,8 +5,11 @@ body {
     width: 100vw;
     height: 100vh;
     overflow-x: hidden; /* Hide horizontal scrollbar */
-    /* background-color: #9ba4a8; */
+    color: white;
     background-color: #111;
+    text-align: center;
+    vertical-align: middle;
+    line-height: normal;
 }
 
 
@@ -25,11 +28,18 @@ body {
 }
 
 .layoutForm{
-    color: white;
+    /* color: white; */
+    text-align: center;
+    vertical-align: middle;
+    line-height: normal;
 }
 
 .layoutForm > input,label{
     padding: 0 2px;
+}
+
+.layoutForm .row, h1 {
+    margin: 3%;
 }
 
 .spacer{
@@ -71,9 +81,38 @@ body {
     color:white;
 }
 
-div{
-    opacity: 100%;
+/* HIDE RADIO */
+.radioBot [type=radio] { 
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
 }
+
+.radioBot p{
+    width: 5vmin;
+    word-wrap: normal;
+    text-align: center;
+}
+  
+/* IMAGE STYLES */
+.botLabel img{
+    cursor: pointer;
+    margin-top: 1vmin;
+    width: 20vmin;
+    height: 20vmin;   
+}
+
+
+/* CHECKED STYLES */
+[type=radio]:checked + .botProfile{
+    outline: 2px solid rgb(108, 108, 114);
+}
+/* .radioBot [type=radio]:checked + img {
+    outline: 2px solid rgb(108, 108, 114);
+} */
+
+
 
 
 /* Pattern Ideas http://projects.verou.me/css3patterns/
@@ -104,6 +143,13 @@ https://www.magicpattern.design/tools/css-backgrounds */
     background-size: 20px 35px;
     background-position: 0 0, 0 0, 10px 18px, 10px 18px, 0 0, 10px 18px;
 }
+.isometric-red-green{
+    background-color: #ff0000;
+    opacity: 1;
+    background-image:  linear-gradient(30deg, #00ff00 12%, transparent 12.5%, transparent 87%, #00ff00 87.5%, #00ff00), linear-gradient(150deg, #00ff00 12%, transparent 12.5%, transparent 87%, #00ff00 87.5%, #00ff00), linear-gradient(30deg, #00ff00 12%, transparent 12.5%, transparent 87%, #00ff00 87.5%, #00ff00), linear-gradient(150deg, #00ff00 12%, transparent 12.5%, transparent 87%, #00ff00 87.5%, #00ff00), linear-gradient(60deg, #00ff0077 25%, transparent 25.5%, transparent 75%, #00ff0077 75%, #00ff0077), linear-gradient(60deg, #00ff0077 25%, transparent 25.5%, transparent 75%, #00ff0077 75%, #00ff0077);
+    background-size: 20px 35px;
+    background-position: 0 0, 0 0, 10px 18px, 10px 18px, 0 0, 10px 18px;
+}
 
 .isometric-amber-violet {
     background-color: #ffbf00;
@@ -128,7 +174,7 @@ https://www.magicpattern.design/tools/css-backgrounds */
 
 
 
-
+/*
 
 .bricks {
     background-color: silver; 
@@ -138,7 +184,7 @@ https://www.magicpattern.design/tools/css-backgrounds */
     background-position: 0px 2px, 4px 35px, 29px 31px, 34px 6px;
 }
 
-.marrakesh {
+ .marrakesh {
     background-color: white; 
     background-image: radial-gradient(midnightblue 9px, transparent 10px), repeating-radial-gradient(midnightblue 0px, midnightblue 4px, transparent 5px, transparent 20px, midnightblue 21px, midnightblue 25px, transparent 26px, transparent 50px); 
     background-size: 30px 30px, 90px 90px; 
@@ -168,5 +214,5 @@ https://www.magicpattern.design/tools/css-backgrounds */
     background-image: url("images/nelly.jpg");
     background-size: cover;
     opacity: 1;
-} 
+}  */
 

@@ -5,6 +5,7 @@ import { scoreBoard } from "./Arena"
 function Racebar(props) {
 
     let sb = props.sb;
+    console.log(`from racebar sb ${sb}`)
     let p1 = roundNumber(sb[0] * 100, 2);
     let p2 = roundNumber(sb[1] * 100, 2);
 

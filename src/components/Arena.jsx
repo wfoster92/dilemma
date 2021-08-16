@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from "react";
 import Row from "./Row"
-import GameTracker from "./GameTracker";
-import Timer from "./Timer";
-import { maxSelections, maxNoChangeRounds } from "../helperFunctions/globals";
+import GamePlay from "./GamePlay";
+// import Timer from "./Timer";
+import { maxNoChangeRounds } from "../helperFunctions/globals";
 import { roundNumber } from "../helperFunctions/mathHelp";
 import { makeArenaObject } from "../helperFunctions/creationHelp";
 import { makeCompleteArray } from "../helperFunctions/makeCompleteArray";
 import { doAnimation, updateControlArray, makeBotMove, updatePlayersArray} from "../helperFunctions/endRoundHelpers"
 import { updateColors } from "../helperFunctions/elementModifiers";
 import { resetColors } from "../helperFunctions/resetGameHelp";
+import ScoreTracker from "./ScoreTracker";
 
 export let controlArray = 0; // new Array(totalUnits).fill(-1);
 export let playersArray = [[],[]]; //keeping variable outside Arena
-export let isPAFull = [false, false];
-export let noChangeRounds = 0;
+export let isPAFull = [false, false]; // is used in updatePlayersArray fn 
 export let [arenaObject, totalUnits, areaArray] = [0,0,0];
 export let [completeArray, colorArray] = [0,0]; 
 
@@ -28,27 +28,27 @@ function Arena (props) {
     const {stateScoreBoard, setStateScoreBoard, isLive, setIsLive, 
         currentMessage, setCurrentMessage, triggerNewGame, setTriggerNewGame, 
         isFirstGame, setIsFirstGame, finishedFirstGame, setFinishedFirstGame,
-        isGameOver, setIsGameOver, PAMax, setPAMax} = props.stateDictForArena;
+        isGameOver, setIsGameOver, PAMax, setPAMax, animationTimeouts, setAnimationTimeouts} = props.stateDictForArena;
 
-    const [animationTimeouts, setAnimationTimeouts] = useState([]);
+    
+
+
     const [choicesLeft, setChoicesLeft] = useState(PAMax)
+    let noChangeRounds = 0;
+    const humanPid = 0;
+    const botGame = true;
+    let scoreBoard = [0,0]
 
 
 
     // isFirstGame is necessary since we need to create the completeArray before render is called
     if (isFirstGame) {
         startNextGame();
+        setIsFirstGame(false);
     }
     
-
-    const humanPid = 0;
-    const botGame = true;
-    let scoreBoard = [0,0]
- 
-
-    
     useEffect(() =>{
-        if(!isFirstGame && triggerNewGame) {
+        if(finishedFirstGame && triggerNewGame) {
             console.log(`new game triggered animationTimeouts ${animationTimeouts} animationTimeouts length ${animationTimeouts.length}`)
             // if a new game is triggered, clear out the animation timeouts
             animationTimeouts.forEach(timeout => clearTimeout(timeout));
@@ -58,7 +58,6 @@ function Arena (props) {
 
     useEffect(() => {
         console.log(`outside useEffectArena isLive ${isLive} isGameOver ${isGameOver}`)
-
         if(!isLive && !isGameOver) {
             console.log(`inside useEffectArena isLive ${isLive} isGameOver ${isGameOver} PAMax ${PAMax}`)
             endRoundA();
@@ -68,6 +67,7 @@ function Arena (props) {
     useEffect(() => {
         setPAMax(startingPAMax())
     }, [numRows, numCols])
+
 
     function startNextGame() {
         console.log(`inside startNewGame finishedFirstGame ${finishedFirstGame}`);
@@ -82,7 +82,7 @@ function Arena (props) {
             setAnimationTimeouts([]);
         }
         setTriggerNewGame(false);
-        isFirstGame && setIsFirstGame(false);
+        // isFirstGame && setIsFirstGame(false);
     }
 
     function startingPAMax() {
@@ -96,6 +96,9 @@ function Arena (props) {
     function resetTopLevelVariables() {
         playersArray = [[],[]];
         setPAMax(startingPAMax());
+        if (!isFirstGame){
+            setChoicesLeft(PAMax);
+        }
         isPAFull = [false, false];
         noChangeRounds = 0;
     }
@@ -104,8 +107,6 @@ function Arena (props) {
         return new Array(totalUnits).fill(-1);
     }
     
-
-
 
     function updateScoreBoard() {
         let sb = [0,0];
@@ -139,13 +140,11 @@ function Arena (props) {
         if (botGame) {
             playersArray = makeBotMove(difficulty, PAMax);
         } 
-        // console.log(`after bot move, playersArray ${playersArray}`)
+
         let interval = 1500;
         let [totalDelay, outputAnimationTimeouts] = doAnimation(interval);
         setAnimationTimeouts([...outputAnimationTimeouts]);
         // console.log(`inside endRoundA, animationTimeouts ${animationTimeouts} outputAnimationTimeouts ${outputAnimationTimeouts}`)
-
-        noChangeRounds = scoreChange() ? 0 : noChangeRounds++;
 
         console.log(`about to runRest, interval ${interval} playersArray ${playersArray}`)
         let roundBTimeoutID = setTimeout(endRoundB, totalDelay);
@@ -155,19 +154,17 @@ function Arena (props) {
 
     function endRoundB(){
         controlArray = updateControlArray();
+        console.log(`after updateControl Array, playersArray ${playersArray}`)
         
         updateScoreBoard()
-        endRoundC();
-    }
-
-
-    function endRoundC(){
+        console.log(`noScoreChange? ${noScoreChange()}`);
+        (noScoreChange()) ? noChangeRounds+=1 : noChangeRounds = 0 ;
         console.log(`noChangeRounds ${noChangeRounds} endroundB scoreboard ${scoreBoard}`)
 
         // set isGameOver with the boolean output of updateIsGameOver
         let isGameOverBool = updateIsGameOver()
         
-        console.log(`endRoundC isGameOver ${isGameOver}`);
+        console.log(`endRound isGameOver ${isGameOver}`);
         isGameOverBool ?  endGameRoutine() : continueGameRoutine();
     }
 
@@ -181,9 +178,11 @@ function Arena (props) {
     }
 
     // check for a round with no score change
-    function scoreChange() {
+    function noScoreChange() {
         let [a, b] = playersArray;
+        console.log(`in score change, p1 ${a} p2 ${b}`)
         let result = (a.length === b.length) && a.every((e, idx) => e === b[idx]);
+        console.log(`score change are lengths equal ${(a.length === b.length)} are the values equal ${a.every((e, idx) => e === b[idx])}`)
         return result;
     }
 
@@ -251,9 +250,9 @@ function Arena (props) {
 
     return (
         <div>
-            <span className="spacer" choicesLeft={choicesLeft} >
-                <Timer isLive={isLive} setIsLive={setIsLive} triggerNewGame={triggerNewGame}/>
-                <button id="submit" onClick={handleEndRoundClick}>Submit</button>
+            <span className="spacer"  >
+                <GamePlay stateDictForTimer={props.stateDictForTimer} choicesLeft={choicesLeft} handleEndRoundClick={handleEndRoundClick}/>
+                {/* <button id="submit" onClick={handleEndRoundClick}>End Round</button> */}
             </span>
             <span id="gameboard">
             {/* <span style={{width:arenaWidth}} id="gameboard"> */}
@@ -263,7 +262,7 @@ function Arena (props) {
             </span>
             {/* <span className="spacer" style={{width:spacerWidth, height:arenaWidth}}> */}
             <span className="spacer">
-                <GameTracker sb={stateScoreBoard} msg={currentMessage}/>
+                <ScoreTracker sb={stateScoreBoard} msg={currentMessage}/>
             </span>
 
         </div>

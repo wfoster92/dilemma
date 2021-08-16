@@ -30,7 +30,6 @@ function SetLayout(props) {
 
     return (
         <div>
-            <h1>Select Your Board Layout</h1>
             <form className="layoutForm" onSubmit={submitForm} action="./arena">
                 <SetLayoutForm layoutSettings = {props.layoutSettings} startNewGame={props.startNewGame}/>
             </form>

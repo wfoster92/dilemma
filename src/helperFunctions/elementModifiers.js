@@ -44,9 +44,11 @@ export function updateSingleImage(elementID, pid) {
 export function animateStepUpdateHalfImage(elementID, pid, opacity) {
     console.log(`In update animateStepUpdateHalfImage elementID ${elementID}`);
     const e = document.getElementById(`${elementID}_${pid}`);
+    // if (document.body.contains(e)){
     e.style.removeProperty("background-color");
     e.className = playerDesigns[pid];
     e.style.opacity = opacity;
+    // }
 }
 
 export function removeClassFromElementHalf(elementID, pid) {

@@ -1,9 +1,8 @@
 import React from "react";
-import Timer from "./Timer";
 import Racebar from "./Racebar";
 
 
-function GameTracker(props) {
+function ScoreTracker(props) {
     return (
         <div>
             <Racebar sb={props.sb} />
@@ -12,4 +11,4 @@ function GameTracker(props) {
     )
 }
 
-export default GameTracker;
+export default ScoreTracker;

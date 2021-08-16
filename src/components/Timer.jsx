@@ -4,11 +4,8 @@ import { secondsPerRound } from "../helperFunctions/globals";
 
 function Timer(props) {
 
-    let isLive = props.isLive;
-    let triggerNewGame = props.triggerNewGame;
-    const [timerIntervalID, setTimerIntervalID] = useState(-1)
-    const [timerIDs, setTimerIDs] = useState([]);
-    const [clearedTimerIDs, setClearedTimerIDs] = useState([]);
+    const {timerIntervalID, setTimerIntervalID, timerIDs, setTimerIDs, 
+        clearedTimerIDs, setClearedTimerIDs, isLive, setIsLive, isGameOver, triggerNewGame} = props.stateDictForTimer;
 
     useEffect(() => {
         if(isLive) {
@@ -25,13 +22,18 @@ function Timer(props) {
     , [isLive])
 
     useEffect(() => {
+        if(isGameOver) {
+            console.log(`isGameOver ${isGameOver} from Timer useEffects`)
+            timerIDs.forEach((timerID) => clearInterval(timerID))
+        }
+    }, [isGameOver])
+
+    useEffect(() => {
         // if a new game is triggered, stop the old one and start a new one
         if (triggerNewGame){
             console.log(`from triggerNewGame useEffect timerIntervalID is ${timerIntervalID}`)
             timerIDs.forEach((timerID) => clearInterval(timerID))
             stopTimer(timerIntervalID);
-            // setTimerIDs([]);
-            // setClearedTimerIDs([]);
             startTimer();
         }
     }, [triggerNewGame])
@@ -57,17 +59,15 @@ function Timer(props) {
     
             if (display) {
                 display.textContent = seconds; 
+                console.log(`in timer ${seconds}`);
             }
     
             if (diff <= 0) {
-                // add one second so that the count down starts at the full duration
-
                 console.log(`diff is negative. Breaking \ntimerIntervalID ${intervalID}`);
                 clearInterval(intervalID);
-                // setClearedTimerIDs((prevState) => [...prevState, timerIntervalID]);
 
                 // console.log(`end of timer function isLive ${isLive}`)
-                props.setIsLive(false);
+                setIsLive(false);
 
             }
         };
@@ -91,7 +91,9 @@ function Timer(props) {
     }
 
     return (
-        <div id="timer">{secondsPerRound} </div>
+        <div className="GameTrackerBox">
+            <h1 id="timer">{secondsPerRound} </h1>
+        </div>
     )
 }
 

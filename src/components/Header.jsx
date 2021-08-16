@@ -1,27 +1,25 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import { squareSize } from "../helperFunctions/globals"
-// import { hasBegun, setHasBegun } from "./Arena";
 
 
 function Header (props) {
-
-    // const [lastPage, setLastPage] = useState(window.location.href);
+    const {startNewGame, stopGame, setIsGameOver, isGameOver, setIsLive, isLive, animationTimeouts} = props.stateDictForHeader
 
     function endGame() {
-        // setLastPage(window.location.href);
-        props.setIsGameOver(true);
-        props.setIsLive(false);
+
+        setIsGameOver(true);
+        animationTimeouts.forEach((timeout) => {
+            clearTimeout(timeout);
+        });
+        console.log(`from header isGameOver ${isGameOver} isLive ${isLive}`);
     }
 
-    // if coming from url other than arena, updateLastPage -> else reset the page for new game, then updateLastPage
+    // we must end the current game before we start a new one
     function restart() {
-        // setLastPage(window.location.href);
-
         console.log(`in Header - restart. `);
-        // we must end the current game before we start a new one
         endGame();
-        props.startNewGame();
+        startNewGame();
     }
 
     return (
@@ -29,7 +27,7 @@ function Header (props) {
         <div className="col-2"></div>
         <div className="col-2 align-self-center" onClick={endGame}>
             <Link exact to="/rules">
-                <h1>How To Play</h1>
+                <h1>Rules</h1>
             </Link>
         </div>
         <div className="col-2 align-self-center" onClick={endGame}>

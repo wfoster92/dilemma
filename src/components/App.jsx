@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Arena from "./Arena"
 import Header from "./Header";
 import Home from "./Home";
@@ -25,12 +25,24 @@ function App() {
         (numRows*numCols < 12) ? 3 :
         (numRows*numCols < 24) ? 4 :
         (numRows*numCols < 36) ? 5 : 6);
+    const [animationTimeouts, setAnimationTimeouts] = useState([]);
 
 
     const stateDictForArena = {stateScoreBoard, setStateScoreBoard, isLive, setIsLive,
         currentMessage, setCurrentMessage, triggerNewGame, setTriggerNewGame, 
         isFirstGame, setIsFirstGame, finishedFirstGame, setFinishedFirstGame, isGameOver, setIsGameOver,
-        PAMax, setPAMax};
+        PAMax, setPAMax, animationTimeouts, setAnimationTimeouts};
+    
+    const stateDictForHeader = {startNewGame, stopGame, setIsGameOver, isGameOver, setIsLive, isLive, animationTimeouts};
+
+    // props for Timer
+    const [timerIntervalID, setTimerIntervalID] = useState(-1);
+    const [timerIDs, setTimerIDs] = useState([]);
+    const [clearedTimerIDs, setClearedTimerIDs] = useState([]);
+    
+
+    const stateDictForTimer = {timerIntervalID, setTimerIntervalID, timerIDs, setTimerIDs, 
+                                clearedTimerIDs, setClearedTimerIDs, isLive, isGameOver, triggerNewGame};
 
     function layoutChange(newRows, newCols, newDifficulty){
         setNumRows(parseInt(newRows));
@@ -46,14 +58,26 @@ function App() {
         }
         setStateScoreBoard([0,0]);
         setCurrentMessage(<div></div>);
-        setTriggerNewGame(true);
         setIsLive(true);
+        setTriggerNewGame(true);
         setIsGameOver(false);
+    }
+
+    useEffect(() =>{
+        console.log(`from app IsGameOver ${isGameOver}`);
+        timerIDs.forEach((timerID) => clearInterval(timerID))
+
+    }, [isGameOver]);
+
+    function stopGame() {
+        console.log(`in stop game`)
+        // setIsLive(false);
+        // setIsGameOver(true);
     }
     
     return (
         <Router>
-            <Header startNewGame={startNewGame} setIsGameOver={setIsGameOver} setIsLive={setIsLive}/>
+            <Header stateDictForHeader={stateDictForHeader}/>
             <Switch>
                 <Route exact path="/">
                     <Home />
@@ -62,7 +86,7 @@ function App() {
                     <Rules />
                 </Route>
                 <Route exact path="/arena">
-                    <Arena layoutSettings={[numRows, numCols, difficulty]} stateDictForArena={stateDictForArena} />
+                    <Arena layoutSettings={[numRows, numCols, difficulty]} stateDictForArena={stateDictForArena} stateDictForTimer={stateDictForTimer}/>
                 </Route>
                 <Route exact path="/setLayout">
                     <SetLayout layoutChange={layoutChange} startNewGame={startNewGame} layoutSettings={[numRows, numCols, difficulty]}/>
