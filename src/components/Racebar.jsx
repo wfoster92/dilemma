@@ -21,6 +21,27 @@ function Racebar(props) {
                     <td>{p2}</td>
                 </tr>
             </table>
+            <div className="row">
+
+            </div>
+            <div className="row">
+                <div className="col-12 finishLine"></div>
+            </div>
+            <div className="row">
+                <div className="col-1"></div>
+                <div className="col-4"></div>
+                <div className="col-1"></div>
+                <div className="col-1"></div>
+                <div className="col-4"></div>
+                <div className="col-1"></div>
+            </div>
+            <div className="row">
+                <div className="col-12 startLine"></div>
+            </div>
+            <div className="row">
+                <div className="col-6">You</div>
+                <div className="col-6">Bot</div>
+            </div>
         </div>
     )
         

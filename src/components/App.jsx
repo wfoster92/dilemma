@@ -42,7 +42,7 @@ function App() {
     
 
     const stateDictForTimer = {timerIntervalID, setTimerIntervalID, timerIDs, setTimerIDs, 
-                                clearedTimerIDs, setClearedTimerIDs, isLive, isGameOver, triggerNewGame};
+                                clearedTimerIDs, setClearedTimerIDs, isLive, setIsLive, isGameOver, triggerNewGame};
 
     function layoutChange(newRows, newCols, newDifficulty){
         setNumRows(parseInt(newRows));

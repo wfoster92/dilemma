@@ -24,18 +24,18 @@ function Header (props) {
 
     return (
     <div className="row header" style={{height:(100-squareSize)/2+"vh"}}> 
-        <div className="col-2"></div>
+        <div className="col-1"></div>
         <div className="col-2 align-self-center" onClick={endGame}>
             <Link exact to="/rules">
                 <h1>Rules</h1>
             </Link>
         </div>
-        <div className="col-2 align-self-center" onClick={endGame}>
+        <div className="col-3 align-self-center" onClick={endGame}>
             <Link to="/">
                 <h1>Dilemma</h1>
             </Link>
         </div>
-        <div className="col-2 align-self-center" onClick={endGame}>
+        <div className="col-3 align-self-center" onClick={endGame}>
             <Link exact to="/setLayout">
                 <h1>Set Layout</h1>
             </Link>
@@ -45,7 +45,7 @@ function Header (props) {
                 <h1>New Game</h1>
             </Link>
         </div>
-        <div className="col-2"></div>
+        <div className="col-1"></div>
     </div>
     )
 }

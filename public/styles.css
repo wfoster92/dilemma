@@ -13,9 +13,9 @@ body {
 }
 
 
-#root{
+/* #root{
     margin: auto;
-}
+} */
 
 #gameboard{
     background-color:white;
@@ -44,7 +44,9 @@ body {
 
 .spacer{
     display:inline-block;
-    height:calc(100vmin * 0.8)
+    height:calc(100vmin * 0.9);
+    margin:auto;
+    vertical-align: top;
 }
 @media only screen and (orientation:landscape) {
     .spacer{
@@ -66,8 +68,8 @@ body {
 #submit {
     width: 20vmin;
     height: 20vmin;
-    background-color: rgb(187, 0, 0);
-    color: rgb(107, 219, 97);
+    background-color: darkblue;
+    color: lightblue;
     font-size: large;
 }
 
@@ -112,8 +114,16 @@ body {
     outline: 2px solid rgb(108, 108, 114);
 } */
 
+.gameTracker {
+    margin:auto;
+}
 
-
+.gameTrackerBox > *{
+    padding:0;
+}
+.gameTrackerBox.col-6 {
+    padding:0;
+}
 
 /* Pattern Ideas http://projects.verou.me/css3patterns/
 https://www.magicpattern.design/tools/css-backgrounds */

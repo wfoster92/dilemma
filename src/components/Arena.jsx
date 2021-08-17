@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Row from "./Row"
-import GamePlay from "./GamePlay";
+import GameTracker from "./GameTracker";
 // import Timer from "./Timer";
-import { maxNoChangeRounds } from "../helperFunctions/globals";
 import { roundNumber } from "../helperFunctions/mathHelp";
 import { makeArenaObject } from "../helperFunctions/creationHelp";
 import { makeCompleteArray } from "../helperFunctions/makeCompleteArray";
@@ -34,10 +33,16 @@ function Arena (props) {
 
 
     const [choicesLeft, setChoicesLeft] = useState(PAMax)
-    let noChangeRounds = 0;
+
+    // set a useState for noChangeRound to pass as a prop and a local variable to keep an accurate endGame calculation
+    const [noChangeRounds, setNoChangeRounds] = useState(0);
+    // let tempNoChangeRounds = 0;
+    // console.log(`init tempNoChangeRounds ${tempNoChangeRounds}`)
     const humanPid = 0;
     const botGame = true;
-    let scoreBoard = [0,0]
+    const maxNoChangeRounds = 3;
+
+    let scoreBoard = [0,0];
 
 
 
@@ -68,6 +73,13 @@ function Arena (props) {
         setPAMax(startingPAMax())
     }, [numRows, numCols])
 
+    useEffect(() => {
+        // this will catch a draw scenario that the endOfGameRoutine will miss since the noChangeRounds state variable updates late.
+        if ((noChangeRounds === maxNoChangeRounds) && !isGameOver) {
+            endGameRoutine();
+        }
+    }, [noChangeRounds])
+
 
     function startNextGame() {
         console.log(`inside startNewGame finishedFirstGame ${finishedFirstGame}`);
@@ -82,7 +94,6 @@ function Arena (props) {
             setAnimationTimeouts([]);
         }
         setTriggerNewGame(false);
-        // isFirstGame && setIsFirstGame(false);
     }
 
     function startingPAMax() {
@@ -98,9 +109,10 @@ function Arena (props) {
         setPAMax(startingPAMax());
         if (!isFirstGame){
             setChoicesLeft(PAMax);
+            setNoChangeRounds(0);
+            // tempNoChangeRounds = 0;
         }
         isPAFull = [false, false];
-        noChangeRounds = 0;
     }
 
     function makeNewControlArray(totalUnits){
@@ -154,12 +166,22 @@ function Arena (props) {
 
     function endRoundB(){
         controlArray = updateControlArray();
-        console.log(`after updateControl Array, playersArray ${playersArray}`)
+        console.log(`after updateControl Array, playersArray ${playersArray}`);
         
-        updateScoreBoard()
-        console.log(`noScoreChange? ${noScoreChange()}`);
-        (noScoreChange()) ? noChangeRounds+=1 : noChangeRounds = 0 ;
-        console.log(`noChangeRounds ${noChangeRounds} endroundB scoreboard ${scoreBoard}`)
+        updateScoreBoard();
+
+        // console.log(`before noScoreChange? ${noScoreChange()} tempNoChangeRounds ${tempNoChangeRounds}`);
+
+        // if (noScoreChange()){
+        //     tempNoChangeRounds = tempNoChangeRounds + 1;
+        // } else {
+        //     tempNoChangeRounds = 0;
+        // } 
+        // console.log(`after noScoreChange? ${noScoreChange()} tempNoChangeRounds ${tempNoChangeRounds}`);
+        // setNoChangeRounds(() => tempNoChangeRounds);
+
+        (noScoreChange()) ? setNoChangeRounds((prevState) => prevState+1) : setNoChangeRounds(0);
+        console.log(`noScoreChange ${noScoreChange()} noChangeRounds ${noChangeRounds} endroundB scoreboard ${scoreBoard}`)
 
         // set isGameOver with the boolean output of updateIsGameOver
         let isGameOverBool = updateIsGameOver()
@@ -250,17 +272,15 @@ function Arena (props) {
 
     return (
         <div>
-            <span className="spacer"  >
-                <GamePlay stateDictForTimer={props.stateDictForTimer} choicesLeft={choicesLeft} handleEndRoundClick={handleEndRoundClick}/>
-                {/* <button id="submit" onClick={handleEndRoundClick}>End Round</button> */}
+            <span className="spacer">
+                <GameTracker stateDictForTimer={props.stateDictForTimer} choicesLeft={choicesLeft} noChangeRounds={noChangeRounds} 
+                maxNoChangeRounds={maxNoChangeRounds} handleEndRoundClick={handleEndRoundClick}/>
             </span>
             <span id="gameboard">
-            {/* <span style={{width:arenaWidth}} id="gameboard"> */}
-            {completeArray.map(row => {
-                    return <Row row={row} handleClick={handleClick}/>
+                {completeArray.map(row => {
+                        return <Row row={row} handleClick={handleClick}/>
                 })}
             </span>
-            {/* <span className="spacer" style={{width:spacerWidth, height:arenaWidth}}> */}
             <span className="spacer">
                 <ScoreTracker sb={stateScoreBoard} msg={currentMessage}/>
             </span>

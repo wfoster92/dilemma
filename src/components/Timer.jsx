@@ -91,7 +91,8 @@ function Timer(props) {
     }
 
     return (
-        <div className="GameTrackerBox">
+        <div>
+            <p>Time</p>
             <h1 id="timer">{secondsPerRound} </h1>
         </div>
     )

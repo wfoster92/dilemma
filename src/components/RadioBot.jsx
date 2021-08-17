@@ -15,25 +15,21 @@ function RadioBot(props) {
 
     if (props.defaultChecked){
         return ((<span>
-                    {/* <span>{botDescriptions[num]}</span><br/> */}
                     <label htmlFor={`bot${num}`} className="botLabel"><br/>
-                        {/* <div className="chosenBot"> */}
                         <input type="radio" id={`bot${num}`} name="botDifficulty" value={num} defaultChecked/>
                         <div className="botProfile">
                             <span>{botDescriptions[num]}</span><br/>
                             <img src={`/images/robot${num}.png`} /><br/>
                         </div>
-                        {/* </div> */}
                     </label>
                 </span>))
     } else if (!props.defaultChecked){
         return (<span>
-                    {/* <span>{botDescriptions[num]}</span><br/> */}
                     <label htmlFor={`bot${num}`} className="botLabel"><br/>
                         <input type="radio" id={`bot${num}`} name="botDifficulty" value={num}/>
                         <div className="botProfile">
-                        <span>{botDescriptions[num]}</span><br/>
-                        <img src={`/images/robot${num}.png`}/><br/>
+                            <span>{botDescriptions[num]}</span><br/>
+                            <img src={`/images/robot${num}.png`}/><br/>
                         </div>
                     </label>
                 </span>)
