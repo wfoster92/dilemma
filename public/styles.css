@@ -105,6 +105,15 @@ body {
     height: 20vmin;   
 }
 
+.raceBarHeader img{
+    width: 10vmin;
+    height: 10vmin;
+}
+
+.raceBarHeader p{
+    margin-top: 1vmin;
+}
+
 
 /* CHECKED STYLES */
 [type=radio]:checked + .botProfile{
@@ -125,6 +134,12 @@ body {
     padding:0;
 }
 
+.raceChart{
+    vertical-align: bottom;
+}
+.bars {
+    height:50vh;
+}
 /* Pattern Ideas http://projects.verou.me/css3patterns/
 https://www.magicpattern.design/tools/css-backgrounds */
 

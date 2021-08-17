@@ -28,9 +28,9 @@ function Arena (props) {
         currentMessage, setCurrentMessage, triggerNewGame, setTriggerNewGame, 
         isFirstGame, setIsFirstGame, finishedFirstGame, setFinishedFirstGame,
         isGameOver, setIsGameOver, PAMax, setPAMax, animationTimeouts, setAnimationTimeouts} = props.stateDictForArena;
-
     
-
+    const stateDictForRacebar = {stateScoreBoard, currentMessage, difficulty}
+    
 
     const [choicesLeft, setChoicesLeft] = useState(PAMax)
 
@@ -282,7 +282,7 @@ function Arena (props) {
                 })}
             </span>
             <span className="spacer">
-                <ScoreTracker sb={stateScoreBoard} msg={currentMessage}/>
+                <ScoreTracker stateDictForRacebar={stateDictForRacebar} msg={currentMessage}/>
             </span>
 
         </div>

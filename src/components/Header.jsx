@@ -4,7 +4,7 @@ import { squareSize } from "../helperFunctions/globals"
 
 
 function Header (props) {
-    const {startNewGame, stopGame, setIsGameOver, isGameOver, setIsLive, isLive, animationTimeouts} = props.stateDictForHeader
+    const {startNewGame, setIsGameOver, isGameOver, isLive, animationTimeouts} = props.stateDictForHeader
 
     function endGame() {
 

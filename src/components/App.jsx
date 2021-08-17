@@ -33,16 +33,11 @@ function App() {
         isFirstGame, setIsFirstGame, finishedFirstGame, setFinishedFirstGame, isGameOver, setIsGameOver,
         PAMax, setPAMax, animationTimeouts, setAnimationTimeouts};
     
-    const stateDictForHeader = {startNewGame, stopGame, setIsGameOver, isGameOver, setIsLive, isLive, animationTimeouts};
+    const stateDictForHeader = {startNewGame, setIsGameOver, isGameOver, isLive, animationTimeouts};
 
     // props for Timer
-    const [timerIntervalID, setTimerIntervalID] = useState(-1);
     const [timerIDs, setTimerIDs] = useState([]);
-    const [clearedTimerIDs, setClearedTimerIDs] = useState([]);
-    
-
-    const stateDictForTimer = {timerIntervalID, setTimerIntervalID, timerIDs, setTimerIDs, 
-                                clearedTimerIDs, setClearedTimerIDs, isLive, setIsLive, isGameOver, triggerNewGame};
+    const stateDictForTimer = {timerIDs, setTimerIDs, isLive, setIsLive, triggerNewGame}; 
 
     function layoutChange(newRows, newCols, newDifficulty){
         setNumRows(parseInt(newRows));
@@ -64,16 +59,14 @@ function App() {
     }
 
     useEffect(() =>{
-        console.log(`from app IsGameOver ${isGameOver}`);
-        timerIDs.forEach((timerID) => clearInterval(timerID))
+        if (isGameOver){
+            console.log(`from app IsGameOver ${isGameOver}`);
+            timerIDs.forEach((timerID) => clearInterval(timerID))  
+            setTimerIDs([]);  
+        }
 
     }, [isGameOver]);
 
-    function stopGame() {
-        console.log(`in stop game`)
-        // setIsLive(false);
-        // setIsGameOver(true);
-    }
     
     return (
         <Router>

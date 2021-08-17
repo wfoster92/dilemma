@@ -1,47 +1,56 @@
 import React from "react";
 import { roundNumber } from "../helperFunctions/mathHelp";
-import { scoreBoard } from "./Arena"
-
+import { playerDesigns } from "../helperFunctions/globals";
 function Racebar(props) {
 
-    let sb = props.sb;
-    console.log(`from racebar sb ${sb}`)
-    let p1 = roundNumber(sb[0] * 100, 2);
-    let p2 = roundNumber(sb[1] * 100, 2);
+    const {stateScoreBoard, difficulty} = props.stateDictForRacebar
+    console.log(`from racebar stateScoreBoard ${stateScoreBoard}`)
+    let p0 = roundNumber(stateScoreBoard[0] * 100, 2);
+    let p1 = roundNumber(stateScoreBoard[1] * 100, 2);
 
     return (
         <div>
-            <table className="table">
-                <tr>
-                    <th>Player 1</th>
-                    <th>Player 2</th>
-                </tr>
-                <tr>
-                    <td>{p1}</td>
-                    <td>{p2}</td>
-                </tr>
-            </table>
+
+            <div className="row raceBarHeader">
+                    <div className="col-1"></div>
+                    <div className="col-4">
+                        <img src={`/images/avatar.png`}/>
+                        <p>{p0}</p>
+                    </div>
+                    <div className="col-1"></div>
+                    <div className="col-1"></div>
+                    <div className="col-4">
+                        <img src={`/images/robot${difficulty}.png`} />
+                        <p>{p1}</p>
+                    </div>
+                    <div className="col-1"></div>
+            </div>
+
+
             <div className="row">
 
             </div>
-            <div className="row">
-                <div className="col-12 finishLine"></div>
+            <div className="raceChart">
+                <div className="row">
+                    <div className="col-12 finishLine"></div>
+                </div>
+                <div className="row bars">
+                    <div className="col-1"></div>
+                    <div className={`col-4 ${playerDesigns[0]}`} style={{height:Math.min(p0, 50)+"vh"}}></div>
+                    <div className="col-1"></div>
+                    <div className="col-1"></div>
+                    <div className={`col-4 ${playerDesigns[1]}`} style={{height:Math.min(p1, 50)+"vh"}}></div>
+                    <div className="col-1"></div>
+                </div>
+                <div className="row">
+                    <div className="col-12 startLine"></div>
+                </div>
+                <div className="row">
+                    <div className="col-6"></div>
+                    <div className="col-6"></div>
+                </div>
             </div>
-            <div className="row">
-                <div className="col-1"></div>
-                <div className="col-4"></div>
-                <div className="col-1"></div>
-                <div className="col-1"></div>
-                <div className="col-4"></div>
-                <div className="col-1"></div>
-            </div>
-            <div className="row">
-                <div className="col-12 startLine"></div>
-            </div>
-            <div className="row">
-                <div className="col-6">You</div>
-                <div className="col-6">Bot</div>
-            </div>
+
         </div>
     )
         

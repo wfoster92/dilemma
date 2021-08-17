@@ -3,9 +3,11 @@ import Racebar from "./Racebar";
 
 
 function ScoreTracker(props) {
+
+    
     return (
         <div>
-            <Racebar sb={props.sb} />
+            <Racebar stateDictForRacebar={props.stateDictForRacebar} />
             {props.msg}
         </div>
     )
