@@ -13,10 +13,6 @@ body {
 }
 
 
-/* #root{
-    margin: auto;
-} */
-
 #gameboard{
     background-color:white;
     display:inline-block;
@@ -71,12 +67,14 @@ body {
     background-color: darkblue;
     color: lightblue;
     font-size: large;
+    margin-top: 5vmin;
 }
 
 .header h1{
     display: inline-block;
     vertical-align: middle;
     line-height: normal;
+    color: #007bff
 }
 
 .table, #timer{
@@ -105,6 +103,9 @@ body {
     height: 20vmin;   
 }
 
+.raceBarHeader{
+    margin-top: 5vmin;
+}
 .raceBarHeader img{
     width: 10vmin;
     height: 10vmin;
@@ -119,20 +120,23 @@ body {
 [type=radio]:checked + .botProfile{
     outline: 2px solid rgb(108, 108, 114);
 }
-/* .radioBot [type=radio]:checked + img {
-    outline: 2px solid rgb(108, 108, 114);
-} */
+
 
 .gameTracker {
     margin:auto;
+    margin-top: 5vmin;
 }
 
 .gameTrackerBox > *{
     padding:0;
 }
-.gameTrackerBox.col-6 {
-    padding:0;
+
+.gameTrackerLabel {
+    height: 40px;
 }
+/* .gameTrackerBox.col-6 {
+    padding:0;
+} */
 
 .raceChart{
     vertical-align: bottom;
@@ -140,6 +144,29 @@ body {
 .bars {
     height:50vh;
 }
+
+.rules h1{
+    margin-bottom: 16px;
+    color: white;
+}
+
+.rules ul{
+    list-style-type: disc;
+    list-style-position: inside;
+    color: #777;
+}
+
+.footer {
+    position: fixed;
+    bottom: 5vmin;
+
+    /* And if you want the div to be full-width: */
+    left: 0;
+    right: 0;
+}
+
+
+
 /* Pattern Ideas http://projects.verou.me/css3patterns/
 https://www.magicpattern.design/tools/css-backgrounds */
 

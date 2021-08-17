@@ -6,15 +6,24 @@ function GameTracker(props) {
     return (
         <div className="gameTracker">
             <div className="row">
+                <div className="gameTrackerLabel col-4">
+                    <p>Time</p>
+                </div>
+                <div className="gameTrackerLabel col-4">
+                    <p>Scoreless Rounds</p>
+                </div>
+                <div className="gameTrackerLabel col-4">
+                    <p>Choices Left</p>
+                </div>
+            </div>
+            <div className="row">
                 <div className="gameTrackerBox col-4">
                     <Timer stateDictForTimer={props.stateDictForTimer}/>
                 </div>
                 <div className="gameTrackerBox col-4">
-                    <p>Scoreless Rounds</p>
                     <h1>{props.noChangeRounds} of {props.maxNoChangeRounds}</h1>
                 </div>
                 <div className="gameTrackerBox col-4">
-                    <p>Choices Left</p>
                     <h1>{props.choicesLeft}</h1>
                 </div>
             </div>

@@ -12,18 +12,18 @@ function Racebar(props) {
         <div>
 
             <div className="row raceBarHeader">
-                    <div className="col-1"></div>
-                    <div className="col-4">
+                    <div className="col-2"></div>
+                    <div className="col-3">
                         <img src={`/images/avatar.png`}/>
                         <p>{p0}</p>
                     </div>
                     <div className="col-1"></div>
                     <div className="col-1"></div>
-                    <div className="col-4">
+                    <div className="col-3">
                         <img src={`/images/robot${difficulty}.png`} />
                         <p>{p1}</p>
                     </div>
-                    <div className="col-1"></div>
+                    <div className="col-2"></div>
             </div>
 
 
@@ -35,12 +35,12 @@ function Racebar(props) {
                     <div className="col-12 finishLine"></div>
                 </div>
                 <div className="row bars">
+                    <div className="col-2"></div>
+                    <div className={`col-3 ${playerDesigns[0]}`} style={{height:Math.min(p0, 50)+"vh"}}></div>
                     <div className="col-1"></div>
-                    <div className={`col-4 ${playerDesigns[0]}`} style={{height:Math.min(p0, 50)+"vh"}}></div>
                     <div className="col-1"></div>
-                    <div className="col-1"></div>
-                    <div className={`col-4 ${playerDesigns[1]}`} style={{height:Math.min(p1, 50)+"vh"}}></div>
-                    <div className="col-1"></div>
+                    <div className={`col-3 ${playerDesigns[1]}`} style={{height:Math.min(p1, 50)+"vh"}}></div>
+                    <div className="col-2"></div>
                 </div>
                 <div className="row">
                     <div className="col-12 startLine"></div>

@@ -1,10 +1,10 @@
 import React, { useEffect } from "react"
-import { secondsPerRound } from "../helperFunctions/globals";
+// import { secondsPerRound } from "../helperFunctions/globals";
 
 
 function Timer(props) {
 
-    const {timerIDs, setTimerIDs, isLive, setIsLive, triggerNewGame} = props.stateDictForTimer;
+    const {timerIDs, setTimerIDs, isLive, setIsLive, triggerNewGame, secondsPerRound} = props.stateDictForTimer;
     
     // let display = document.getElementById("timer");
     
@@ -79,7 +79,6 @@ function Timer(props) {
 
     return (
         <div>
-            <p>Time</p>
             <h1 id="timer">{secondsPerRound}</h1>
         </div>
     )

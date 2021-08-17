@@ -25,24 +25,27 @@ function App() {
         (numRows*numCols < 12) ? 3 :
         (numRows*numCols < 24) ? 4 :
         (numRows*numCols < 36) ? 5 : 6);
+    const [secondsPerRound, setSecondsPerRound] = useState(startingSecondsPerRound(numRows, numCols));
     const [animationTimeouts, setAnimationTimeouts] = useState([]);
+    const maxNoChangeRounds = 3;
 
 
     const stateDictForArena = {stateScoreBoard, setStateScoreBoard, isLive, setIsLive,
         currentMessage, setCurrentMessage, triggerNewGame, setTriggerNewGame, 
         isFirstGame, setIsFirstGame, finishedFirstGame, setFinishedFirstGame, isGameOver, setIsGameOver,
-        PAMax, setPAMax, animationTimeouts, setAnimationTimeouts};
+        PAMax, setPAMax, animationTimeouts, setAnimationTimeouts, secondsPerRound, setSecondsPerRound, maxNoChangeRounds};
     
-    const stateDictForHeader = {startNewGame, setIsGameOver, isGameOver, isLive, animationTimeouts};
+    const stateDictForHeader = {startNewGame, setIsGameOver, isGameOver, isLive, animationTimeouts, maxNoChangeRounds};
 
     // props for Timer
     const [timerIDs, setTimerIDs] = useState([]);
-    const stateDictForTimer = {timerIDs, setTimerIDs, isLive, setIsLive, triggerNewGame}; 
+    const stateDictForTimer = {timerIDs, setTimerIDs, isLive, setIsLive, triggerNewGame, secondsPerRound}; 
 
     function layoutChange(newRows, newCols, newDifficulty){
         setNumRows(parseInt(newRows));
         setNumCols(parseInt(newCols));
         setDifficulty(parseInt(newDifficulty));
+        setSecondsPerRound(startingSecondsPerRound(newRows, newCols));
     }
 
     // resets App level state variables then sets Arena level resets with resetArenaTrigger
@@ -64,8 +67,21 @@ function App() {
             timerIDs.forEach((timerID) => clearInterval(timerID))  
             setTimerIDs([]);  
         }
-
     }, [isGameOver]);
+
+    // useEffect(() => {
+    //     if (triggerNewGame){
+    //         setSecondsPerRound(startingSecondsPerRound());
+    //     }
+    // }, [triggerNewGame])
+
+
+    function startingSecondsPerRound(r, c) {
+        let newSecondsPerRound = (r*c < 12) ? 20 :
+                                    (r*c < 24) ? 25 :
+                                    (r*c < 36) ? 30 : 35;
+        return newSecondsPerRound;
+    }
 
     
     return (
@@ -76,7 +92,7 @@ function App() {
                     <Home />
                 </Route>
                 <Route exact path="/rules">
-                    <Rules />
+                    <Rules maxNoChangeRounds={maxNoChangeRounds}/>
                 </Route>
                 <Route exact path="/arena">
                     <Arena layoutSettings={[numRows, numCols, difficulty]} stateDictForArena={stateDictForArena} stateDictForTimer={stateDictForTimer}/>

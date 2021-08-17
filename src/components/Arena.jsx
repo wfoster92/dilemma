@@ -27,7 +27,7 @@ function Arena (props) {
     const {stateScoreBoard, setStateScoreBoard, isLive, setIsLive, 
         currentMessage, setCurrentMessage, triggerNewGame, setTriggerNewGame, 
         isFirstGame, setIsFirstGame, finishedFirstGame, setFinishedFirstGame,
-        isGameOver, setIsGameOver, PAMax, setPAMax, animationTimeouts, setAnimationTimeouts} = props.stateDictForArena;
+        isGameOver, setIsGameOver, PAMax, setPAMax, animationTimeouts, setAnimationTimeouts, maxNoChangeRounds} = props.stateDictForArena;
     
     const stateDictForRacebar = {stateScoreBoard, currentMessage, difficulty}
     
@@ -40,7 +40,6 @@ function Arena (props) {
     // console.log(`init tempNoChangeRounds ${tempNoChangeRounds}`)
     const humanPid = 0;
     const botGame = true;
-    const maxNoChangeRounds = 3;
 
     let scoreBoard = [0,0];
 
@@ -70,7 +69,7 @@ function Arena (props) {
     }, [isLive])
 
     useEffect(() => {
-        setPAMax(startingPAMax())
+        setPAMax(startingPAMax());
     }, [numRows, numCols])
 
     useEffect(() => {
@@ -103,6 +102,7 @@ function Arena (props) {
         console.log(`PAMax is ${newPAMax}`)
         return newPAMax;
     }
+
 
     function resetTopLevelVariables() {
         playersArray = [[],[]];
@@ -170,15 +170,6 @@ function Arena (props) {
         
         updateScoreBoard();
 
-        // console.log(`before noScoreChange? ${noScoreChange()} tempNoChangeRounds ${tempNoChangeRounds}`);
-
-        // if (noScoreChange()){
-        //     tempNoChangeRounds = tempNoChangeRounds + 1;
-        // } else {
-        //     tempNoChangeRounds = 0;
-        // } 
-        // console.log(`after noScoreChange? ${noScoreChange()} tempNoChangeRounds ${tempNoChangeRounds}`);
-        // setNoChangeRounds(() => tempNoChangeRounds);
 
         (noScoreChange()) ? setNoChangeRounds((prevState) => prevState+1) : setNoChangeRounds(0);
         console.log(`noScoreChange ${noScoreChange()} noChangeRounds ${noChangeRounds} endroundB scoreboard ${scoreBoard}`)
@@ -227,13 +218,13 @@ function Arena (props) {
         if (Math.max(...scoreBoard) > 0.5) {
             let winner = (scoreBoard[0] > scoreBoard[1]) ? 1 : 2;
             console.log(`The winner is player ${winner}`)
-            first = <h1>The winner is player {winner}</h1>
+            first = (winner === 1)? <h1>Wow! You Win</h1> : <h1>The Bot Wins!</h1>
         } else {
             console.log(`It's a draw!`)
             first = <h1>It's a draw</h1>
         }
         console.log(`omg it's all over\nFinal Score \nPlayer 1 ${roundNumber(100*scoreBoard[0], 2)} Player 2 ${roundNumber(100*scoreBoard[1], 2)}`);
-        let summary = <p>omg it's all over <br/>Final Score <br/>Player 1 {roundNumber(100*scoreBoard[0], 2)} <br/>Player 2 {roundNumber(100*scoreBoard[1], 2)}</p>
+        let summary = <p>omg it's all over</p>
         setCurrentMessage(<div>{first}{summary}</div>)
         setIsLive(false); 
         setIsGameOver(true);   

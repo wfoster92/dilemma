@@ -4,7 +4,7 @@ import { squareSize } from "../helperFunctions/globals"
 
 
 function Header (props) {
-    const {startNewGame, setIsGameOver, isGameOver, isLive, animationTimeouts} = props.stateDictForHeader
+    const {startNewGame, setIsGameOver, isGameOver, isLive, animationTimeouts, maxNoChangeRounds} = props.stateDictForHeader
 
     function endGame() {
 
@@ -26,7 +26,7 @@ function Header (props) {
     <div className="row header" style={{height:(100-squareSize)/2+"vh"}}> 
         <div className="col-1"></div>
         <div className="col-2 align-self-center" onClick={endGame}>
-            <Link exact to="/rules">
+            <Link exact to="/rules" >
                 <h1>Rules</h1>
             </Link>
         </div>
