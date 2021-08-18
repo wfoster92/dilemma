@@ -22,13 +22,12 @@ function App() {
     const [finishedFirstGame, setFinishedFirstGame] = useState(false);
     const [isGameOver, setIsGameOver] = useState(false);
     const [PAMax, setPAMax] = useState(startingPAMax());
-        // (numRows*numCols < 12) ? 3 :
-        // (numRows*numCols < 24) ? 4 :
-        // (numRows*numCols < 36) ? 5 : 6);
     const [secondsPerRound, setSecondsPerRound] = useState(startingSecondsPerRound(numRows, numCols));
     const [animationTimeouts, setAnimationTimeouts] = useState([]);
     const maxNoChangeRounds = 3;
-    const [squareSize, setSquareSize] = useState(checkForWindowResize());
+    const [initSquareSize, initOrientation] = checkForWindowResize();
+    const [squareSize, setSquareSize] = useState(initSquareSize);
+    const [orientation, setOrientation] = useState(initOrientation);
     const [choicesLeft, setChoicesLeft] = useState(PAMax)
 
 
@@ -102,22 +101,37 @@ function App() {
     }
 
     function updateSquareSize(){
-        let newSquareSize = checkForWindowResize()
+        let [newSquareSize, newOrientation] = checkForWindowResize()
         if (newSquareSize - squareSize !== 0) {
             setSquareSize(newSquareSize);
         }
+        if (orientation - newOrientation != 0){
+            setOrientation(newOrientation);
+        }
     }
 
+    // return the new orientation as well as the new squareSize
     function checkForWindowResize() {
-        console.log(`Screen width: ${window.innerWidth}`);
-        let tempSquareSize;
-        if (window.matchMedia("(orientation: landscape)").matches) {
+        let tempSquareSize, tempOrientation;
+        let w = document.body.clientWidth;
+        let h = document.body.clientHeight;
+        
+        let isClose = (Math.min(w,h) * 1.4 > Math.max(w,h)) ? true : false;
+
+        // first check if the screen dimensions are within 20% of one another
+        if (isClose) {
+            tempSquareSize = 60;
+            tempOrientation = 0;
+        }
+        else if (window.matchMedia("(orientation: landscape)").matches) {
             tempSquareSize = 80;
+            tempOrientation = 1
         }
         else if (window.matchMedia("(orientation: portrait)").matches){
-            tempSquareSize = 60;
+            tempSquareSize = 100;
+            tempOrientation = 2;
         }
-        return tempSquareSize;
+        return [tempSquareSize, tempOrientation];
     }
     
     window.addEventListener('resize', updateSquareSize);
@@ -129,9 +143,9 @@ function App() {
 
     // We listen to the resize event
     window.addEventListener('resize', () => {
-    // We execute the same script as before
-    let vh = window.innerHeight * 0.01;
-    document.documentElement.style.setProperty('--vh', `${vh}px`);
+        // We execute the same script as before
+        let vh = window.innerHeight * 0.01;
+        document.documentElement.style.setProperty('--vh', `${vh}px`);
     });
     
     return (

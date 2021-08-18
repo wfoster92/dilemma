@@ -3,19 +3,29 @@ import { colorBase } from "./globals";
 // import { arenaObject, totalUnits } from "../components/Arena";
 
 function shuffleArray(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
+    var currentIndex = array.length,  randomIndex;
+  
+    // While there remain elements to shuffle...
+    while (currentIndex != 0) {
+  
+      // Pick a remaining element...
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+  
+      // And swap it with the current element.
+      [array[currentIndex], array[randomIndex]] = [
+        array[randomIndex], array[currentIndex]];
     }
     return array;
-}
+  }
 
 export function makeCompleteArray(arenaObject, totalUnits){
     // depending on the units in the arena, we will add a number of colors to the colorbase
     let ColorBaseIndices =  (totalUnits < 10) ? 4 :
-                            (totalUnits < 20) ? 6 :
-                            (totalUnits < 30) ? 8 :
-                            (totalUnits < 40) ? 10 : 12;
+                            (totalUnits < 20) ? 8 :
+                            (totalUnits < 30) ? 12 :
+                            (totalUnits < 40) ? 16 : 18;
+
     let shuffledColorBase = shuffleArray(colorBase);
     let workingColorBase = [];
     for (let i = 0; i < ColorBaseIndices; i++) {

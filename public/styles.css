@@ -140,6 +140,9 @@ body {
     margin-right: 0;
 }
 
+.finishLineDiv {
+    height: 5vmin;
+}
 
 /* CHECKED STYLES */
 [type=radio]:checked + .botProfile{
@@ -249,6 +252,13 @@ https://www.magicpattern.design/tools/css-backgrounds */
     background-image:  repeating-radial-gradient( circle at 0 0, transparent 0, #800080 10px ), repeating-linear-gradient( #ffff0055, #ffff00);
 }
 
+.finishLine {
+    background-color: #b00;
+    opacity: 1;
+    background-image:  repeating-linear-gradient(45deg, #ffffff 25%, transparent 25%, transparent 75%, #ffffff 75%, #ffffff), repeating-linear-gradient(45deg, #ffffff 25%, #b00 25%, #b00 75%, #ffffff 75%, #ffffff);
+    background-position: 0 0, 10px 10px;
+    background-size: 20px 20px;
+}
 
 
 

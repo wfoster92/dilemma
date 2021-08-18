@@ -28,7 +28,7 @@ function Arena (props) {
         currentMessage, setCurrentMessage, triggerNewGame, setTriggerNewGame, 
         isFirstGame, setIsFirstGame, finishedFirstGame, setFinishedFirstGame,
         isGameOver, setIsGameOver, PAMax, setPAMax, animationTimeouts, setAnimationTimeouts, 
-        maxNoChangeRounds, squareSize, choicesLeft, setChoicesLeft, startingPAMax} = props.stateDictForArena;
+        maxNoChangeRounds, squareSize, orientation, choicesLeft, setChoicesLeft, startingPAMax} = props.stateDictForArena;
     
     const stateDictForRacebar = {stateScoreBoard, currentMessage, difficulty}
     

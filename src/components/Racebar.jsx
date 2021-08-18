@@ -38,19 +38,20 @@ function Racebar(props) {
             <div className="row">
             </div>
             <div className="raceChart">
-                <div className="row">
-                    <div className="col-12 finishLine"></div>
-                </div>
-                <div className="row" style={{height:50 * 0.8+"vh"}}>
+
+                <div className="row" style={{height:50 * 0.8+"vmin"}}>
                     <div className="col-2"></div>
-                    <div className={`col-3 ${playerDesigns[0]}`} style={{height:Math.min(p0, 50) * 0.8+"vh"}}></div>
+                    <div className={`col-3 ${playerDesigns[0]}`} style={{height:Math.min(p0, 53) * 0.8+"vmin"}}></div>
                     <div className="col-1"></div>
                     <div className="col-1"></div>
-                    <div className={`col-3 ${playerDesigns[1]}`} style={{height:Math.min(p1, 50) * 0.8+"vh"}}></div>
+                    <div className={`col-3 ${playerDesigns[1]}`} style={{height:Math.min(p1, 53) * 0.8+"vmin"}}></div>
                     <div className="col-2"></div>
                 </div>
-                <div className="row">
-                    <div className="col-12 startLine"></div>
+                <div className="row" style={{height:3 * .8+"vmin"}}>
+                    <div className="col-1"></div>
+                    {/* zIndex of -1 so the player can cross the finish line */}
+                    <div className="col-10 finishLine" style={{zIndex:-1}} ></div>
+                    <div className="col-1"></div>
                 </div>
                 <div className="row">
                     <div className="col-6"></div>
