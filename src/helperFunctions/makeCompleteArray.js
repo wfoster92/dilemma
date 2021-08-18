@@ -2,16 +2,27 @@ import Gradient from "javascript-color-gradient";
 import { colorBase } from "./globals";
 // import { arenaObject, totalUnits } from "../components/Arena";
 
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+}
+
 export function makeCompleteArray(arenaObject, totalUnits){
+    // depending on the units in the arena, we will add a number of colors to the colorbase
     let ColorBaseIndices =  (totalUnits < 10) ? 4 :
                             (totalUnits < 20) ? 6 :
                             (totalUnits < 30) ? 8 :
                             (totalUnits < 40) ? 10 : 12;
-
+    let shuffledColorBase = shuffleArray(colorBase);
     let workingColorBase = [];
     for (let i = 0; i < ColorBaseIndices; i++) {
-        workingColorBase.push(colorBase[i]);
+        workingColorBase.push(shuffledColorBase[i]);
     }
+    // once we add the colors to the base array, shuffle the order
+    
     const colorGradient = new Gradient();
     console.log(`in makeCompleteArray, totalUnits ${totalUnits}`);
     colorGradient.setMidpoint(totalUnits+1);

@@ -27,12 +27,13 @@ function Arena (props) {
     const {stateScoreBoard, setStateScoreBoard, isLive, setIsLive, 
         currentMessage, setCurrentMessage, triggerNewGame, setTriggerNewGame, 
         isFirstGame, setIsFirstGame, finishedFirstGame, setFinishedFirstGame,
-        isGameOver, setIsGameOver, PAMax, setPAMax, animationTimeouts, setAnimationTimeouts, maxNoChangeRounds} = props.stateDictForArena;
+        isGameOver, setIsGameOver, PAMax, setPAMax, animationTimeouts, setAnimationTimeouts, 
+        maxNoChangeRounds, squareSize, choicesLeft, setChoicesLeft, startingPAMax} = props.stateDictForArena;
     
     const stateDictForRacebar = {stateScoreBoard, currentMessage, difficulty}
     
 
-    const [choicesLeft, setChoicesLeft] = useState(PAMax)
+    // const [choicesLeft, setChoicesLeft] = useState(PAMax)
 
     // set a useState for noChangeRound to pass as a prop and a local variable to keep an accurate endGame calculation
     const [noChangeRounds, setNoChangeRounds] = useState(0);
@@ -95,20 +96,13 @@ function Arena (props) {
         setTriggerNewGame(false);
     }
 
-    function startingPAMax() {
-        let newPAMax = (numRows*numCols < 12) ? 3 :
-                        (numRows*numCols < 24) ? 4 :
-                        (numRows*numCols < 36) ? 5 : 6;
-        console.log(`PAMax is ${newPAMax}`)
-        return newPAMax;
-    }
-
 
     function resetTopLevelVariables() {
         playersArray = [[],[]];
-        setPAMax(startingPAMax());
+        let newPAMax = startingPAMax();
+        setPAMax(newPAMax);
         if (!isFirstGame){
-            setChoicesLeft(PAMax);
+            setChoicesLeft(newPAMax);
             setNoChangeRounds(0);
             // tempNoChangeRounds = 0;
         }
@@ -224,8 +218,7 @@ function Arena (props) {
             first = <h1>It's a draw</h1>
         }
         console.log(`omg it's all over\nFinal Score \nPlayer 1 ${roundNumber(100*scoreBoard[0], 2)} Player 2 ${roundNumber(100*scoreBoard[1], 2)}`);
-        let summary = <p>omg it's all over</p>
-        setCurrentMessage(<div>{first}{summary}</div>)
+        setCurrentMessage(<div>{first}</div>)
         setIsLive(false); 
         setIsGameOver(true);   
     }
@@ -269,7 +262,7 @@ function Arena (props) {
             </span>
             <span id="gameboard">
                 {completeArray.map(row => {
-                        return <Row row={row} handleClick={handleClick}/>
+                        return <Row row={row} squareSize={squareSize} handleClick={handleClick}/>
                 })}
             </span>
             <span className="spacer">

@@ -1,12 +1,14 @@
 export const squareSize = 80; 
 
-export const maxSelections = 3;
-export const colorBase = ["#0000ff", "#ff0000", "#00ff00", "#6442bd",
-                          "#0000ff", "#ff0000", "#00ff00", "#6442bd",
-                          "#0000ff", "#ff0000", "#00ff00", "#6442bd",
-                          "#0000ff", "#ff0000", "#00ff00", "#6442bd"];
+export const colorBase = ["#00ff00", "#ff00ff", "#00ff00",
+                          "#ff0077", "#ffff00", "#00ffff",
+                          "#000077", "#770000", "#007700",
+                          "#770077", "#777700", "#007777",];
+                        //   "#0000ff", "#ff0000", "#00ff00",];
+// export const colorBase = ["#0000ff", "#ff0000", "#00ff00", "#6442bd",
+//                           "#0000ff", "#ff0000", "#00ff00", "#6442bd",
+//                           "#0000ff", "#ff0000", "#00ff00", "#6442bd",
+//                           "#0000ff", "#ff0000", "#00ff00", "#6442bd"];
                           
-export const playerDesigns = ["isometric-red-green", "isometric-amber-violet"]
+export const playerDesigns = ["isometric-red-green", "isometric-amber-violet"];
 // ["japanese-cube", "bricks"];
-// export const [difficulty, setDifficulty] = useState(4);
-export const secondsPerRound = 20;

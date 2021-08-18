@@ -9,18 +9,26 @@ function Racebar(props) {
     let p1 = roundNumber(stateScoreBoard[1] * 100, 2);
 
     return (
-        <div>
+        <div className="raceBar">
 
             <div className="row raceBarHeader">
                     <div className="col-2"></div>
-                    <div className="col-3">
+                    <div className="col-3 raceBarAvatar">
                         <img src={`/images/avatar.png`}/>
+                    </div>
+                    <div className="col-2"></div>
+                    <div className="col-3 raceBarAvatar">
+                        <img src={`/images/robot${difficulty}.png`} />
+                    </div>
+                    <div className="col-2"></div>
+            </div>
+            <div className="row raceBarScore">
+                    <div className="col-2"></div>
+                    <div className="col-3 raceBarAvatar">
                         <p>{p0}</p>
                     </div>
-                    <div className="col-1"></div>
-                    <div className="col-1"></div>
-                    <div className="col-3">
-                        <img src={`/images/robot${difficulty}.png`} />
+                    <div className="col-2"></div>
+                    <div className="col-3 raceBarAvatar">
                         <p>{p1}</p>
                     </div>
                     <div className="col-2"></div>
@@ -28,18 +36,17 @@ function Racebar(props) {
 
 
             <div className="row">
-
             </div>
             <div className="raceChart">
                 <div className="row">
                     <div className="col-12 finishLine"></div>
                 </div>
-                <div className="row bars">
+                <div className="row" style={{height:50 * 0.8+"vh"}}>
                     <div className="col-2"></div>
-                    <div className={`col-3 ${playerDesigns[0]}`} style={{height:Math.min(p0, 50)+"vh"}}></div>
+                    <div className={`col-3 ${playerDesigns[0]}`} style={{height:Math.min(p0, 50) * 0.8+"vh"}}></div>
                     <div className="col-1"></div>
                     <div className="col-1"></div>
-                    <div className={`col-3 ${playerDesigns[1]}`} style={{height:Math.min(p1, 50)+"vh"}}></div>
+                    <div className={`col-3 ${playerDesigns[1]}`} style={{height:Math.min(p1, 50) * 0.8+"vh"}}></div>
                     <div className="col-2"></div>
                 </div>
                 <div className="row">

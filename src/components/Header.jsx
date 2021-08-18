@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react"
+import React from "react"
 import { Link } from "react-router-dom"
-import { squareSize } from "../helperFunctions/globals"
 
 
 function Header (props) {
@@ -23,7 +22,7 @@ function Header (props) {
     }
 
     return (
-    <div className="row header" style={{height:(100-squareSize)/2+"vh"}}> 
+    <div className="row header" style={{height:"10vh"}}> 
         <div className="col-1"></div>
         <div className="col-2 align-self-center" onClick={endGame}>
             <Link exact to="/rules" >

@@ -7,7 +7,7 @@ function Row(props) {
     let row = props.row;
     // console.log(`from ROW, row ${row}`);
     return <div>
-        {row.map(unit => <Unit unit={unit} handleClick={props.handleClick}/>)}
+        {row.map(unit => <Unit unit={unit} squareSize={props.squareSize} handleClick={props.handleClick}/>)}
     </div>
 }
 
