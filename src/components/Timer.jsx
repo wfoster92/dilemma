@@ -16,7 +16,7 @@ function Timer(props) {
         } else if (!isLive) {
             stopTimer(); 
         }
-        console.log(`timerIDs ${timerIDs}`);
+        // console.log(`timerIDs ${timerIDs}`);
     }
     , [isLive])
 

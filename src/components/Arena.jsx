@@ -22,6 +22,8 @@ export let [completeArray, colorArray] = [0,0];
 
 function Arena (props) {
     console.log("in arena")
+    const [noChangeRounds, setNoChangeRounds] = useState(0);
+
     const [numRows, numCols, difficulty] = props.layoutSettings;
 
     const {stateScoreBoard, setStateScoreBoard, isLive, setIsLive, 
@@ -30,18 +32,12 @@ function Arena (props) {
         isGameOver, setIsGameOver, PAMax, setPAMax, animationTimeouts, setAnimationTimeouts, 
         maxNoChangeRounds, squareSize, orientation, choicesLeft, setChoicesLeft, startingPAMax} = props.stateDictForArena;
     
-    const stateDictForRacebar = {stateScoreBoard, currentMessage, difficulty}
+    const stateDictForScoreTracker = {stateScoreBoard, currentMessage, difficulty, squareSize, orientation};
+    const stateDictForGameTracker = {choicesLeft, noChangeRounds, maxNoChangeRounds, handleEndRoundClick, orientation};
     
-
-    // const [choicesLeft, setChoicesLeft] = useState(PAMax)
-
     // set a useState for noChangeRound to pass as a prop and a local variable to keep an accurate endGame calculation
-    const [noChangeRounds, setNoChangeRounds] = useState(0);
-    // let tempNoChangeRounds = 0;
-    // console.log(`init tempNoChangeRounds ${tempNoChangeRounds}`)
     const humanPid = 0;
     const botGame = true;
-
     let scoreBoard = [0,0];
 
 
@@ -104,7 +100,6 @@ function Arena (props) {
         if (!isFirstGame){
             setChoicesLeft(newPAMax);
             setNoChangeRounds(0);
-            // tempNoChangeRounds = 0;
         }
         isPAFull = [false, false];
     }
@@ -150,7 +145,6 @@ function Arena (props) {
         let interval = 1500;
         let [totalDelay, outputAnimationTimeouts] = doAnimation(interval);
         setAnimationTimeouts([...outputAnimationTimeouts]);
-        // console.log(`inside endRoundA, animationTimeouts ${animationTimeouts} outputAnimationTimeouts ${outputAnimationTimeouts}`)
 
         console.log(`about to runRest, interval ${interval} playersArray ${playersArray}`)
         let roundBTimeoutID = setTimeout(endRoundB, totalDelay);
@@ -254,23 +248,52 @@ function Arena (props) {
         return console.log("exited handleClick!")
     }
 
-    return (
-        <div>
-            <span className="spacer">
-                <GameTracker stateDictForTimer={props.stateDictForTimer} choicesLeft={choicesLeft} noChangeRounds={noChangeRounds} 
-                maxNoChangeRounds={maxNoChangeRounds} handleEndRoundClick={handleEndRoundClick}/>
-            </span>
-            <span id="gameboard">
-                {completeArray.map(row => {
-                        return <Row row={row} squareSize={squareSize} handleClick={handleClick}/>
-                })}
-            </span>
-            <span className="spacer">
-                <ScoreTracker stateDictForRacebar={stateDictForRacebar} msg={currentMessage}/>
-            </span>
+    if (orientation === "landscape"){
+        let landscapeSpacerStyle = {width: "calc((100vmax - " + squareSize + "vmin)/2)", height:squareSize+"vmin"};
+        return (
+            <div>
+                <span className="spacerLandscape" style={landscapeSpacerStyle}>
+                    <GameTracker stateDictForTimer={props.stateDictForTimer} stateDictForGameTracker={stateDictForGameTracker} />
+                </span>
+                <span id="gameboard">
+                    {completeArray.map(row => {
+                            return <Row row={row} squareSize={squareSize} handleClick={handleClick}/>
+                    })}
+                </span>
+                <span className="spacerLandscape" style={landscapeSpacerStyle}>
+                    <ScoreTracker stateDictForScoreTracker={stateDictForScoreTracker} msg={currentMessage}/>
+                </span>
+    
+            </div>
+        )
+    } else if (orientation === "portrait"){
+        let portraitSpacerStyle = {width:(100-squareSize)/2 + "vmin", height:squareSize+"vmin"};
+        return (
+            <div>
+                <div className="row">
+                    <ScoreTracker stateDictForScoreTracker={stateDictForScoreTracker} msg={currentMessage}/>
+                </div>
+                <div className="row">
+                    <GameTracker stateDictForTimer={props.stateDictForTimer} stateDictForGameTracker={stateDictForGameTracker}/> 
+                </div>
+                <div className="row">
+                    <span className="spacer" style={portraitSpacerStyle}>
+                    </span>
+                    <span id="gameboard">
+                        {completeArray.map(row => {
+                                return <Row row={row} squareSize={squareSize} handleClick={handleClick}/>
+                        })}
+                    </span>
+                    <span className="spacer" style={portraitSpacerStyle}>
+                    </span>
+                </div>
+            </div>
+        )
+    } else {
+        console.log(`No orientation match... orientation = ${orientation}`);
+        return (<div></div>)
+    }
 
-        </div>
-    )
     
 }
 

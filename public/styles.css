@@ -37,7 +37,7 @@ body {
     margin: 3%;
 }
 
-.spacer{
+.spacerLandscape{
     display:inline-block;
     height:calc(100vmin * 0.9);
     margin:auto;
@@ -46,7 +46,7 @@ body {
 }
 
 /* the width calculation is tied to the squareSize set in App.jsx */
-@media only screen and (orientation:landscape) {
+/* @media only screen and (orientation:landscape) {
     .spacer{
         width:calc((100vmax - (100vmin * 0.8)) / 2);
     }
@@ -55,7 +55,7 @@ body {
     .spacer{
         width:calc((100vmin - (100vmin * 0.6)) / 2);
     }
-}
+} */
 
 
 .header, .header *{
