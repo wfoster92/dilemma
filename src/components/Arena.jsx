@@ -273,7 +273,7 @@ function Arena (props) {
                 <div className="row">
                     <ScoreTracker stateDictForScoreTracker={stateDictForScoreTracker} msg={currentMessage}/>
                 </div>
-                <div className="row">
+                <div>
                     <GameTracker stateDictForTimer={props.stateDictForTimer} stateDictForGameTracker={stateDictForGameTracker}/> 
                 </div>
                 <div className="row">

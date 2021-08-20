@@ -12,6 +12,10 @@ body {
     line-height: normal;
 }
 
+.row *{
+    padding:0;
+}
+
 
 #gameboard{
     background-color:white;
@@ -45,18 +49,6 @@ body {
     padding: 0;
 }
 
-/* the width calculation is tied to the squareSize set in App.jsx */
-/* @media only screen and (orientation:landscape) {
-    .spacer{
-        width:calc((100vmax - (100vmin * 0.8)) / 2);
-    }
-}
-@media only screen and (orientation:portrait) {
-    .spacer{
-        width:calc((100vmin - (100vmin * 0.6)) / 2);
-    }
-} */
-
 
 .header, .header *{
     text-align: center;
@@ -75,19 +67,35 @@ body {
     font-size: 4vmin;
 }
 
-#submit {
+.gameTrackerPortrait h1,p {
+    vertical-align: middle;
+    text-align: center;
+    font-size: 4vmin;
+}
+.gameTrackerContent{
+    margin: 50%;
+}
+
+.submitLandscape, .submitPortrait {
     width: 20vmin;
     height: 20vmin;
     background-color: darkblue;
     color: lightblue;
     font-size: large;
+}
+
+.submitLandscape{
+    width: 20vmin;
+    height: 20vmin;
     margin-top: 5vmin;
 }
 
-/* 
-.table, #timer{
-    color:white;
-} */
+.submitPortrait{
+    width: 15vmin;
+    height: 15vmin;
+    margin: 2.5vh 0;
+}
+
 
 /* HIDE RADIO */
 .radioBot [type=radio] { 
@@ -167,9 +175,7 @@ body {
 .gameTrackerLabel {
     height: 40px;
 }
-/* .gameTrackerBox.col-6 {
-    padding:0;
-} */
+
 
 .raceChart{
     vertical-align: bottom;
@@ -293,16 +299,5 @@ https://www.magicpattern.design/tools/css-backgrounds */
     background-position: 0px 0px, 40px 60px, 130px 270px, 70px 100px;
 } 
 
-
-.kelly {
-    background-image: url("images/kelly.jpg");
-    background-size:cover;
-    opacity: 1;
-}
-
-.nelly {
-    background-image: url("images/nelly.jpg");
-    background-size: cover;
-    opacity: 1;
 }  */
 

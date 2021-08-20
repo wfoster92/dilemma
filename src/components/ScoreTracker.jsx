@@ -4,7 +4,7 @@ import { playerDesigns } from "../helperFunctions/globals";
 
 function ScoreTracker(props) {
 
-    const {stateScoreBoard, currentMessage, difficulty, squareSize, orientation} = props.stateDictForRacebar;
+    const {stateScoreBoard, currentMessage, difficulty, squareSize, orientation} = props.stateDictForScoreTracker;
     console.log(`from racebar stateScoreBoard ${stateScoreBoard}`)
     let p0 = roundNumber(stateScoreBoard[0] * 100, 2);
     let p1 = roundNumber(stateScoreBoard[1] * 100, 2);
