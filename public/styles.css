@@ -2,8 +2,8 @@ body {
     margin: 0px;
     border:0;
     padding: 0;
-    /* width: 100vw;
-    height: 100vh; */
+    width:100wv;
+    height: 100vh;
     overflow-x: hidden; /* Hide horizontal scrollbar */
     color: white;
     background-color: #111;
@@ -12,8 +12,14 @@ body {
     line-height: normal;
 }
 
-.row *{
+.row, .row *{
     padding:0;
+    /* margin-left: 0;
+    margin-right: 0; */
+}
+.row {
+    margin-left: 0;
+    margin-right: 0;
 }
 
 
@@ -25,6 +31,12 @@ body {
 #gameboard > * {
     margin: auto;
     font-size: 0;
+}
+
+.gameboardWrapperPortrait{
+    font-size: 0;
+    position: absolute;
+    bottom: 0;
 }
 
 .layoutForm{
@@ -77,8 +89,6 @@ body {
 }
 
 .submitLandscape, .submitPortrait {
-    width: 20vmin;
-    height: 20vmin;
     background-color: darkblue;
     color: lightblue;
     font-size: large;
@@ -91,9 +101,8 @@ body {
 }
 
 .submitPortrait{
-    width: 15vmin;
-    height: 15vmin;
-    margin: 2.5vh 0;
+    margin-right: 0;
+    margin-left: auto;
 }
 
 
@@ -180,6 +189,45 @@ body {
 .raceChart{
     vertical-align: bottom;
 }
+
+.stPlayerPortrait, .stPlayerPortrait * {
+    display: inline-block;
+}
+
+.stWrapperPortrait{
+    text-align: left;
+    margin-bottom: 2vh;
+    font-size: 0;
+}
+
+.stBothPlayers{
+    display: inline-block;
+}
+
+.stPlayerPortrait{
+    text-align: left;
+    margin: 0;
+}
+
+.stPlayerPortrait p{
+    margin-bottom: 0;
+    text-align: center;
+}
+.stPlayerPortrait-bottom{
+    margin-top:1vh;
+}
+
+.finishLinePortrait, .raceBarStyle{
+    position: absolute;
+}
+
+.raceBarStyle{
+    margin-left: 1vw;
+}
+
+/* .raceBarStyle > span, .stPlayerPortrait img{
+    font-size: 0;
+} */
 
 
 .rules h1{

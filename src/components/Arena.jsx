@@ -270,13 +270,13 @@ function Arena (props) {
         let portraitSpacerStyle = {width:(100-squareSize)/2 + "vmin", height:squareSize+"vmin"};
         return (
             <div>
-                <div className="row">
+                <div>
                     <ScoreTracker stateDictForScoreTracker={stateDictForScoreTracker} msg={currentMessage}/>
                 </div>
                 <div>
                     <GameTracker stateDictForTimer={props.stateDictForTimer} stateDictForGameTracker={stateDictForGameTracker}/> 
                 </div>
-                <div className="row">
+                <div className="gameboardWrapperPortrait">
                     <span className="spacer" style={portraitSpacerStyle}>
                     </span>
                     <span id="gameboard">
