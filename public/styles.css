@@ -14,8 +14,6 @@ body {
 
 .row, .row *{
     padding:0;
-    /* margin-left: 0;
-    margin-right: 0; */
 }
 .row {
     margin-left: 0;
@@ -49,9 +47,32 @@ body {
     padding: 0 2px;
 }
 
-.layoutForm .row, h1 {
+/* .layoutForm .row{
     margin: 3%;
+} */
+
+.layoutSegment{
+    display: grid;
+    align-content: space-evenly;
 }
+
+.layoutSegmentBots{
+    height: 30vh;
+}
+
+.layoutSegmentGrid{
+    height: 20vh
+}
+
+.layoutSubmit, .layoutLabel{
+    height: 10vh;
+ }
+
+.layoutSubmit{
+    margin: 5vh;
+}
+
+
 
 .spacerLandscape{
     display:inline-block;
@@ -77,13 +98,24 @@ body {
     line-height: normal;
     color: #007bff;
     font-size: 4vmin;
+    margin-bottom: 0;
 }
 
-.gameTrackerPortrait h1,p {
+.gameTrackerLandscapeText, .gameTrackerLandscapeText * {
     vertical-align: middle;
     text-align: center;
-    font-size: 4vmin;
 }
+
+p.gameTrackerLandscapeText{
+    font-size: 3vmin;
+    margin-bottom: 0;
+}
+
+.gameTrackerLandscapeText h1, .gameTrackerLandscapeText{
+    font-size: 5vmin;
+}
+
+
 .gameTrackerContent{
     margin: 50%;
 }
@@ -95,9 +127,8 @@ body {
 }
 
 .submitLandscape{
-    width: 20vmin;
-    height: 20vmin;
-    margin-top: 5vmin;
+    width: 100%;
+    height: 100%;
 }
 
 .submitPortrait{
@@ -119,8 +150,15 @@ body {
     word-wrap: normal;
     text-align: center;
 }
+
+.radioRow span{
+    margin:0 2px;
+}
+
+.radioColumn span{
+    margin: 0 2px;
+}
   
-/* IMAGE STYLES */
 .botLabel img{
     cursor: pointer;
     margin-top: 1vmin;
@@ -128,33 +166,36 @@ body {
     height: 20vmin;   
 }
 
-.raceBarHeader{
-    margin-top: 5vh;
+/* landscapes */
+.raceBarHeader img{
+    width: calc(min(8vw, 15vh));
+    height: calc(min(8vw, 15vh));
 }
 
-@media only screen and (orientation:portrait) {
-
-    .raceBarHeader img{
-        width: 100%;
-        height: 100%;
-    }
+.raceBarHeader {
+    margin-bottom: 1vh;
 }
 
-@media only screen and (orientation:landscape) {
-    .raceBarHeader img{
-        width: 15vmin;
-        height: 15vmin;
-    }
+
+.raceBarWidthLandscape {
+    width: calc(min(8vw, 15vh));
 }
 
-.raceBarScore p{
+.landscapeScore{
     margin-top: 1vmin;
+    font-size: 3vh;
 }
+
 
 .raceBar, .raceBar *{
     padding: 0;
     margin-left: 0;
     margin-right: 0;
+}
+
+.raceBar{
+    flex-flow: column;
+    display: flex;
 }
 
 .finishLineDiv {
@@ -169,7 +210,6 @@ body {
 
 .gameTracker {
     margin:auto;
-    margin-top: 5vh;
 }
 
 .gameTracker, .gameTracker *{
@@ -177,13 +217,7 @@ body {
     margin-right: 0;
 }
 
-.gameTrackerBox > *{
-    padding:0;
-}
 
-.gameTrackerLabel {
-    height: 40px;
-}
 
 
 .raceChart{
@@ -225,9 +259,19 @@ body {
     margin-left: 1vw;
 }
 
-/* .raceBarStyle > span, .stPlayerPortrait img{
-    font-size: 0;
-} */
+.raceBarAvatarLandscape p{
+    margin-bottom: 0;
+}
+
+.raceBar .endgameMessage{
+    flex: auto;
+} 
+
+.endgameMessage p{
+    margin-bottom: 0;
+    font-size: 5.5vmin;
+}
+
 
 
 .rules h1{

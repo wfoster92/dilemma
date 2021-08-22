@@ -33,9 +33,6 @@ function SetLayout(props) {
             <form className="layoutForm" onSubmit={submitForm} action="./arena">
                 <SetLayoutForm layoutSettings = {props.layoutSettings} startNewGame={props.startNewGame}/>
             </form>
-            {/* <Link exact to="/arena" onClick={props.startNewGame}>
-                <button>Start New Game</button>
-            </Link>; */}
         </div>
     )
 }

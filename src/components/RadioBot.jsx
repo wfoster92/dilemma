@@ -1,5 +1,4 @@
 import React from "react";
-// import bots from "../../public/images/robot*"
 
 
 

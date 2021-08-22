@@ -22,24 +22,24 @@ function Header (props) {
     }
 
     return (
-    <div className="row header" style={{height:"10vh"}}> 
+    <div className="row align-items-center header" style={{height:"10vh"}}> 
         <div className="col-1"></div>
-        <div className="col-2 align-self-center" onClick={endGame}>
+        <div className="col-2" onClick={endGame}>
             <Link exact to="/rules" >
                 <h1>Rules</h1>
             </Link>
         </div>
-        <div className="col-3 align-self-center" onClick={endGame}>
+        <div className="col-3" onClick={endGame}>
             <Link to="/">
                 <h1>Dilemma</h1>
             </Link>
         </div>
-        <div className="col-3 align-self-center" onClick={endGame}>
+        <div className="col-3" onClick={endGame}>
             <Link exact to="/setLayout">
                 <h1>Set Layout</h1>
             </Link>
         </div>
-        <div className="col-2 align-self-center" onClick={restart}>
+        <div className="col-2" onClick={restart}>
             <Link exact to="/arena">
                 <h1>New Game</h1>
             </Link>

@@ -16,7 +16,7 @@ function App() {
 
     const [stateScoreBoard, setStateScoreBoard] = useState([0,0]);
     const [isLive, setIsLive] = useState(true);
-    const [currentMessage, setCurrentMessage] = useState(<div></div>);
+    const [currentMessage, setCurrentMessage] = useState("");
     const [triggerNewGame, setTriggerNewGame] = useState(false);
     const [isFirstGame, setIsFirstGame] = useState(true);
     const [finishedFirstGame, setFinishedFirstGame] = useState(false);
@@ -60,7 +60,7 @@ function App() {
             setFinishedFirstGame(true);
         }
         setStateScoreBoard([0,0]);
-        setCurrentMessage(<div></div>);
+        setCurrentMessage("");
         setIsLive(true);
         setTriggerNewGame(true);
         setIsGameOver(false);

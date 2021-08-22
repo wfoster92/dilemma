@@ -14,53 +14,57 @@ function SetLayoutForm(props) {
 
 
     return(<div>
-                <h1>Select Your Board Layout</h1>
-                <div className="row">
-                    <div className="col-3"></div>
-                    <div className="col-3 radioRow">
-                        <p>Rows</p>
-                        {rowArray.map((num) => {
-                            if (num === numRows) {
-                                return (<span>
-                                            <label htmlFor={"row".concat(num.toString())}>{num}<br/>
-                                            <input type="radio" id={"row".concat(num.toString())} name="rowCount" value={num.toString()} defaultChecked/>
-                                            </label>
-                                        </span>)
-                            } else {
-                                return (<span>
-                                            <label htmlFor={"row".concat(num.toString())}>{num}<br/>
-                                            <input type="radio" id={"row".concat(num.toString())} name="rowCount" value={num.toString()}/>
-                                            </label>
-                                        </span>)
-                            }
-                        })}
-                    </div>
-
-                    <div className="col-3 radioColumn">
-                        <p>Columns</p>
-                        {colArray.map((num) => {
-                            if (num === numCols) {
-                                return (<span>
-                                            <label htmlFor={"col".concat(num.toString())}>{num}<br/>
-                                            <input type="radio" id={"col".concat(num.toString())} name="colCount" value={num.toString()} defaultChecked/>
-                                            </label>
-                                        </span>)
-                            } else {
-                                return (<span>
-                                            <label htmlFor={"col".concat(num.toString())}>{num}<br />
-                                            <input type="radio" id={"col".concat(num.toString())} name="colCount" value={num.toString()}/>
-                                            </label>
-                                        </span>)
-                            }
-                        })}
-                    </div>
-                    <div className="col-3"></div>
-
+                <div className="layoutLabel">
+                    <h1>Select Your Board Layout</h1>
                 </div>
-                <h1>Bot Difficulty</h1>
-                <div>
+                <div className="layoutSegment layoutSegmentGrid align-items-center">
+                    {/* <h1>Select Your Board Layout</h1> */}
+                    <div className="row" style={{height: 70+"%"}}>
+                        <div className="col-5 radioRow">
+                            <p>Rows</p>
+                            {rowArray.map((num) => {
+                                if (num === numRows) {
+                                    return (<span>
+                                                <label htmlFor={"row".concat(num.toString())}>{num}<br/>
+                                                <input type="radio" id={"row".concat(num.toString())} name="rowCount" value={num.toString()} defaultChecked/>
+                                                </label>
+                                            </span>)
+                                } else {
+                                    return (<span>
+                                                <label htmlFor={"row".concat(num.toString())}>{num}<br/>
+                                                <input type="radio" id={"row".concat(num.toString())} name="rowCount" value={num.toString()}/>
+                                                </label>
+                                            </span>)
+                                }
+                            })}
+                        </div>
+                        <div className="col-2"></div>
+                        <div className="col-5 radioColumn">
+                            <p>Columns</p>
+                            {colArray.map((num) => {
+                                if (num === numCols) {
+                                    return (<span>
+                                                <label htmlFor={"col".concat(num.toString())}>{num}<br/>
+                                                <input type="radio" id={"col".concat(num.toString())} name="colCount" value={num.toString()} defaultChecked/>
+                                                </label>
+                                            </span>)
+                                } else {
+                                    return (<span>
+                                                <label htmlFor={"col".concat(num.toString())}>{num}<br />
+                                                <input type="radio" id={"col".concat(num.toString())} name="colCount" value={num.toString()}/>
+                                                </label>
+                                            </span>)
+                                }
+                            })}
+                        </div>
+                    </div>
+                </div>
+                <div className="layoutLabel">
+                    <h1>Bot Difficulty</h1>
+                </div>
+                <div className="layoutSegment layoutSegmentBots align-items-center">
+                
                     <div className="radioBot align-self-center row">
-                        {/* <p>Bot Difficulty (4 is The Hardest)</p> */}
                         
                         {difficultyArray.map((num) => {
                             if (num === difficulty) {
@@ -72,22 +76,15 @@ function SetLayoutForm(props) {
     
                             } else {
                                 return (<span className="col-3">
-
-                                <RadioBot defaultChecked={false} num={num}/>
+                                    <RadioBot defaultChecked={false} num={num}/>
                                 </span>)
-                                {/* (<span>
-                                            <label htmlFor={"bot".concat(num.toString())}>{num}<br/>
-                                            <input type="radio" id={"bot".concat(num.toString())} name="botDifficulty" value={num}/>
-                                            </label>
-                                        </span>) */}
                             }
                         })}
                     </div>
                 </div>
-                <input type="submit" value="Submit"></input>       
-
-
-
+                <div className="layoutSubmit">
+                    <input type="submit" value="Submit"></input> 
+                </div>      
     </div>
     )
 }

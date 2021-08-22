@@ -12,53 +12,45 @@ function ScoreTracker(props) {
     let finishLineSpace = 3;
 
     if (orientation === "landscape") {
+        let squareSizePercentage = squareSize/100;
         return (
-            <div className="raceBar">
-    
-                <div className="row raceBarHeader">
-                        <div className="col-2"></div>
-                        <div className="col-3 raceBarAvatar">
-                            <img src={`/images/avatar.png`}/>
-                        </div>
-                        <div className="col-2"></div>
-                        <div className="col-3 raceBarAvatar">
-                            <img src={`/images/robot${difficulty}.png`} />
-                        </div>
-                        <div className="col-2"></div>
-                </div>
-                <div className="row raceBarScore">
-                        <div className="col-2"></div>
-                        <div className="col-3 raceBarAvatar">
-                            <p>{score0}</p>
-                        </div>
-                        <div className="col-2"></div>
-                        <div className="col-3 raceBarAvatar">
-                            <p>{score1}</p>
-                        </div>
-                        <div className="col-2"></div>
-                </div>
-    
-                <div className="raceChart">
-                    <div className="row" style={{height:50 * 0.8+"vh"}}>
-                        <div className="col-2"></div>
-                        <div className={`col-3 ${playerDesigns[0]}`} style={{height:Math.min(score0, 50+finishLineSpace) * 0.8+"vh"}}></div>
-                        <div className="col-1"></div>
-                        <div className="col-1"></div>
-                        <div className={`col-3 ${playerDesigns[1]}`} style={{height:Math.min(score1, 50+finishLineSpace) * 0.8+"vh"}}></div>
-                        <div className="col-2"></div>
+            <div>
+                <div className="raceBar" style={{height: squareSize+"vh"}}>
+                    <div className="row raceBarHeader">
+                            <div className="col-6 raceBarAvatarLandscape">
+                                <img src={`/images/avatar.png`}/>
+                                <p className="landscapeScore">{score0}</p>
+                            </div>
+                            <div className="col-6 raceBarAvatarLandscape">
+                                <img src={`/images/robot${difficulty}.png`} />
+                                <p className="landscapeScore">{score1}</p>
+                            </div>
                     </div>
-                    <div className="row" style={{height:finishLineSpace * .8+"vh"}}>
-                        <div className="col-1"></div>
-                        {/* zIndex of -1 so the player can cross the finish line */}
-                        <div className="col-10 finishLine" style={{zIndex:-1}} ></div>
-                        <div className="col-1"></div>
+
+        
+                    <div className="raceChart">
+                        <div className="row" style={{height:50 * squareSizePercentage +"vh"}}>
+                            <div className={`col-6 d-flex justify-content-center`}>
+                                <div className ={`${playerDesigns[0]} raceBarWidthLandscape`} style={{height:Math.min(score0, 50+finishLineSpace) * squareSizePercentage+"vh"}}></div>
+                            </div>
+                            <div className={`col-6 d-flex justify-content-center`}>
+                                <div className ={`${playerDesigns[1]} raceBarWidthLandscape`} style={{height:Math.min(score1, 50+finishLineSpace) * squareSizePercentage+"vh"}}></div>
+                            </div>
+                        </div>
+                        
+                        <div className="row" style={{height:finishLineSpace * squareSizePercentage +"vh"}}>
+                            <div className="col-1"></div>
+                            {/* zIndex of -1 so the player can cross the finish line */}
+                            <div className="col-10 finishLine" style={{zIndex:-1}} ></div>
+                            <div className="col-1"></div>
+                        </div>
                     </div>
-                    <div className="row">
-                        <div className="col-6"></div>
-                        <div className="col-6"></div>
-                    </div>
+                    <div className="row align-items-center endgameMessage">
+                        <div className="col-12">
+                            <p>{currentMessage}</p>
+                        </div>
                 </div>
-                {currentMessage}
+                </div>
             </div>
         )
     } else if (orientation === "portrait") {
@@ -115,55 +107,6 @@ function ScoreTracker(props) {
                 <div className="finishLine finishLinePortrait stPlayerPortrait" style={finishLineStyle}></div>
             </div>
         )
-
-
-        // return (
-            // <div className="raceBar">
-            //     <div className="row raceBarHeader">
-            //             <div className="col-2"></div>
-            //             <div className="col-3 raceBarAvatar">
-            //                 <img src={`/images/avatar.png`}/>
-            //             </div>
-            //             <div className="col-2"></div>
-            //             <div className="col-3 raceBarAvatar">
-            //                 <img src={`/images/robot${difficulty}.png`} />
-            //             </div>
-            //             <div className="col-2"></div>
-            //     </div>
-            //     <div className="row raceBarScore">
-            //             <div className="col-2"></div>
-            //             <div className="col-3 raceBarAvatar">
-            //                 <p>{score0}</p>
-            //             </div>
-            //             <div className="col-2"></div>
-            //             <div className="col-3 raceBarAvatar">
-            //                 <p>{score1}</p>
-            //             </div>
-            //             <div className="col-2"></div>
-            //     </div>
-    
-            //     <div className="raceChart">
-            //         <div className="row" style={{height:50 * 0.8+"vmin"}}>
-            //             <div className="col-2"></div>
-            //             <div className={`col-3 ${playerDesigns[0]}`} style={{height:Math.min(score0, 53) * 0.8+"vmin"}}></div>
-            //             <div className="col-1"></div>
-            //             <div className="col-1"></div>
-            //             <div className={`col-3 ${playerDesigns[1]}`} style={{height:Math.min(score1, 53) * 0.8+"vmin"}}></div>
-            //             <div className="col-2"></div>
-            //         </div>
-            //         <div className="row" style={{height:3 * .8+"vmin"}}>
-            //             <div className="col-1"></div>
-            //             {/* zIndex of -1 so the player can cross the finish line */}
-            //             <div className="col-10 finishLine" style={{zIndex:-1}} ></div>
-            //             <div className="col-1"></div>
-            //         </div>
-            //         <div className="row">
-            //             <div className="col-6"></div>
-            //             <div className="col-6"></div>
-            //         </div>
-            //     </div>
-            // </div>
-        // )
 
 
     }        

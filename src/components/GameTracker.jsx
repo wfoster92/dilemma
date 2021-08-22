@@ -2,35 +2,66 @@ import React from "react";
 import Timer from "./Timer";
 
 function GameTracker(props) {
-    const {choicesLeft, noChangeRounds, maxNoChangeRounds, handleEndRoundClick, orientation} = props.stateDictForGameTracker 
+    const {choicesLeft, noChangeRounds, maxNoChangeRounds, handleEndRoundClick, orientation, squareSize} = props.stateDictForGameTracker 
     
     if (orientation === "landscape") {
+        let rowHeight = (squareSize === 80) ? {height: "calc(" + squareSize + "vh /3)"} : {height: "calc(" + squareSize + "vh /4)"};
         return (
             <div className="gameTracker">
-                <div className="row">
-                    <div className="gameTrackerLabel col-4">
-                        <p>No Change Rounds</p>
-                    </div>
-                    <div className="gameTrackerLabel col-4">
-                        <p>Time</p>
-                    </div>
-                    <div className="gameTrackerLabel col-4">
-                        <p>Choices Left</p>
+            <div>
+                {/* <div className="row align-items-top" style={rowHeight}> */}
+                    {/* <div className="gameTrackerLabel col-6">
+                        <p className="gameTrackerLandscapeText" >Strikes</p>
+                        <h1 className="gameTrackerLandscapeText">{noChangeRounds} of {maxNoChangeRounds}</h1>
+                    </div> */}
+                    {/* <div className="gameTrackerLabel col-6">
+                        <p className="gameTrackerLandscapeText">Time</p>
+                        <div className="gameTrackerLandscapeText">
+                            <Timer stateDictForTimer={props.stateDictForTimer}/>
+                        </div>
+                    </div> */}
+                    {(squareSize === 60)? 
+                        <div>
+                            <div className="row align-items-top" style={rowHeight}>
+                                <div className="gameTrackerLabel col-12">
+                                    <p className="gameTrackerLandscapeText" >Strikes</p>
+                                    <h1 className="gameTrackerLandscapeText">{noChangeRounds} of {maxNoChangeRounds}</h1>
+                                </div>
+                            </div>
+                            <div className="row align-items-center" style={rowHeight}>
+                                <div className="gameTrackerLabel col-12">
+                                    <p className="gameTrackerLandscapeText">Time</p>
+                                    <div className="gameTrackerLandscapeText">
+                                        <Timer stateDictForTimer={props.stateDictForTimer}/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> :
+                        <div className="row align-items-top" style={rowHeight}>
+                            <div className="gameTrackerLabel col-6">
+                                <p className="gameTrackerLandscapeText" >Strikes</p>
+                                <h1 className="gameTrackerLandscapeText">{noChangeRounds} of {maxNoChangeRounds}</h1>
+                            </div>
+                            <div className="gameTrackerLabel col-6">
+                                <p className="gameTrackerLandscapeText">Time</p>
+                                <div className="gameTrackerLandscapeText">
+                                    <Timer stateDictForTimer={props.stateDictForTimer}/>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+                <div className="row align-items-center" style={rowHeight}>
+                    <div className="gameTrackerLabel col-12">
+                        <p className="gameTrackerLandscapeText">Choices Left</p>
+                        <h1 className="gameTrackerLandscapeText">{choicesLeft}</h1>
                     </div>
                 </div>
-                <div className="row">
-                    <div className="gameTrackerBox col-4">
-                        <h1>{noChangeRounds} of {maxNoChangeRounds}</h1>
-                    </div>
-                    <div className="gameTrackerBox col-4">
-                        <Timer stateDictForTimer={props.stateDictForTimer}/>
-                    </div>
-                    <div className="gameTrackerBox col-4">
-                        <h1>{choicesLeft}</h1>
-                    </div>
+                <div className="row" style={rowHeight}>
+                    <div className="col-1"></div>
+                    <button id="submit" className="submitLandscape col-10" onClick={handleEndRoundClick}>End Round</button>
+                    <div className="col-1"></div>
                 </div>
-                
-                <button id="submit" className="submitLandscape" onClick={handleEndRoundClick}>End Round</button>
             </div>
         )
     } else if (orientation === "portrait") {

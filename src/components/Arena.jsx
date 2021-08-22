@@ -33,7 +33,7 @@ function Arena (props) {
         maxNoChangeRounds, squareSize, orientation, choicesLeft, setChoicesLeft, startingPAMax} = props.stateDictForArena;
     
     const stateDictForScoreTracker = {stateScoreBoard, currentMessage, difficulty, squareSize, orientation};
-    const stateDictForGameTracker = {choicesLeft, noChangeRounds, maxNoChangeRounds, handleEndRoundClick, orientation};
+    const stateDictForGameTracker = {choicesLeft, noChangeRounds, maxNoChangeRounds, handleEndRoundClick, squareSize, orientation};
     
     // set a useState for noChangeRound to pass as a prop and a local variable to keep an accurate endGame calculation
     const humanPid = 0;
@@ -202,17 +202,17 @@ function Arena (props) {
     function endGameRoutine () {
         setFinishedFirstGame(true);
         console.log(`in endGameRoutine max = ${Math.max(...scoreBoard)}`)
-        let first;
+        let msg;
         if (Math.max(...scoreBoard) > 0.5) {
             let winner = (scoreBoard[0] > scoreBoard[1]) ? 1 : 2;
             console.log(`The winner is player ${winner}`)
-            first = (winner === 1)? <h1>Wow! You Win</h1> : <h1>The Bot Wins!</h1>
+            msg = (winner === 1)? "Wow! You Win" : "The Bot Wins!"
         } else {
             console.log(`It's a draw!`)
-            first = <h1>It's a draw</h1>
+            msg = "It's a draw"
         }
         console.log(`omg it's all over\nFinal Score \nPlayer 1 ${roundNumber(100*scoreBoard[0], 2)} Player 2 ${roundNumber(100*scoreBoard[1], 2)}`);
-        setCurrentMessage(<div>{first}</div>)
+        setCurrentMessage(msg)
         setIsLive(false); 
         setIsGameOver(true);   
     }
@@ -249,9 +249,12 @@ function Arena (props) {
     }
 
     if (orientation === "landscape"){
-        let landscapeSpacerStyle = {width: "calc((100vmax - " + squareSize + "vmin)/2)", height:squareSize+"vmin"};
+        let headerHeight = 10+"vh";
+        let landscapeSpacerStyle = {width: "calc((100vmax - " + squareSize + "vh)/2)", height:squareSize+"vh"};
+        let verticalMargin = {height: "calc((100vh - " + squareSize + "vh - " + headerHeight + ") / 2)"};
         return (
             <div>
+                <div className="verticalMargin" style={verticalMargin}></div>
                 <span className="spacerLandscape" style={landscapeSpacerStyle}>
                     <GameTracker stateDictForTimer={props.stateDictForTimer} stateDictForGameTracker={stateDictForGameTracker} />
                 </span>
@@ -263,7 +266,7 @@ function Arena (props) {
                 <span className="spacerLandscape" style={landscapeSpacerStyle}>
                     <ScoreTracker stateDictForScoreTracker={stateDictForScoreTracker} msg={currentMessage}/>
                 </span>
-    
+                <div className="verticalMargin" style={verticalMargin}></div>
             </div>
         )
     } else if (orientation === "portrait"){
