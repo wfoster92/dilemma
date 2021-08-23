@@ -26,8 +26,9 @@ function App() {
     const [animationTimeouts, setAnimationTimeouts] = useState([]);
     const maxNoChangeRounds = 3;
     const [initSquareSize, initOrientation] = checkForWindowResize();
-    const [squareSize, setSquareSize] = useState(initSquareSize);
-    const [orientation, setOrientation] = useState(initOrientation);
+    const [viewportProperties, setViewportProperties] = useState([initSquareSize, initOrientation])
+    // const [squareSize, setSquareSize] = useState(initSquareSize);
+    // const [orientation, setOrientation] = useState(initOrientation);
     const [choicesLeft, setChoicesLeft] = useState(PAMax)
     const [currentRound, setCurrentRound] = useState(1);
 
@@ -39,7 +40,7 @@ function App() {
         currentMessage, setCurrentMessage, triggerNewGame, setTriggerNewGame, 
         isFirstGame, setIsFirstGame, finishedFirstGame, setFinishedFirstGame, isGameOver, setIsGameOver,
         PAMax, setPAMax, animationTimeouts, setAnimationTimeouts, secondsPerRound, setSecondsPerRound, maxNoChangeRounds, 
-        squareSize, choicesLeft, setChoicesLeft, startingPAMax, currentRound, setCurrentRound, orientation};
+        choicesLeft, setChoicesLeft, startingPAMax, currentRound, setCurrentRound, viewportProperties};
     
     const stateDictForHeader = {startNewGame, setIsGameOver, isGameOver, isLive, animationTimeouts, maxNoChangeRounds};
 
@@ -99,10 +100,11 @@ function App() {
         return newChoicesLeft;
     }
 
-    function updateSquareSize(){
+    function updateViewportProperties(){
         let [newSquareSize, newOrientation] = checkForWindowResize();
-        setSquareSize(newSquareSize);
-        setOrientation(newOrientation);
+        setViewportProperties([newSquareSize, newOrientation]);
+        // setSquareSize(newSquareSize);
+        // setOrientation(newOrientation);
     }
 
     // return the new orientation as well as the new squareSize
@@ -146,7 +148,7 @@ function App() {
         return [tempSquareSize, tempOrientation];
     }
     
-    window.addEventListener('resize', updateSquareSize);
+    window.addEventListener('resize', updateViewportProperties);
 
     // // First we get the viewport height and we multiple it by 1% to get a value for a vh unit
     // let vh = window.innerHeight * 0.01;

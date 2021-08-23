@@ -231,7 +231,11 @@ p.gameTrackerLandscapeText{
 
 .landscapeScore{
     margin-top: 1vmin;
-    font-size: 3vh;
+    font-size: 3vmin;
+}
+
+.portraitScore{
+    font-size: 3vmin;
 }
 
 
@@ -279,7 +283,7 @@ p.gameTrackerLandscapeText{
 .stWrapperPortrait{
     text-align: left;
     margin-bottom: 2vh;
-    font-size: 0;
+    /* font-size: 0; */
     margin-left: 5vw;
 }
 

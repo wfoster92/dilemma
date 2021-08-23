@@ -30,16 +30,17 @@ function Arena (props) {
         currentMessage, setCurrentMessage, triggerNewGame, setTriggerNewGame, 
         isFirstGame, setIsFirstGame, finishedFirstGame, setFinishedFirstGame,
         isGameOver, setIsGameOver, PAMax, setPAMax, animationTimeouts, setAnimationTimeouts, 
-        maxNoChangeRounds, squareSize, orientation, choicesLeft, setChoicesLeft, startingPAMax, 
+        maxNoChangeRounds, viewportProperties, choicesLeft, setChoicesLeft, startingPAMax, 
         currentRound, setCurrentRound} = props.stateDictForArena;
     
-    const stateDictForScoreTracker = {stateScoreBoard, currentMessage, difficulty, squareSize, orientation};
-    const stateDictForGameTracker = {choicesLeft, noChangeRounds, maxNoChangeRounds, handleEndRoundClick, squareSize, orientation};
+    const stateDictForScoreTracker = {stateScoreBoard, currentMessage, difficulty, viewportProperties};
+    const stateDictForGameTracker = {choicesLeft, noChangeRounds, maxNoChangeRounds, handleEndRoundClick, viewportProperties};
     
     // set a useState for noChangeRound to pass as a prop and a local variable to keep an accurate endGame calculation
     const humanPid = 0;
     const botGame = true;
     let scoreBoard = [0,0];
+    const [squareSize, orientation] = viewportProperties
 
 
 

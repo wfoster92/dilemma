@@ -3,7 +3,10 @@ import Timer from "./Timer";
 import EndRoundButton from "./EndRoundButton";
 
 function GameTracker(props) {
-    const {choicesLeft, noChangeRounds, maxNoChangeRounds, handleEndRoundClick, orientation, squareSize} = props.stateDictForGameTracker 
+    const {choicesLeft, noChangeRounds, maxNoChangeRounds, handleEndRoundClick, viewportProperties} = props.stateDictForGameTracker 
+
+    const [squareSize, orientation] = viewportProperties;
+
     console.log(`from gametracker orientation ${orientation} squareSize ${squareSize}`)
     if (orientation === "landscape") {
         let rowHeight = (squareSize === 80) ? {height: "calc(" + squareSize + "vh /3)"} : {height: "calc(" + squareSize + "vh /4)"};

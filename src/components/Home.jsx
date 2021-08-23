@@ -4,7 +4,11 @@ import Footer from "./Footer";
 function Home() {
     return (
         <div>
-        <h1>Everything's done except for the homepage :/</h1>
+        <h1>Dilemma</h1>
+        {/* <div className="row self-align-items">
+
+        </div> */}
+
         <div className="footer" style={{marginBottom:0}}>
             <Footer />
         </div>
