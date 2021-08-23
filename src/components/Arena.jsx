@@ -279,6 +279,7 @@ function Arena (props) {
                 <div>
                     <GameTracker stateDictForTimer={props.stateDictForTimer} stateDictForGameTracker={stateDictForGameTracker}/> 
                 </div>
+
                 <div className="gameboardWrapperPortrait">
                     <span className="spacer" style={portraitSpacerStyle}>
                     </span>

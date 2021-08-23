@@ -9,17 +9,6 @@ function GameTracker(props) {
         return (
             <div className="gameTracker">
             <div>
-                {/* <div className="row align-items-top" style={rowHeight}> */}
-                    {/* <div className="gameTrackerLabel col-6">
-                        <p className="gameTrackerLandscapeText" >Strikes</p>
-                        <h1 className="gameTrackerLandscapeText">{noChangeRounds} of {maxNoChangeRounds}</h1>
-                    </div> */}
-                    {/* <div className="gameTrackerLabel col-6">
-                        <p className="gameTrackerLandscapeText">Time</p>
-                        <div className="gameTrackerLandscapeText">
-                            <Timer stateDictForTimer={props.stateDictForTimer}/>
-                        </div>
-                    </div> */}
                     {(squareSize === 60)? 
                         <div>
                             <div className="row align-items-top" style={rowHeight}>
@@ -65,15 +54,17 @@ function GameTracker(props) {
             </div>
         )
     } else if (orientation === "portrait") {
-        let textContentStyle = {width: "calc(90vw - 12vh)", height: 12+"vh"}
-        return (
-            <div style={{textAlign:"start"}}>
-                <div style={{display:"inline-block"}}>
-                    <div className="row" style={textContentStyle}>
-                        <div className="col-12">
-                            <div className="row gameTrackerPortrait" style={{height: 4+"vh"}}>
+        let textContentStyle = {width: 90 +"vw", height: 12+"vh"}
+        if (squareSize === 60){
+            return(<div></div>)
+        } else if (squareSize === 100){
+            return (
+                <div className="gameTrackerPortraitWrapper"> 
+                    <div className="row gameTrackerPortrait" style={textContentStyle}>
+                        <div className="col-9">
+                            <div className="row gameTrackerPortrait align-items-center" style={{height: 4+"vh"}}>
                                 <div className="col-4">
-                                    <p>No Change Rounds</p>
+                                    <p>Strikes</p>
                                 </div>
                                 <div className="col-4">
                                     <p>Time</p>
@@ -82,7 +73,7 @@ function GameTracker(props) {
                                     <p>Choices Left</p>
                                 </div>
                             </div>
-                            <div className="row gameTrackerPortrait" style={{height: 8+"vh"}}>
+                            <div className="row gameTrackerPortrait align-items-top" style={{height: 8+"vh"}}>
                                 <div className="col-4">
                                     <h1>{noChangeRounds} of {maxNoChangeRounds}</h1>
                                 </div>
@@ -94,14 +85,14 @@ function GameTracker(props) {
                                 </div>
                             </div>
                         </div>
+                        <div className="col-3 gameTrackerPortrait" style={{display:"inline-block"}}>
+                            <button id="submit" className="submitPortrait" style={{height: 12+"vh", width: 12+"vh"}} onClick={handleEndRoundClick}>End Round</button>
+                        </div>
                     </div>
                 </div>
-                <div style={{display:"inline-block"}}>
-                    <button id="submit" className="submitPortrait" style={{height: 12+"vh", width: 12+"vh"}} onClick={handleEndRoundClick}>End Round</button>
-                </div>
-            </div>
-           
-        )
+            )
+        }
+        
     } else {
         console.log(`from gametracker component orientation = ${orientation}`);
         return <div>Error from orientation = ${orientation}</div>

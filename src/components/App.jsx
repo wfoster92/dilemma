@@ -99,9 +99,7 @@ function App() {
 
     function updateSquareSize(){
         let [newSquareSize, newOrientation] = checkForWindowResize()
-        if (newSquareSize - squareSize != 0) {
-            setSquareSize(newSquareSize);
-        }
+        setSquareSize(newSquareSize);
         setOrientation(newOrientation);
         
     }
@@ -115,7 +113,10 @@ function App() {
         let w = window.visualViewport.width;
         let h = window.visualViewport.height;
         
-        let isClose = (Math.min(w,h) * 1.4 > Math.max(w,h)) ? true : false;
+        let portraitIsClose = (w < h) && (w * 1.7 > h);
+        let landscapeIsClose = (w > h) && (h * 1.4 > w);
+        let isClose = (portraitIsClose || landscapeIsClose);
+
 
 
         // first check if the screen dimensions are within 20% of one another

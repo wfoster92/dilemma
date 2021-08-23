@@ -72,6 +72,20 @@ body {
     margin: 5vh;
 }
 
+.submitPortraitParent{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.gameTrackerPortraitWrapper{
+    margin: 0 5vw;
+}
+
+#submit{
+    font-size: x-small;
+}
+
 
 
 .spacerLandscape{
@@ -118,6 +132,19 @@ p.gameTrackerLandscapeText{
 
 .gameTrackerContent{
     margin: 50%;
+}
+
+.gameTrackerPortrait{
+    vertical-align: middle;
+    text-align: center;
+}
+
+.gameTrackerPortrait p{
+    font-size: 3vmin;
+}
+
+.gameTrackerPortrait h1{
+    font-size: 5vmin;
 }
 
 .submitLandscape, .submitPortrait {
@@ -232,6 +259,7 @@ p.gameTrackerLandscapeText{
     text-align: left;
     margin-bottom: 2vh;
     font-size: 0;
+    margin-left: 5vw;
 }
 
 .stBothPlayers{
