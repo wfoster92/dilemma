@@ -29,6 +29,8 @@ function App() {
     const [squareSize, setSquareSize] = useState(initSquareSize);
     const [orientation, setOrientation] = useState(initOrientation);
     const [choicesLeft, setChoicesLeft] = useState(PAMax)
+    const [currentRound, setCurrentRound] = useState(1);
+
 
 
 
@@ -37,7 +39,7 @@ function App() {
         currentMessage, setCurrentMessage, triggerNewGame, setTriggerNewGame, 
         isFirstGame, setIsFirstGame, finishedFirstGame, setFinishedFirstGame, isGameOver, setIsGameOver,
         PAMax, setPAMax, animationTimeouts, setAnimationTimeouts, secondsPerRound, setSecondsPerRound, maxNoChangeRounds, 
-        squareSize, choicesLeft, setChoicesLeft, startingPAMax, orientation};
+        squareSize, choicesLeft, setChoicesLeft, startingPAMax, currentRound, setCurrentRound, orientation};
     
     const stateDictForHeader = {startNewGame, setIsGameOver, isGameOver, isLive, animationTimeouts, maxNoChangeRounds};
 
@@ -60,7 +62,7 @@ function App() {
             setFinishedFirstGame(true);
         }
         setStateScoreBoard([0,0]);
-        setCurrentMessage("");
+        setCurrentMessage("Round 1");
         setIsLive(true);
         setTriggerNewGame(true);
         setIsGameOver(false);
@@ -98,10 +100,9 @@ function App() {
     }
 
     function updateSquareSize(){
-        let [newSquareSize, newOrientation] = checkForWindowResize()
+        let [newSquareSize, newOrientation] = checkForWindowResize();
         setSquareSize(newSquareSize);
         setOrientation(newOrientation);
-        
     }
 
     // return the new orientation as well as the new squareSize
@@ -115,18 +116,19 @@ function App() {
         
         let portraitIsClose = (w < h) && (w * 1.7 > h);
         let landscapeIsClose = (w > h) && (h * 1.4 > w);
-        let isClose = (portraitIsClose || landscapeIsClose);
+        let isEven = (w === h);
+        let isClose = (portraitIsClose || landscapeIsClose || isEven);
 
 
 
         // first check if the screen dimensions are within 20% of one another
         if (isClose) {
             tempSquareSize = 60;
-            // close and landscape
-            if (w > h){
+            // close and landscape or even
+            if (w >= h){
                 tempOrientation = "landscape";
             // close and portrait
-            } else if (h >= w) {
+            } else if (h > w) {
                 tempOrientation = "portrait";
             }
         }

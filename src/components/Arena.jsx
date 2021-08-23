@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Row from "./Row"
 import GameTracker from "./GameTracker";
-// import Timer from "./Timer";
+import SideContent from "./SideContent";
 import { roundNumber } from "../helperFunctions/mathHelp";
 import { makeArenaObject } from "../helperFunctions/creationHelp";
 import { makeCompleteArray } from "../helperFunctions/makeCompleteArray";
@@ -30,7 +30,8 @@ function Arena (props) {
         currentMessage, setCurrentMessage, triggerNewGame, setTriggerNewGame, 
         isFirstGame, setIsFirstGame, finishedFirstGame, setFinishedFirstGame,
         isGameOver, setIsGameOver, PAMax, setPAMax, animationTimeouts, setAnimationTimeouts, 
-        maxNoChangeRounds, squareSize, orientation, choicesLeft, setChoicesLeft, startingPAMax} = props.stateDictForArena;
+        maxNoChangeRounds, squareSize, orientation, choicesLeft, setChoicesLeft, startingPAMax, 
+        currentRound, setCurrentRound} = props.stateDictForArena;
     
     const stateDictForScoreTracker = {stateScoreBoard, currentMessage, difficulty, squareSize, orientation};
     const stateDictForGameTracker = {choicesLeft, noChangeRounds, maxNoChangeRounds, handleEndRoundClick, squareSize, orientation};
@@ -75,6 +76,10 @@ function Arena (props) {
             endGameRoutine();
         }
     }, [noChangeRounds])
+
+    useEffect(()=>{
+        setCurrentMessage(`Round ${currentRound}`);
+    }, [currentRound])
 
 
     function startNextGame() {
@@ -159,7 +164,7 @@ function Arena (props) {
         updateScoreBoard();
 
 
-        (noScoreChange()) ? setNoChangeRounds((prevState) => prevState+1) : setNoChangeRounds(0);
+        (noScoreChange()) ? setNoChangeRounds((prevState) => prevState + 1) : setNoChangeRounds(0);
         console.log(`noScoreChange ${noScoreChange()} noChangeRounds ${noChangeRounds} endroundB scoreboard ${scoreBoard}`)
 
         // set isGameOver with the boolean output of updateIsGameOver
@@ -176,6 +181,7 @@ function Arena (props) {
         setIsGameOver(false);
         setChoicesLeft(PAMax);
         setAnimationTimeouts([]);
+        setCurrentRound((prevState) => prevState + 1);
     }
 
     // check for a round with no score change
@@ -264,34 +270,60 @@ function Arena (props) {
                     })}
                 </span>
                 <span className="spacerLandscape" style={landscapeSpacerStyle}>
-                    <ScoreTracker stateDictForScoreTracker={stateDictForScoreTracker} msg={currentMessage}/>
+                    <ScoreTracker stateDictForScoreTracker={stateDictForScoreTracker}/>
                 </span>
                 <div className="verticalMargin" style={verticalMargin}></div>
             </div>
         )
-    } else if (orientation === "portrait"){
-        let portraitSpacerStyle = {width:(100-squareSize)/2 + "vmin", height:squareSize+"vmin"};
+    } else if (orientation === "portrait" && squareSize === 100){ 
         return (
             <div>
-                <div>
-                    <ScoreTracker stateDictForScoreTracker={stateDictForScoreTracker} msg={currentMessage}/>
+                <div className="trackerStyle100">
+                    <ScoreTracker stateDictForScoreTracker={stateDictForScoreTracker} />
                 </div>
-                <div>
+                <div className="endGameMessage row align-items-center endGameStyle100">
+                    <div className="col-12">
+                        <p>
+                            {currentMessage}
+                        </p>
+                    </div>
+                </div>
+                <div className="trackerStyle100">
                     <GameTracker stateDictForTimer={props.stateDictForTimer} stateDictForGameTracker={stateDictForGameTracker}/> 
                 </div>
-
                 <div className="gameboardWrapperPortrait">
-                    <span className="spacer" style={portraitSpacerStyle}>
-                    </span>
                     <span id="gameboard">
                         {completeArray.map(row => {
                                 return <Row row={row} squareSize={squareSize} handleClick={handleClick}/>
                         })}
                     </span>
-                    <span className="spacer" style={portraitSpacerStyle}>
-                    </span>
                 </div>
             </div>
+        )
+    } else if (orientation === "portrait" && squareSize < 100){
+        const stateDictForSideContent = {squareSize, currentMessage, handleEndRoundClick};
+        return (
+        <div>
+            <div >
+                <div className="trackerStyle60P row align-items-center">
+                    <ScoreTracker stateDictForScoreTracker={stateDictForScoreTracker} />
+                </div>
+            </div>
+
+            <div className="trackerStyle60P row align-items-center">
+                <GameTracker stateDictForTimer={props.stateDictForTimer} stateDictForGameTracker={stateDictForGameTracker}/> 
+            </div>
+            <div className="gameboardWrapperPortraitWithSide">
+                <span id="gameboard">
+                    {completeArray.map(row => {
+                            return <Row row={row} squareSize={squareSize} handleClick={handleClick}/>
+                    })}
+                </span>
+                <span>
+                    <SideContent stateDictForSideContent={stateDictForSideContent}/>
+                </span>
+            </div>
+        </div>
         )
     } else {
         console.log(`No orientation match... orientation = ${orientation}`);

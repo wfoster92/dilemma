@@ -36,7 +36,14 @@ body {
     position: absolute;
     bottom: 0;
 }
-
+.gameboardWrapperPortraitWithSide{
+    font-size: 0;
+    position: absolute;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 .layoutForm{
     text-align: center;
     vertical-align: middle;
@@ -82,9 +89,10 @@ body {
     margin: 0 5vw;
 }
 
-#submit{
-    font-size: x-small;
+.gameTrackerPortraitWrapper p{
+    margin:0;
 }
+
 
 
 
@@ -147,20 +155,33 @@ p.gameTrackerLandscapeText{
     font-size: 5vmin;
 }
 
-.submitLandscape, .submitPortrait {
+.endRoundSubmit{
     background-color: darkblue;
     color: lightblue;
+}
+
+.endRoundSubmitLandscape{
+    width: 100%;
+    height: 100%;
     font-size: large;
 }
 
-.submitLandscape{
-    width: 100%;
-    height: 100%;
-}
-
-.submitPortrait{
+.endRoundSubmitPortrait{
     margin-right: 0;
     margin-left: auto;
+    font-size: medium;
+}
+
+.trackerStyle100{
+    height: calc(((90vh - 100vw) * .4))
+}
+
+.trackerStyle60P{
+    height: calc((90vh - 60vw) / 2);
+}
+
+.endGameStyle100{
+    height: calc(((90vh - 100vw) * .2))
 }
 
 
@@ -291,16 +312,22 @@ p.gameTrackerLandscapeText{
     margin-bottom: 0;
 }
 
-.raceBar .endgameMessage{
+.raceBar .endGameMessage{
     flex: auto;
 } 
 
-.endgameMessage p{
+.endGameMessage p{
     margin-bottom: 0;
     font-size: 5.5vmin;
 }
 
-
+.sideContentWrapper {
+    margin: 2vw 5vw;
+    /* display: inline-block; */
+    /* display: flex;
+    align-items: center;
+    justify-content: center; */
+}
 
 .rules h1{
     margin-bottom: 16px;
@@ -311,6 +338,7 @@ p.gameTrackerLandscapeText{
     list-style-type: disc;
     list-style-position: inside;
     color: #777;
+    padding: 0;
 }
 
 .footer {
