@@ -4,8 +4,9 @@ import { playerDesigns } from "../helperFunctions/globals";
 
 function ScoreTracker(props) {
 
-    const {stateScoreBoard, currentMessage, difficulty, viewportProperties} = props.stateDictForScoreTracker;
-    const [squareSize, orientation] = viewportProperties;
+    const {stateScoreBoard, currentMessage, difficulty, squareSize, isLandscape} = props.stateDictForScoreTracker;
+    // const {stateScoreBoard, currentMessage, difficulty, viewportProperties} = props.stateDictForScoreTracker;
+    // const [squareSize, isLandscape] = viewportProperties;
 
     console.log(`from racebar stateScoreBoard ${stateScoreBoard}`)
     let score0 = roundNumber(stateScoreBoard[0] * 100, 2);
@@ -13,7 +14,7 @@ function ScoreTracker(props) {
 
     let finishLineSpace = 3;
 
-    if (orientation === "landscape") {
+    if (isLandscape) {
         let squareSizePercentage = squareSize/100;
         return (
             <div>
@@ -55,7 +56,7 @@ function ScoreTracker(props) {
                 </div>
             </div>
         )
-    } else if (orientation === "portrait") {
+    } else if (!isLandscape) {
         let totalHeight = 15;
         let verticalMargin = 1;
         let totalWidth = 90;

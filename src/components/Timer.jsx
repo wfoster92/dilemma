@@ -1,29 +1,30 @@
 import React, { useEffect } from "react"
-// import { secondsPerRound } from "../helperFunctions/globals";
 
 
 function Timer(props) {
 
-    const {timerIDs, setTimerIDs, isLive, setIsLive, triggerNewGame, secondsPerRound} = props.stateDictForTimer;
-    
-    // let display = document.getElementById("timer");
-    
+    const {timerIDs, setTimerIDs, isLive, setIsLive, triggerNewGame, secondsPerRound, setTimeLeft} = props.stateDictForTimer;
+        
 
     useEffect(() => {
+        console.log(`in isLive use effect in timer isLive ${isLive} triggerNewGame ${triggerNewGame}`)
+
         if(isLive && !triggerNewGame) {
+            console.log("in isLive use effect in timer start")
             timerIDs.forEach((timerID) => clearInterval(timerID))
             startTimer();
         } else if (!isLive) {
+            console.log("in isLive use effect in timer stop")
             stopTimer(); 
+            }   
         }
-        // console.log(`timerIDs ${timerIDs}`);
-    }
     , [isLive])
 
 
     useEffect(() => {
         // if a new game is triggered, stop the old one and start a new one
         if (triggerNewGame){
+            console.log("in triggerNewGame use effect in timer")
             stopTimer(); 
             startTimer();
         }
@@ -35,9 +36,8 @@ function Timer(props) {
         let duration = secondsPerRound;
         let start = Date.now();
         let diff, seconds;
-        let display = document.getElementById("timer");
 
-        display.textContent = duration; 
+        setTimeLeft(duration);
 
         function timer() {
             // get the number of seconds that have elapsed since 
@@ -47,11 +47,9 @@ function Timer(props) {
             seconds = Math.round(diff % 60);
     
             seconds = seconds < 10 ? "0" + seconds : seconds;
-    
-            if (display) {
-                display.textContent = seconds; 
-                console.log(`in timer ${seconds}`);
-            }
+
+            setTimeLeft(seconds);
+            console.log(`in timer ${seconds}`);
     
             if (diff <= 0) {
                 console.log(`diff is negative. Breaking \ntimerIntervalID ${intervalID}`);
@@ -71,17 +69,16 @@ function Timer(props) {
     // function stopTimer(id) {
     function stopTimer() {
         timerIDs.forEach((timerID) => clearInterval(timerID))
-        let display = document.getElementById("timer");
 
-        display.textContent = "00";
+        setTimeLeft("00");
         console.log(`in stopTimer isLive ${isLive}`);
     }
 
-    return (
-        <div>
-            <h1 id="timer">{secondsPerRound}</h1>
-        </div>
-    )
+    return (null);
+        // <div>
+        //     <h1>{secondsPerRound}</h1>
+        // </div>
+    // )
 }
 
 export default Timer;

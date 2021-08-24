@@ -30,27 +30,33 @@ function Arena (props) {
         currentMessage, setCurrentMessage, triggerNewGame, setTriggerNewGame, 
         isFirstGame, setIsFirstGame, finishedFirstGame, setFinishedFirstGame,
         isGameOver, setIsGameOver, PAMax, setPAMax, animationTimeouts, setAnimationTimeouts, 
-        maxNoChangeRounds, viewportProperties, choicesLeft, setChoicesLeft, startingPAMax, 
-        currentRound, setCurrentRound} = props.stateDictForArena;
+        maxNoChangeRounds, choicesLeft, setChoicesLeft, startingPAMax, 
+        currentRound, setCurrentRound, timeLeft,
+        // viewportProperties} = props.stateDictForArena;
+        squareSize, isLandscape} = props.stateDictForArena;
     
-    const stateDictForScoreTracker = {stateScoreBoard, currentMessage, difficulty, viewportProperties};
-    const stateDictForGameTracker = {choicesLeft, noChangeRounds, maxNoChangeRounds, handleEndRoundClick, viewportProperties};
+        // const stateDictForScoreTracker = {stateScoreBoard, currentMessage, difficulty, viewportProperties};
+        // const stateDictForGameTracker = {choicesLeft, noChangeRounds, maxNoChangeRounds, handleEndRoundClick, timeLeft, viewportProperties};
+        const stateDictForScoreTracker = {stateScoreBoard, currentMessage, difficulty, squareSize, isLandscape};
+        const stateDictForGameTracker = {choicesLeft, noChangeRounds, maxNoChangeRounds, handleEndRoundClick, timeLeft, squareSize, isLandscape};
     
     // set a useState for noChangeRound to pass as a prop and a local variable to keep an accurate endGame calculation
     const humanPid = 0;
     const botGame = true;
     let scoreBoard = [0,0];
-    const [squareSize, orientation] = viewportProperties
+    // const [squareSize, isLandscape] = viewportProperties;
 
 
 
     // isFirstGame is necessary since we need to create the completeArray before render is called
     if (isFirstGame) {
+        console.log("inside isFirstGame")
         startNextGame();
         setIsFirstGame(false);
     }
     
     useEffect(() =>{
+        console.log("inside trigger new game")
         if(finishedFirstGame && triggerNewGame) {
             console.log(`new game triggered animationTimeouts ${animationTimeouts} animationTimeouts length ${animationTimeouts.length}`)
             // if a new game is triggered, clear out the animation timeouts
@@ -100,6 +106,7 @@ function Arena (props) {
 
 
     function resetTopLevelVariables() {
+        console.log("inside resetTopLevelVariables")
         playersArray = [[],[]];
         let newPAMax = startingPAMax();
         setPAMax(newPAMax);
@@ -255,7 +262,7 @@ function Arena (props) {
         return console.log("exited handleClick!")
     }
 
-    if (orientation === "landscape"){
+    if (isLandscape){
         let headerHeight = 10+"vh";
         let landscapeSpacerStyle = {width: "calc((100vmax - " + squareSize + "vh)/2)", height:squareSize+"vh"};
         let verticalMargin = {height: "calc((100vh - " + squareSize + "vh - " + headerHeight + ") / 2)"};
@@ -276,7 +283,7 @@ function Arena (props) {
                 <div className="verticalMargin" style={verticalMargin}></div>
             </div>
         )
-    } else if (orientation === "portrait" && squareSize === 100){ 
+    } else if (!isLandscape && squareSize === 100){ 
         return (
             <div>
                 <div className="trackerStyle100">
@@ -301,7 +308,7 @@ function Arena (props) {
                 </div>
             </div>
         )
-    } else if (orientation === "portrait" && squareSize < 100){
+    } else if (!isLandscape && squareSize < 100){
         const stateDictForSideContent = {squareSize, currentMessage, handleEndRoundClick};
         return (
         <div>
@@ -327,11 +334,9 @@ function Arena (props) {
         </div>
         )
     } else {
-        console.log(`No orientation match... orientation = ${orientation}`);
+        console.log(`No orientation match... isLandscape = ${isLandscape}`);
         return (<div></div>)
     }
-
-    
 }
 
 export default Arena;

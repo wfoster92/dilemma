@@ -3,6 +3,7 @@ import Arena from "./Arena"
 import Header from "./Header";
 import Home from "./Home";
 import Rules from "./Rules";
+import Timer from "./Timer";
 import {
     BrowserRouter as Router, Switch, Route,
     Link
@@ -23,12 +24,18 @@ function App() {
     const [isGameOver, setIsGameOver] = useState(false);
     const [PAMax, setPAMax] = useState(startingPAMax());
     const [secondsPerRound, setSecondsPerRound] = useState(startingSecondsPerRound(numRows, numCols));
+    const [timeLeft, setTimeLeft] = useState(startingSecondsPerRound(numRows, numCols));
     const [animationTimeouts, setAnimationTimeouts] = useState([]);
     const maxNoChangeRounds = 3;
-    const [initSquareSize, initOrientation] = checkForWindowResize();
-    const [viewportProperties, setViewportProperties] = useState([initSquareSize, initOrientation])
+    const initClassification = checkForWindowResize();
+    const [classification, setClassification] = useState(initClassification);
+    const [squareSize, setSquareSize] = useState((initClassification % 2 === 0) ? 60 :
+                                                    (initClassification === 1) ? 80 : 100);
+    const [isLandscape, setIsLandscape] = useState((initClassification < 2) ? true : false);
+    // const [initSquareSize, initIsLandscape] = checkForWindowResize();
+    // const [viewportProperties, setViewportProperties] = useState(checkForWindowResize())
     // const [squareSize, setSquareSize] = useState(initSquareSize);
-    // const [orientation, setOrientation] = useState(initOrientation);
+    // const [isLandscape, setIsLandscape] = useState(initIsLandscape);
     const [choicesLeft, setChoicesLeft] = useState(PAMax)
     const [currentRound, setCurrentRound] = useState(1);
 
@@ -40,13 +47,14 @@ function App() {
         currentMessage, setCurrentMessage, triggerNewGame, setTriggerNewGame, 
         isFirstGame, setIsFirstGame, finishedFirstGame, setFinishedFirstGame, isGameOver, setIsGameOver,
         PAMax, setPAMax, animationTimeouts, setAnimationTimeouts, secondsPerRound, setSecondsPerRound, maxNoChangeRounds, 
-        choicesLeft, setChoicesLeft, startingPAMax, currentRound, setCurrentRound, viewportProperties};
+        choicesLeft, setChoicesLeft, startingPAMax, currentRound, setCurrentRound, timeLeft, isLandscape, squareSize};
+        // choicesLeft, setChoicesLeft, startingPAMax, currentRound, setCurrentRound, timeLeft, viewportProperties};
     
     const stateDictForHeader = {startNewGame, setIsGameOver, isGameOver, isLive, animationTimeouts, maxNoChangeRounds};
 
     // props for Timer
     const [timerIDs, setTimerIDs] = useState([]);
-    const stateDictForTimer = {timerIDs, setTimerIDs, isLive, setIsLive, triggerNewGame, secondsPerRound}; 
+    const stateDictForTimer = {timerIDs, setTimerIDs, isLive, setIsLive, triggerNewGame, secondsPerRound, setTimeLeft}; 
 
     function layoutChange(newRows, newCols, newDifficulty){
         setNumRows(parseInt(newRows));
@@ -77,6 +85,11 @@ function App() {
         }
     }, [isGameOver]);
 
+    useEffect(() => {
+        setSquareSize((classification % 2 === 0) ? 60 :
+                        (classification === 1) ? 80 : 100);
+        setIsLandscape((classification < 2) ? true : false);
+    }, [classification])
 
 
     function startingSecondsPerRound(r, c) {
@@ -101,17 +114,18 @@ function App() {
     }
 
     function updateViewportProperties(){
-        let [newSquareSize, newOrientation] = checkForWindowResize();
-        setViewportProperties([newSquareSize, newOrientation]);
+        let newClassification = checkForWindowResize();
+        setClassification(newClassification);
+        // let [newSquareSize, newIsLandscape] = checkForWindowResize();
+        // console.log(`newSquareSize ${newSquareSize} newIsLandscape ${newIsLandscape}`);
+        // setIsLandscape(newIsLandscape);
         // setSquareSize(newSquareSize);
-        // setOrientation(newOrientation);
     }
 
     // return the new orientation as well as the new squareSize
     function checkForWindowResize() {
-        let tempSquareSize, tempOrientation;
-        // let w = document.body.clientWidth;
-        // let h = document.body.clientHeight;
+        let tempSquareSize, tempIsLandscape, classification;
+
 
         let w = window.visualViewport.width;
         let h = window.visualViewport.height;
@@ -121,34 +135,51 @@ function App() {
         let isEven = (w === h);
         let isClose = (portraitIsClose || landscapeIsClose || isEven);
 
-
-
         // first check if the screen dimensions are within 20% of one another
         if (isClose) {
             tempSquareSize = 60;
             // close and landscape or even
             if (w >= h){
-                tempOrientation = "landscape";
+                tempIsLandscape = true;
+                classification = 0;
             // close and portrait
             } else if (h > w) {
-                tempOrientation = "portrait";
+                tempIsLandscape = false;
+                classification = 2;
             }
         }
-        else if (window.matchMedia("(orientation: landscape)").matches) {
+        // else if (window.matchMedia("(orientation: landscape)").matches) {
+            else if (w > h) {
             tempSquareSize = 80;
-            tempOrientation = "landscape";
+            tempIsLandscape = true;
+            classification = 1
         }
-        else if (window.matchMedia("(orientation: portrait)").matches){
+        // else if (window.matchMedia("(orientation: portrait)").matches){
+            else if (w < h) {
             tempSquareSize = 100;
-            tempOrientation = "portrait";
+            tempIsLandscape = false;
+            classification = 3
         }
 
-        console.log(`exit check window resize, width = ${w} height = ${h} isClose = ${isClose} \nsquareSize = ${tempSquareSize} orientation ${tempOrientation}`)
-
-        return [tempSquareSize, tempOrientation];
+        console.log(`exit check window resize, width = ${w} height = ${h} isClose = ${isClose} \nsquareSize = ${tempSquareSize} tempIsLandscape ${tempIsLandscape}`)
+        return classification;
+        // return [tempSquareSize, tempIsLandscape];
     }
     
+    
+    // const [resizeID, setResizeID] = useState(-1);
+    // // $(window).resize(()=>{
+    // //     clearTimeout(resizeID);
+    // //     resizeID = setTimeout(updateViewportProperties, 50);
+    // // })
+
     window.addEventListener('resize', updateViewportProperties);
+    // window.addEventListener('resize', ()=> {
+    //     clearTimeout(resizeID);
+    //     resizeID = setTimeout(updateViewportProperties, 50);
+    // });
+
+
 
     // // First we get the viewport height and we multiple it by 1% to get a value for a vh unit
     // let vh = window.innerHeight * 0.01;
@@ -165,6 +196,7 @@ function App() {
     return (
         <Router>
             <Header stateDictForHeader={stateDictForHeader}/>
+            <Timer stateDictForTimer={stateDictForTimer}/>
             <Switch>
                 <Route exact path="/">
                     <Home />
@@ -174,6 +206,7 @@ function App() {
                 </Route>
                 <Route exact path="/arena">
                     <Arena layoutSettings={[numRows, numCols, difficulty]} stateDictForArena={stateDictForArena} stateDictForTimer={stateDictForTimer}/>
+                    {/* <Arena layoutSettings={[numRows, numCols, difficulty]} stateDictForArena={stateDictForArena} stateDictForTimer={stateDictForTimer}/> */}
                 </Route>
                 <Route exact path="/setLayout">
                     <SetLayout layoutChange={layoutChange} startNewGame={startNewGame} layoutSettings={[numRows, numCols, difficulty]}/>

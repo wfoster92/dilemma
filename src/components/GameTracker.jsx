@@ -1,14 +1,14 @@
 import React from "react";
-import Timer from "./Timer";
 import EndRoundButton from "./EndRoundButton";
 
 function GameTracker(props) {
-    const {choicesLeft, noChangeRounds, maxNoChangeRounds, handleEndRoundClick, viewportProperties} = props.stateDictForGameTracker 
+    const {choicesLeft, noChangeRounds, maxNoChangeRounds, handleEndRoundClick, timeLeft, squareSize, isLandscape} = props.stateDictForGameTracker 
+    // const {choicesLeft, noChangeRounds, maxNoChangeRounds, handleEndRoundClick, timeLeft, viewportProperties} = props.stateDictForGameTracker 
 
-    const [squareSize, orientation] = viewportProperties;
+    // const [squareSize, isLandscape] = viewportProperties;
 
-    console.log(`from gametracker orientation ${orientation} squareSize ${squareSize}`)
-    if (orientation === "landscape") {
+    console.log(`from gametracker isLandscape ${isLandscape} squareSize ${squareSize}`)
+    if (isLandscape) {
         let rowHeight = (squareSize === 80) ? {height: "calc(" + squareSize + "vh /3)"} : {height: "calc(" + squareSize + "vh /4)"};
         return (
             <div className="gameTracker">
@@ -25,7 +25,7 @@ function GameTracker(props) {
                                 <div className="gameTrackerLabel col-12">
                                     <p className="gameTrackerLandscapeText">Time</p>
                                     <div className="gameTrackerLandscapeText">
-                                        <Timer stateDictForTimer={props.stateDictForTimer}/>
+                                        <p>{timeLeft}</p>
                                     </div>
                                 </div>
                             </div>
@@ -38,7 +38,7 @@ function GameTracker(props) {
                             <div className="gameTrackerLabel col-6">
                                 <p className="gameTrackerLandscapeText">Time</p>
                                 <div className="gameTrackerLandscapeText">
-                                    <Timer stateDictForTimer={props.stateDictForTimer}/>
+                                    <p>{timeLeft}</p>
                                 </div>
                             </div>
                         </div>
@@ -57,7 +57,7 @@ function GameTracker(props) {
                 </div>
             </div>
         )
-    } else if (orientation === "portrait") {
+    } else if (!isLandscape) {
         if (squareSize === 60){
             return(
             <div className="col-12">
@@ -77,7 +77,7 @@ function GameTracker(props) {
                         <h1>{noChangeRounds} of {maxNoChangeRounds}</h1>
                     </div>
                     <div className="col-4">
-                        <Timer stateDictForTimer={props.stateDictForTimer}/>
+                        <h1>{timeLeft}</h1>
                     </div>
                     <div className="col-4">
                         <h1>{choicesLeft}</h1>
@@ -106,7 +106,7 @@ function GameTracker(props) {
                                 <h1>{noChangeRounds} of {maxNoChangeRounds}</h1>
                             </div>
                             <div className="col-4">
-                                <Timer stateDictForTimer={props.stateDictForTimer}/>
+                                <h1>{timeLeft}</h1>
                             </div>
                             <div className="col-4">
                                 <h1>{choicesLeft}</h1>
@@ -120,8 +120,8 @@ function GameTracker(props) {
             )
         }
     } else {
-        console.log(`ERROR from gametracker component orientation = ${orientation} squareSize${squareSize}`);
-        return <div>Error from orientation = ${orientation}</div>
+        console.log(`ERROR from gametracker component isLandscape = ${isLandscape} squareSize${squareSize}`);
+        return <div>Error from gametracker isLandscape = ${isLandscape}</div>
     }
 }
 
