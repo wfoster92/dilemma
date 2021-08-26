@@ -78,23 +78,19 @@ function Arena (props) {
 
     useEffect(() => {
         setPAMax(startingPAMax());
-    }, [numRows, numCols])
+    }, [numRows, numCols]
+    )
     
+    // the use effect can only be triggered when the game is not live - or in between rounds
     useEffect(() => {
-        // the use effect can only be triggered when the game is not live - or in between rounds
         if (!isFirstGame && !isLive){
             endRoundC();
         }
     }, [comparisonBool])
 
 
+    // when nochangerounds changes, we can trigger the comparisonbool that will test for an endGame
     useEffect(() => {
-        // this will catch a draw scenario that the endOfGameRoutine will miss since the noChangeRounds state variable updates late.
-        // if ((noChangeRounds === maxNoChangeRounds) && !isGameOver) {
-        //     console.log(`ending the game from endGameRoutine`);
-        //     // endGameRoutine();
-        //     endRoundC();
-        // }
         console.log(`no changerounds called`)
         setComparisonBool(prevState => !prevState);
     }, [noChangeRounds])

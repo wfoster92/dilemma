@@ -36,7 +36,6 @@ function App() {
 
     const [choicesLeft, setChoicesLeft] = useState(PAMax)
     const [currentRound, setCurrentRound] = useState(1);
-    // probably a bad idea
     const [styleDict, setStyleDict] = useState({}); 
     const [classNameDict, setClassNameDict] = useState({});
     const [comparisonBool, setComparisonBool] = useState(false);
@@ -84,7 +83,6 @@ function App() {
         setIsLive(true);
         setTriggerNewGame(true);
         setIsGameOver(false);
-        // setCurrentRound(1);
     }
 
     useEffect(() =>{
@@ -119,7 +117,6 @@ function App() {
         let newChoicesLeft = (r * c < 12) ? 3 :
                         (r * c < 24) ? 4 :
                         (r * c < 36) ? 5 : 6;
-        // console.log(`Choices Left is ${newChoicesLeft}`)
         return newChoicesLeft;
     }
 
@@ -176,20 +173,6 @@ function App() {
 
     window.addEventListener('resize', updateViewportProperties);
 
-
-
-
-    // // First we get the viewport height and we multiple it by 1% to get a value for a vh unit
-    // let vh = window.innerHeight * 0.01;
-    // // Then we set the value in the --vh custom property to the root of the document
-    // document.documentElement.style.setProperty('--vh', `${vh}px`);
-
-    // // We listen to the resize event
-    // window.addEventListener('resize', () => {
-    //     // We execute the same script as before
-    //     let vh = window.innerHeight * 0.01;
-    //     document.documentElement.style.setProperty('--vh', `${vh}px`);
-    // });
     
     return (
         <Router>
