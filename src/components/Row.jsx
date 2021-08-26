@@ -5,9 +5,11 @@ import { createSegments } from "../helperFunctions/creationHelp";
 
 function Row(props) {
     let row = props.row;
-    // console.log(`from ROW, row ${row}`);
+    // let styleDict = props.styleDict;
+    // console.log(`from ROW, row ${row} styleDict ${styleDict}`);
+    // styleDict.forEach((element, idx) => console.log(`styleDict element ${element}, idx ${idx}`))
     return <div>
-        {row.map(unit => <Unit unit={unit} squareSize={props.squareSize} handleClick={props.handleClick}/>)}
+        {row.map(unit => <Unit unit={unit} styleDict={props.styleDict} classNameDict={props.classNameDict} squareSize={props.squareSize} handleClick={props.handleClick}/>)}
     </div>
 }
 

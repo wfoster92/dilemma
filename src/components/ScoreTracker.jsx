@@ -8,7 +8,7 @@ function ScoreTracker(props) {
     // const {stateScoreBoard, currentMessage, difficulty, viewportProperties} = props.stateDictForScoreTracker;
     // const [squareSize, isLandscape] = viewportProperties;
 
-    console.log(`from racebar stateScoreBoard ${stateScoreBoard}`)
+    console.log(`from scoreTracker stateScoreBoard ${stateScoreBoard}`)
     let score0 = roundNumber(stateScoreBoard[0] * 100, 2);
     let score1 = roundNumber(stateScoreBoard[1] * 100, 2);
 

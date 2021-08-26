@@ -42,6 +42,10 @@ export function makeCompleteArray(arenaObject, totalUnits){
     const completeArray = colorGradient.getArray();
     let colorArray = [];
 
+    let tempStyleDict = {}; 
+    let tempClassNameDict = {};
+
+
     // append a color onto each element in arena object
     const outputArray = arenaObject.map((row, idx) => {    
         let rowLength = row.length;
@@ -50,11 +54,24 @@ export function makeCompleteArray(arenaObject, totalUnits){
         let colorRow = (idx % 2 === 0) ? currentRow : currentRow.reverse();  
         colorArray = colorArray.concat(colorRow);
         // append a color onto each element in the row
-        row.forEach((element, i) => element.push(colorRow[i]))
+        // row.forEach((element, i) => element.push(colorRow[i]))
+        // add the color into the element's styleDictionary
+        let tempIdx, tempDict;                           
+        row.forEach((element, i) =>{
+          element.push(colorRow[i])
+          
+          tempIdx = element[2];
+          tempDict={backgroundColor: colorRow[i]}
+          tempStyleDict[tempIdx] = tempDict;
+          tempStyleDict[`${tempIdx}_0`] = tempDict;
+          tempStyleDict[`${tempIdx}_1`] = tempDict;
+          tempClassNameDict[tempIdx] = "";
+          tempClassNameDict[`${tempIdx}_0`] = "";
+          tempClassNameDict[`${tempIdx}_1`] = "";
+        });
         return row;
     })
 
     console.log(`colorArray 48th idx ${colorArray[48]}`);
-
-    return [outputArray, colorArray]
+    return [outputArray, colorArray, tempStyleDict, tempClassNameDict]
 }

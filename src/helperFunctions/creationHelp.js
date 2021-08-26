@@ -22,21 +22,25 @@ export function makeArenaObject(numRows, numCols) {
     let arenaObject = [];
     let areaArray = [];
     let rows = createSegments(numRows);
-    let totalUnits = 0;
+    let offset = 0;
 
     // create the arenaObject list
     for (let r=0; r < rows.length; r++) {
         let newCol = createSegments(numCols);
         let newRow = [];
         newCol.forEach((c, idx) => 
-        {
-            let newElement = [c, rows[r], totalUnits+idx];
+        {   
+            // width, height, index
+            let newElement = [c, rows[r], offset+idx];
+            // idx, styleDict
+            // let newElement = [offset+idx, {width:c, height: rows[r], backgroundColor:"black"}];
             areaArray.push(c * rows[r]);
             newRow.push(newElement)}
+
         )
         arenaObject.push(newRow);
-        totalUnits += newCol.length;
+        offset += newCol.length;
     }
     console.log(`areaArray ${areaArray}`)
-    return [arenaObject, totalUnits, areaArray];
+    return [arenaObject, areaArray];
 }

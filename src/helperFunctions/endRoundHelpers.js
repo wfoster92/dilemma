@@ -1,5 +1,5 @@
 import { playersArray, colorArray, areaArray, controlArray, isPAFull } from "../components/Arena"
-import { updateSingleColor, updateSingleImage, animateStepUpdateHalfImage, removeClassFromElementHalf } from "./elementModifiers";
+import { updateSingleColor, animateStepUpdateHalfImage } from "./elementModifiers";
 
 
 export function doAnimation(interval) {
@@ -30,7 +30,6 @@ export function doAnimation(interval) {
         // if pid0 entered nothing
         } else if (isNaN(elementId1)) {
             if (!claimed.includes(elementId0)){
-                
                 setTimeouts.push(setTimeout(animateStepUpdateHalfImage, delay, elementId0, 0, 1)) && claimed.push(elementId0);
             }
         // if pid0 and pid1 entered the same value
@@ -84,38 +83,37 @@ export function updateControlArray() {
                 if (!seen.includes(elementId1)){
                     data[elementId1] = 1
                     seen.push(elementId1)
-                    updateSingleImage(elementId1, 1);
+                    // updateSingleImage(elementId1, 1);
                 }
             // if pid0 entered nothing
             } else if (isNaN(elementId1)) {
                 if (!seen.includes(elementId0)){
                     data[elementId0] = 0
                     seen.push(elementId0)
-                    updateSingleImage(elementId0, 0);
+                    // updateSingleImage(elementId0, 0);
                 }
                 // if pid0 and pid1 entered the same value
             } else if (!isNaN(elementId0) && !isNaN(elementId1)) {
                 if (elementId0===elementId1){
                     // remove the classes from do animation
-                    removeClassFromElementHalf(elementId0, 0) 
-                    removeClassFromElementHalf(elementId1, 1)
+                    // removeClassFromElementHalf(elementId0, 0) 
+                    // removeClassFromElementHalf(elementId1, 1)
                     // reset color for next round
-                    updateSingleColor(elementId0, colorArray[elementId0], 1);
+                    // updateSingleColor(elementId0, colorArray[elementId0], 1);
                 } else {
                     if (!seen.includes(elementId0)) {
                         data[elementId0] = 0
                         seen.push(elementId0)
-                        updateSingleImage(elementId0, 0);
+                        // updateSingleImage(elementId0, 0);
                     }
                     if (!seen.includes(elementId1)) {
                         data[elementId1] = 1
                         seen.push(elementId1)
-                        updateSingleImage(elementId1, 1);
+                        // updateSingleImage(elementId1, 1);
                     } 
                 }
             }
             console.log(`end rounds ${i} update control array playersArray ${playersArray}`)
-
         }
     console.log(`from update control array controlArray copy = ${data}`)
     console.log(`end update control array playersArray ${playersArray}`)
@@ -223,10 +221,13 @@ export function updatePlayersArray(elementID, pid, PAMax){
     }
     console.log(`playersArray after ${data} elementToRemove ${elementToRemove}`);
 
+    let toRemoveDict = {}
     // if there is an element remove from the players list (a positive elementToRemove variable) set its color back to the original
-    (elementToRemove > -1) && updateSingleColor(elementToRemove, colorArray[elementToRemove], 1);
+    if(elementToRemove > -1){
+        toRemoveDict = updateSingleColor(elementToRemove, colorArray[elementToRemove], 1);
+    }
     // console.log("exiting update players array");
-    return data
+    return [data, toRemoveDict]
 }
 
 function updateIsPAFull(pid, aBoolean) {

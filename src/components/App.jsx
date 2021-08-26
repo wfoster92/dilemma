@@ -13,6 +13,7 @@ import SetLayout from "./SetLayout";
 function App() {
     const [numRows, setNumRows] = useState(3);
     const [numCols, setNumCols] = useState(3);
+    const [numUnits, setNumUnits] = useState(numRows * numCols);
     const [difficulty, setDifficulty] = useState(4);
 
     const [stateScoreBoard, setStateScoreBoard] = useState([0,0]);
@@ -32,12 +33,16 @@ function App() {
     const [squareSize, setSquareSize] = useState((initClassification % 2 === 0) ? 60 :
                                                     (initClassification === 1) ? 80 : 100);
     const [isLandscape, setIsLandscape] = useState((initClassification < 2) ? true : false);
-    // const [initSquareSize, initIsLandscape] = checkForWindowResize();
-    // const [viewportProperties, setViewportProperties] = useState(checkForWindowResize())
-    // const [squareSize, setSquareSize] = useState(initSquareSize);
-    // const [isLandscape, setIsLandscape] = useState(initIsLandscape);
+
     const [choicesLeft, setChoicesLeft] = useState(PAMax)
     const [currentRound, setCurrentRound] = useState(1);
+    // probably a bad idea
+    const [styleDict, setStyleDict] = useState({}); 
+    const [classNameDict, setClassNameDict] = useState({});
+    const [comparisonBool, setComparisonBool] = useState(false);
+    const [noChangeRounds, setNoChangeRounds] = useState(0);
+
+
 
 
 
@@ -47,8 +52,9 @@ function App() {
         currentMessage, setCurrentMessage, triggerNewGame, setTriggerNewGame, 
         isFirstGame, setIsFirstGame, finishedFirstGame, setFinishedFirstGame, isGameOver, setIsGameOver,
         PAMax, setPAMax, animationTimeouts, setAnimationTimeouts, secondsPerRound, setSecondsPerRound, maxNoChangeRounds, 
-        choicesLeft, setChoicesLeft, startingPAMax, currentRound, setCurrentRound, timeLeft, isLandscape, squareSize};
-        // choicesLeft, setChoicesLeft, startingPAMax, currentRound, setCurrentRound, timeLeft, viewportProperties};
+        choicesLeft, setChoicesLeft, startingPAMax, currentRound, setCurrentRound, timeLeft, isLandscape, squareSize, 
+        numUnits, styleDict, setStyleDict, classNameDict, setClassNameDict, comparisonBool, setComparisonBool,
+        noChangeRounds, setNoChangeRounds};
     
     const stateDictForHeader = {startNewGame, setIsGameOver, isGameOver, isLive, animationTimeouts, maxNoChangeRounds};
 
@@ -57,8 +63,11 @@ function App() {
     const stateDictForTimer = {timerIDs, setTimerIDs, isLive, setIsLive, triggerNewGame, secondsPerRound, setTimeLeft}; 
 
     function layoutChange(newRows, newCols, newDifficulty){
-        setNumRows(parseInt(newRows));
-        setNumCols(parseInt(newCols));
+        newRows = parseInt(newRows);
+        newCols = parseInt(newCols);
+        setNumRows(newRows);
+        setNumCols(newCols);
+        setNumUnits(newRows * newCols);
         setDifficulty(parseInt(newDifficulty));
         setSecondsPerRound(startingSecondsPerRound(newRows, newCols));
         setChoicesLeft(startingChoicesLeft(newRows, newCols));
@@ -75,6 +84,7 @@ function App() {
         setIsLive(true);
         setTriggerNewGame(true);
         setIsGameOver(false);
+        // setCurrentRound(1);
     }
 
     useEffect(() =>{
@@ -116,10 +126,6 @@ function App() {
     function updateViewportProperties(){
         let newClassification = checkForWindowResize();
         setClassification(newClassification);
-        // let [newSquareSize, newIsLandscape] = checkForWindowResize();
-        // console.log(`newSquareSize ${newSquareSize} newIsLandscape ${newIsLandscape}`);
-        // setIsLandscape(newIsLandscape);
-        // setSquareSize(newSquareSize);
     }
 
     // return the new orientation as well as the new squareSize
@@ -167,17 +173,9 @@ function App() {
     }
     
     
-    // const [resizeID, setResizeID] = useState(-1);
-    // // $(window).resize(()=>{
-    // //     clearTimeout(resizeID);
-    // //     resizeID = setTimeout(updateViewportProperties, 50);
-    // // })
 
     window.addEventListener('resize', updateViewportProperties);
-    // window.addEventListener('resize', ()=> {
-    //     clearTimeout(resizeID);
-    //     resizeID = setTimeout(updateViewportProperties, 50);
-    // });
+
 
 
 

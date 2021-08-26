@@ -26,9 +26,17 @@ body {
     display:inline-block;
 }
 
-#gameboard > * {
-    margin: auto;
+#gameboard span{
+    display:inline-block;
     font-size: 0;
+    margin: auto;
+
+}
+
+#gameboard div{
+    display: block;
+    font-size: 0;
+    margin: auto;
 }
 
 .gameboardWrapperPortrait{
