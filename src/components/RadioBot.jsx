@@ -7,8 +7,8 @@ function RadioBot(props) {
     let num = props.num 
     let botDescriptions = {
         1: "Selects at Random",
-        2: "Better Random Bot",
-        3: "Best Random Bot",
+        2: "A Better Random Bot",
+        3: "The Best Random Bot",
         4: "Greedy, Not Random"
     }
 

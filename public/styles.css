@@ -69,21 +69,22 @@ body {
 .layoutSegment{
     display: grid;
     align-content: space-evenly;
+    margin-top: 2vh;
 }
 
 .layoutSegmentBots{
-    height: 30vh;
+    height: 35vh;
 }
 
 .layoutSegmentGrid{
-    height: 20vh
+    height: 35vh;
 }
 
 .layoutSubmit, .layoutLabel{
-    height: 10vh;
+    height: 10vmin;
  }
 
-.layoutLabel h1{
+.layoutLabel{
     font-size: 6vmin;
 }
 
@@ -209,11 +210,11 @@ p.gameTrackerLandscapeText{
     height: 0;
 }
 
-.radioBot p{
-    width: 5vmin;
-    word-wrap: normal;
-    text-align: center;
+.radioBot{
+    width: 90vw;
+    margin-left: 5vw;
 }
+
 
 .radioRow span{
     margin:0 2px;
@@ -228,6 +229,15 @@ p.gameTrackerLandscapeText{
     margin-top: 1vmin;
     width: 20vmin;
     height: 20vmin;   
+}
+
+/* CHECKED STYLES */
+[type=radio]:checked + .botProfile{
+    outline: 2px solid rgb(108, 108, 114);
+}
+
+.botProfile span{
+    font-size: 3.25vmin;
 }
 
 /* landscapes */
@@ -270,14 +280,7 @@ p.gameTrackerLandscapeText{
     height: 5vmin;
 }
 
-/* CHECKED STYLES */
-[type=radio]:checked + .botProfile{
-    outline: 2px solid rgb(108, 108, 114);
-}
 
-.botProfile span{
-    font-size: 3.5vmin;
-}
 
 .radioLabel{
     font-size: 5vmin;
