@@ -34,17 +34,17 @@ function ScoreTracker(props) {
                     <div className="raceChart">
                         <div className="row" style={{height:50 * squareSizePercentage +"vh"}}>
                             <div className={`col-6 d-flex justify-content-center`}>
-                                <div className ={`${playerDesigns[0]} raceBarWidthLandscape`} style={{height:Math.min(score0, 50+finishLineSpace) * squareSizePercentage+"vh"}}></div>
+                                <div className ={`${playerDesigns[0]} raceBarWidthLandscape`} style={{height:Math.min(score0, 50+finishLineSpace) * squareSizePercentage+"vh", zIndex:1, position:"absolute"}}></div>
                             </div>
                             <div className={`col-6 d-flex justify-content-center`}>
-                                <div className ={`${playerDesigns[1]} raceBarWidthLandscape`} style={{height:Math.min(score1, 50+finishLineSpace) * squareSizePercentage+"vh"}}></div>
+                                <div className ={`${playerDesigns[1]} raceBarWidthLandscape`} style={{height:Math.min(score1, 50+finishLineSpace) * squareSizePercentage+"vh", zIndex:1, position:"absolute"}}></div>
                             </div>
                         </div>
                         
                         <div className="row" style={{height:finishLineSpace * squareSizePercentage +"vh"}}>
                             <div className="col-1"></div>
-                            {/* zIndex of -1 so the player can cross the finish line */}
-                            <div className="col-10 finishLine" style={{zIndex:-1}} ></div>
+                            {/* gave element a lower zIndex so the racebar can cross the finish line */}
+                            <div className="col-10 finishLine" style={{zIndex:0}} ></div>
                             <div className="col-1"></div>
                         </div>
                     </div>
@@ -65,9 +65,9 @@ function ScoreTracker(props) {
         let scoreHeight = (totalHeight*(0.25)) / 2+"vh";
 
         let raceBarStyle0 = {width: "calc((" + Math.min(score0, 50 + finishLineSpace) + "*(" + totalWidth + "vw - " + iconSide + " - " + iconSpacing + ")) / (50 + " + finishLineSpace + "))", 
-                height: iconSide, zIndex:1};
+                height: iconSide, zIndex:1, position:"absolute"};
         let raceBarStyle1 = {width: "calc((" + Math.min(score1, 50 + finishLineSpace) + "*(" + totalWidth + "vw - " + iconSide + " - " + iconSpacing + ")) / (50 + " + finishLineSpace + "))",
-                height: iconSide, zIndex:1};
+                height: iconSide, zIndex:1, position:"absolute"};
 
         let stWrapperStyle = {width: totalWidth + "vw", height: totalHeight + verticalMargin + "vh"};
         let stPlayerStyle = {width: "calc(" + (50 / (50 + finishLineSpace)) + "*(" + totalWidth + "vw - " + iconSide + " - " + iconSpacing + ") + " + iconSide + " + " + iconSpacing + ")", 
@@ -75,7 +75,7 @@ function ScoreTracker(props) {
         let stBothPlayersStyle = {width: "calc(" + (50 / (50 + finishLineSpace)) + "*(" + totalWidth + "vw - " + iconSide + " - " + iconSpacing + ") + " + iconSide + " + " + iconSpacing + ")", 
                 height: totalHeight + verticalMargin+"vh"};
         let finishLineStyle = {width: "calc(" + (finishLineSpace / (50 + finishLineSpace)) + "*(" + totalWidth + "vw - " + iconSide + " - " + iconSpacing + "))", 
-                height:totalHeight+verticalMargin+"vh", zIndex:-1, position:"absolute"}
+                height:totalHeight+verticalMargin+"vh", zIndex:0, position:"absolute"}
         
 
         return (
