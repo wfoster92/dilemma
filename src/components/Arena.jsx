@@ -4,11 +4,9 @@ import GameTracker from "./GameTracker";
 import SideContent from "./SideContent";
 import Animation from "./Animation";
 import EndRoundUpdateArena from "./EndRoundUpdateArena";
-import { roundNumber } from "../helperFunctions/mathHelp";
 import { makeArenaObject } from "../helperFunctions/creationHelp";
 import { makeCompleteArray } from "../helperFunctions/makeCompleteArray";
 import { makeBotMove, updatePlayersArray, updateControlArray} from "../helperFunctions/endRoundHelpers"
-// import { doAnimation, updateControlArray, makeBotMove, updatePlayersArray} from "../helperFunctions/endRoundHelpers"
 import { updateColors } from "../helperFunctions/elementModifiers";
 import { resetColors } from "../helperFunctions/resetGameHelp";
 import ScoreTracker from "./ScoreTracker";
@@ -43,7 +41,7 @@ function Arena (props) {
         const stateDictForEndRoundUpdateArena = {classNameDict, setClassNameDict, styleDict, setStyleDict};
         const stateDictForScoreTracker = {stateScoreBoard, currentMessage, difficulty, squareSize, isLandscape};
         const stateDictForGameTracker = {choicesLeft, noChangeRounds, maxNoChangeRounds, handleEndRoundClick, timeLeft, squareSize, isLandscape};
-    
+
     // set a useState for noChangeRound to pass as a prop and a local variable to keep an accurate endGame calculation
     const humanPid = 0;
     const botGame = true;
@@ -209,9 +207,8 @@ function Arena (props) {
         console.log(`after updateControl Array, playersArray ${playersArray}`);
         
         updateScoreBoard();
-
-        // in the case where prevState was 0 and next state is 0, noChangeRounds will not change. 
-        // Here we call setComparisonBool in the conditional because it will not be triggered by the noChangeRounds useEffect
+        // In the case where noChangeRounds was 0 and next state is 0, noChangeRounds will not trigger a useEffect
+        // We must call endRoundC manually in the case above instead of via useEffect. This is seen with the callEndRoundC boolean
         let callEndRoundC = false;
         (noScoreChange()) ? setNoChangeRounds((prevState) => prevState + 1) : 
             setNoChangeRounds((prevState) => {
@@ -316,6 +313,13 @@ function Arena (props) {
         return console.log("exited handleClick!")
     }
 
+    // const stateDictForGameBoard =  {completeArray, styleDict, classNameDict, squareSize, handleClick};
+
+    let gameBoard = (<span id="gameboard">
+                        {completeArray.map(row => {
+                        return <Row row={row} styleDict={styleDict} classNameDict={classNameDict} squareSize={squareSize} handleClick={handleClick}/>
+                        })}
+                    </span>)
 
 
     if (isLandscape){
@@ -329,12 +333,7 @@ function Arena (props) {
                 <span className="spacerLandscape" style={landscapeSpacerStyle}>
                     <GameTracker stateDictForTimer={props.stateDictForTimer} stateDictForGameTracker={stateDictForGameTracker} />
                 </span>
-                {/* {gb} */}
-                <span id="gameboard">
-                    {completeArray.map(row => {
-                        return <Row row={row} styleDict={styleDict} classNameDict={classNameDict} squareSize={squareSize} handleClick={handleClick}/>
-                    })}
-                </span>
+                {gameBoard}
                 <span className="spacerLandscape" style={landscapeSpacerStyle}>
                     <ScoreTracker stateDictForScoreTracker={stateDictForScoreTracker}/>
                 </span>
@@ -358,12 +357,7 @@ function Arena (props) {
                     <GameTracker stateDictForTimer={props.stateDictForTimer} stateDictForGameTracker={stateDictForGameTracker}/> 
                 </div>
                 <div className="gameboardWrapperPortrait">
-                    {/* {gb} */}
-                    <span id="gameboard">
-                        {completeArray.map(row => {
-                        return <Row row={row} styleDict={styleDict} classNameDict={classNameDict} squareSize={squareSize} handleClick={handleClick}/>
-                        })}
-                    </span>
+                    {gameBoard}
                 </div>
             </div>
         )
@@ -371,31 +365,21 @@ function Arena (props) {
         const stateDictForSideContent = {squareSize, currentMessage, handleEndRoundClick};
         return (
         <div>
-            <div >
-                <div className="trackerStyle60P row align-items-center">
-                    <ScoreTracker stateDictForScoreTracker={stateDictForScoreTracker} />
-                </div>
+            <div className="trackerStyle60P row align-items-center">
+                <ScoreTracker stateDictForScoreTracker={stateDictForScoreTracker} />
             </div>
 
             <div className="trackerStyle60P row align-items-center">
                 <GameTracker stateDictForTimer={props.stateDictForTimer} stateDictForGameTracker={stateDictForGameTracker}/> 
             </div>
             <div className="gameboardWrapperPortraitWithSide">
-                {/* {gb} */}
-                <span id="gameboard">
-                    {completeArray.map(row => {
-                            return <Row row={row} styleDict={styleDict} classNameDict={classNameDict} squareSize={squareSize} handleClick={handleClick}/>
-                    })}
-                </span>
+                {gameBoard}
                 <span>
                     <SideContent stateDictForSideContent={stateDictForSideContent}/>
                 </span>
             </div>
         </div>
         )
-    } else {
-        console.log(`No orientation match... isLandscape = ${isLandscape}`);
-        return (<div></div>)
     }
 }
 

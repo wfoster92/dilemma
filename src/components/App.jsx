@@ -133,7 +133,7 @@ function App() {
         let w = window.visualViewport.width;
         let h = window.visualViewport.height;
         
-        let portraitIsClose = (w < h) && (w * 1.7 > h);
+        let portraitIsClose = (w < h) && (w * 1.75 > h);
         let landscapeIsClose = (w > h) && (h * 1.4 > w);
         let isEven = (w === h);
         let isClose = (portraitIsClose || landscapeIsClose || isEven);

@@ -61,7 +61,7 @@ function GameTracker(props) {
         if (squareSize === 60){
             return(
             <div className="col-12">
-                <div className="row gameTrackerPortrait align-items-center" style={{height: 4+"vh"}}>
+                <div className="row gameTrackerPortrait align-items-bottom" style={{height: 4+"vh"}}>
                     <div className="col-4">
                         <p>Strikes</p>
                     </div>
@@ -72,7 +72,7 @@ function GameTracker(props) {
                         <p>Choices Left</p>
                     </div>
                 </div>
-                <div className="row gameTrackerPortrait align-items-top" style={{height: 8+"vh"}}>
+                <div className="row gameTrackerPortrait align-items-center" style={{height: 8+"vh"}}>
                     <div className="col-4">
                         <h1>{noChangeRounds} of {maxNoChangeRounds}</h1>
                     </div>

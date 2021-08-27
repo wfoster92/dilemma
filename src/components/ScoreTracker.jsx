@@ -60,9 +60,9 @@ function ScoreTracker(props) {
         let totalHeight = 15;
         let verticalMargin = 1;
         let totalWidth = 90;
-        let iconSide = (totalHeight*(0.7)) / 2+"vh";
+        let iconSide = (totalHeight*(0.6)) / 2+"vh";
         let iconSpacing = "1vw";
-        let scoreHeight = (totalHeight*(0.3)) / 2+"vh";
+        let scoreHeight = (totalHeight*(0.25)) / 2+"vh";
 
         let raceBarStyle0 = {width: "calc((" + Math.min(score0, 50 + finishLineSpace) + "*(" + totalWidth + "vw - " + iconSide + " - " + iconSpacing + ")) / (50 + " + finishLineSpace + "))", 
                 height: iconSide, zIndex:1};
@@ -70,7 +70,6 @@ function ScoreTracker(props) {
                 height: iconSide, zIndex:1};
 
         let stWrapperStyle = {width: totalWidth + "vw", height: totalHeight + verticalMargin + "vh"};
-        let stHorizontalMargin = {width: (100-totalWidth)/2 + "vw", height: totalHeight + verticalMargin + "vh"}
         let stPlayerStyle = {width: "calc(" + (50 / (50 + finishLineSpace)) + "*(" + totalWidth + "vw - " + iconSide + " - " + iconSpacing + ") + " + iconSide + " + " + iconSpacing + ")", 
                 height:(totalHeight / 2) +"vh"};
         let stBothPlayersStyle = {width: "calc(" + (50 / (50 + finishLineSpace)) + "*(" + totalWidth + "vw - " + iconSide + " - " + iconSpacing + ") + " + iconSide + " + " + iconSpacing + ")", 
@@ -81,32 +80,30 @@ function ScoreTracker(props) {
 
         return (
             //  move style to css when done 
-            <div>
-                <div className="stWrapperPortrait" style={stWrapperStyle}>
-                    <div className="stBothPlayers" style={stBothPlayersStyle}>
-                        <div className="stPlayerPortrait" style={stPlayerStyle}>
-                            <div style={{width: iconSide, height: totalHeight/2 + "vh"}} >
-                                <img style={{width: iconSide, height: iconSide}} src="/images/avatar.png"/>
-                                <p className="portraitScore" style={{width: iconSide, height: scoreHeight}}>{score0}</p>
-                            </div>
-                            <div className="raceBarStyle">
-                                <span className={playerDesigns[0]} style={raceBarStyle0}>
-                                </span>
-                            </div>
+            <div className="stWrapperPortrait" style={stWrapperStyle}>
+                <div className="stBothPlayers" style={stBothPlayersStyle}>
+                    <div className="stPlayerPortrait" style={stPlayerStyle}>
+                        <div style={{width: iconSide, height: totalHeight/2 + "vh"}} >
+                            <img style={{width: iconSide, height: iconSide}} src="/images/avatar.png"/>
+                            <p className="portraitScore" style={{width: iconSide, height: scoreHeight}}>{score0}</p>
                         </div>
-                        <div className="stPlayerPortrait stPlayerPortrait-bottom" style={stPlayerStyle}>
-                            <div style={{width: iconSide}}> 
-                                <img style={{width: iconSide, height: iconSide}} src={`/images/robot${difficulty}.png`}/>
-                                <p className="portraitScore" style={{width: iconSide, height: scoreHeight}} >{score1}</p>
-                            </div>
-                            <div className="raceBarStyle">
-                                <span className={playerDesigns[1]} style={raceBarStyle1}>
-                                </span>
-                            </div>
+                        <div className="raceBarStyle">
+                            <span className={playerDesigns[0]} style={raceBarStyle0}>
+                            </span>
                         </div>
                     </div>
-                    <div className="finishLine finishLinePortrait stPlayerPortrait" style={finishLineStyle}></div>
+                    <div className="stPlayerPortrait stPlayerPortrait-bottom" style={stPlayerStyle}>
+                        <div style={{width: iconSide}}> 
+                            <img style={{width: iconSide, height: iconSide}} src={`/images/robot${difficulty}.png`}/>
+                            <p className="portraitScore" style={{width: iconSide, height: scoreHeight}} >{score1}</p>
+                        </div>
+                        <div className="raceBarStyle">
+                            <span className={playerDesigns[1]} style={raceBarStyle1}>
+                            </span>
+                        </div>
+                    </div>
                 </div>
+                <div className="finishLine finishLinePortrait stPlayerPortrait" style={finishLineStyle}></div>
             </div>
         )
 
