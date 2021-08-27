@@ -83,8 +83,16 @@ body {
     height: 10vh;
  }
 
+.layoutLabel h1{
+    font-size: 6vmin;
+}
+
 .layoutSubmit{
     margin: 5vh;
+}
+
+.layoutSubmit input{
+    font-size: 4vmin;
 }
 
 .submitPortraitParent{
@@ -267,6 +275,23 @@ p.gameTrackerLandscapeText{
     outline: 2px solid rgb(108, 108, 114);
 }
 
+.botProfile span{
+    font-size: 3.5vmin;
+}
+
+.radioLabel{
+    font-size: 5vmin;
+    margin-bottom: 2vmin;
+}
+
+.radioSpan label{
+    font-size: 4vmin;
+}
+
+.radioSpan input{
+    height: 4vmin;
+    width: 4vmin;
+}
 
 .gameTracker {
     margin:auto;
@@ -335,10 +360,7 @@ p.gameTrackerLandscapeText{
 
 .sideContentWrapper {
     margin: 2vw 5vw;
-    /* display: inline-block; */
-    /* display: flex;
-    align-items: center;
-    justify-content: center; */
+
 }
 
 .rules h1{
@@ -351,6 +373,13 @@ p.gameTrackerLandscapeText{
     list-style-position: inside;
     color: #777;
     padding: 0;
+    width: 90vw;
+    margin-left:5vw;
+    text-align: left;
+}
+
+.rules li {
+    margin-bottom: 4px;
 }
 
 .footer {
