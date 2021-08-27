@@ -24,28 +24,33 @@ body {
 #gameboard{
     background-color:white;
     display:inline-block;
+    font-size: 0;
+}
+
+#gameboard *{
+    font-size: 0;
 }
 
 #gameboard span{
     display:inline-block;
-    font-size: 0;
+    /* font-size: 0; */
     margin: auto;
 
 }
 
 #gameboard div{
     display: block;
-    font-size: 0;
+    /* font-size: 0; */
     margin: auto;
 }
 
 .gameboardWrapperPortrait{
-    font-size: 0;
+    /* font-size: 0; */
     position: absolute;
     bottom: 0;
 }
 .gameboardWrapperPortraitWithSide{
-    font-size: 0;
+    /* font-size: 0; */
     position: absolute;
     bottom: 0;
     display: flex;
@@ -385,6 +390,17 @@ p.gameTrackerLandscapeText{
     margin-bottom: 4px;
 }
 
+#homeImg{
+    width: 50vmin;
+    height: 50vmin;
+    margin-top: 10vmin;
+}
+
+.home h1{
+    font-size: 10vmin;
+}
+
+
 .footer {
     position: fixed;
     bottom: 5vmin;
@@ -393,7 +409,9 @@ p.gameTrackerLandscapeText{
     left: 0;
     right: 0;
 }
-
+.footer, .footer > a{
+    font-size: 3.5vmin;
+}
 
 
 /* Pattern Ideas http://projects.verou.me/css3patterns/
