@@ -42,13 +42,13 @@ body {
     margin: auto;
 }
 
-.gameboardWrapperPortrait{
+/* .gameboardWrapperPortrait{
     position: absolute;
     bottom: 0;
-}
+} */
 .gameboardWrapperPortraitWithSide{
-    position: absolute;
-    bottom: 0;
+    /* position: absolute; */
+    /* bottom: 0; */
     display: flex;
     align-items: center;
     justify-content: center;
