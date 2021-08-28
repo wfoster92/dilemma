@@ -3,14 +3,14 @@ import { Link } from "react-router-dom"
 
 
 function Header (props) {
-    const {startNewGame, setIsGameOver, isGameOver, isLive, animationTimeouts, maxNoChangeRounds} = props.stateDictForHeader
+    const {startNewGame, setIsGameOver, isGameOver, isLive, animationTimeouts} = props.stateDictForHeader
 
     function endGame() {
 
-        setIsGameOver(true);
         animationTimeouts.forEach((timeout) => {
             clearTimeout(timeout);
         });
+        setIsGameOver(true);
         console.log(`from header isGameOver ${isGameOver} isLive ${isLive}`);
     }
 

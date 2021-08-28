@@ -50,7 +50,6 @@ function Animation(props){
         if (isNaN(elementId0)) {
             console.log(`elementId0 ${elementId0} is not a number`)
             if (!claimed.includes(elementId1)){
-                
                 setTimeouts.push(
                     setTimeout(callAnimateStepUpdateHalfImage, delay, elementId1, 1, 1)
                     ) && claimed.push(elementId1);
@@ -83,9 +82,12 @@ function Animation(props){
         } 
         delaySegments++;
     }
+
+    // add timeouts to the animationTimeouts array
+    // setAnimationTimeouts((prevState) => [...prevState, ...setTimeouts])
     
     console.log(`end of do animation playersArray ${playersArray}`)
-    return(null);
+    return(setTimeouts);
   
 }
 export default Animation;

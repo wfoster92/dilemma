@@ -126,6 +126,7 @@ function Arena (props) {
         controlArray = makeNewControlArray(numUnits);
         resetTopLevelVariables();
         if (animationTimeouts.length > 0){
+            animationTimeouts.forEach(timeout => clearTimeout(timeout));
             setAnimationTimeouts([]);
         }
         setTriggerNewGame(false);
@@ -188,12 +189,9 @@ function Arena (props) {
 
         let totalDelay = interval * (1 + Math.max(playersArray[0].length, playersArray[1].length));
 
-        Animation({stateDictForAnimation:stateDictForAnimation});
-        // <Animation stateDictForAnimation={stateDictForAnimation}/>
-
-        // let [totalDelay, outputAnimationTimeouts] = doAnimation(interval);
-        // setAnimationTimeouts([...outputAnimationTimeouts]);
-
+        let timeouts = Animation({stateDictForAnimation:stateDictForAnimation});
+        setAnimationTimeouts((prevState) => [...prevState, ...timeouts]);
+        
         console.log(`about to runRest, interval ${interval} playersArray ${playersArray}`)
         let roundBTimeoutID = setTimeout(endRoundB, totalDelay);
         setAnimationTimeouts((prevState) => [...prevState, roundBTimeoutID]);
