@@ -374,9 +374,21 @@ p.gameTrackerLandscapeText{
     list-style-position: inside;
     color: #777;
     padding: 0;
-    width: 90vw;
-    margin-left:5vw;
     text-align: left;
+}
+
+@media only screen and (max-width:767px){
+    .rules ul{
+        width: 90vw;
+        margin-left:5vw;
+    }
+}
+@media only screen and (min-width:768px){
+    .rules ul{
+        width: 60vw;
+        margin-left:20vw;
+        text-align: center;
+    }
 }
 
 .rules li {
@@ -384,9 +396,10 @@ p.gameTrackerLandscapeText{
 }
 
 #homeImg{
-    width: 50vmin;
-    height: 50vmin;
-    margin-top: 10vmin;
+    width: 60vmin;
+    height: 60vmin;
+    margin-top: 2vmin;
+    margin-bottom: 2vmin;
 }
 
 .home h1{
@@ -396,7 +409,7 @@ p.gameTrackerLandscapeText{
 
 .footer {
     position: fixed;
-    bottom: 5vmin;
+    bottom: 2vmin;
 
     /* And if you want the div to be full-width: */
     left: 0;

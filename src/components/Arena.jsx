@@ -311,7 +311,6 @@ function Arena (props) {
         return console.log("exited handleClick!")
     }
 
-    // const stateDictForGameBoard =  {completeArray, styleDict, classNameDict, squareSize, handleClick};
 
     let gameBoard = (<span id="gameboard">
                         {completeArray.map(row => {
