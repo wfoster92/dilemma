@@ -322,7 +322,8 @@ function Arena (props) {
     if (isLandscape){
         let headerHeight = 10+"vh";
         // landscapeSpacerStyle uses 98vmax instead of 100vmax to control for a scrollbar that may appear in desktop
-        let landscapeSpacerStyle = {width: "calc((98vmax - " + squareSize + "vh)/2)", height:squareSize+"vh"};
+        // let landscapeSpacerStyle = {width: "calc((98vmax - " + squareSize + "vh)/2)", height:squareSize+"vh"};
+        let landscapeSpacerStyle = {width: "calc((100vmax - " + squareSize + "vh)/2)", height:squareSize+"vh"};
         let verticalMargin = {height: "calc((100vh - " + squareSize + "vh - " + headerHeight + ") / 2)"};
         
         return (
@@ -335,7 +336,6 @@ function Arena (props) {
                 <span className="spacerLandscape" style={landscapeSpacerStyle}>
                     <ScoreTracker stateDictForScoreTracker={stateDictForScoreTracker}/>
                 </span>
-                <div className="verticalMargin" style={verticalMargin}></div>
             </div>
         )
     } else if (!isLandscape && squareSize === 100){ 

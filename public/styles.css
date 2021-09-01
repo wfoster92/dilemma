@@ -4,15 +4,13 @@ body {
     padding: 0;
     width:100wv;
     height: 100vh;
-    /* overflow-x: hidden;  */
-    overflow: hidden; 
+    overflow-x: hidden; 
     color: white;
     background-color: #111;
     text-align: center;
     vertical-align: middle;
     line-height: normal;
 }
-
 
 .row, .row *{
     padding:0;
@@ -21,7 +19,6 @@ body {
     margin-left: 0;
     margin-right: 0;
 }
-
 
 #gameboard{
     background-color:white;
@@ -44,17 +41,16 @@ body {
     margin: auto;
 }
 
-/* .gameboardWrapperPortrait{
-    position: absolute;
-    bottom: 0;
-} */
+.gameboardWrapperPortrait{
+    font-size: 0;
+}
 .gameboardWrapperPortraitWithSide{
-    /* position: absolute; */
-    /* bottom: 0; */
+    font-size: 0;
     display: flex;
     align-items: center;
     justify-content: center;
 }
+
 .layoutForm{
     text-align: center;
     vertical-align: middle;
@@ -109,7 +105,6 @@ body {
 .gameTrackerPortraitWrapper p{
     margin:0;
 }
-
 
 
 
@@ -365,6 +360,7 @@ p.gameTrackerLandscapeText{
     margin: 2vw 5vw;
 
 }
+
 
 .rules h1{
     margin-bottom: 16px;

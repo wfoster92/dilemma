@@ -168,6 +168,8 @@ function App() {
         return classification;
         // return [tempSquareSize, tempIsLandscape];
     }
+
+    
     
     
 
