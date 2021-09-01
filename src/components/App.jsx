@@ -31,7 +31,7 @@ function App() {
     const initClassification = checkForWindowResize();
     const [classification, setClassification] = useState(initClassification);
     const [squareSize, setSquareSize] = useState((initClassification % 2 === 0) ? 60 :
-                                                    (initClassification === 1) ? 80 : 100);
+                                                     (initClassification === 1) ? 80 : 100);
     const [isLandscape, setIsLandscape] = useState((initClassification < 2) ? true : false);
 
     const [choicesLeft, setChoicesLeft] = useState(PAMax)
@@ -187,7 +187,6 @@ function App() {
                 </Route>
                 <Route exact path="/arena">
                     <Arena layoutSettings={[numRows, numCols, difficulty]} stateDictForArena={stateDictForArena} stateDictForTimer={stateDictForTimer}/>
-                    {/* <Arena layoutSettings={[numRows, numCols, difficulty]} stateDictForArena={stateDictForArena} stateDictForTimer={stateDictForTimer}/> */}
                 </Route>
                 <Route exact path="/setLayout">
                     <SetLayout layoutChange={layoutChange} startNewGame={startNewGame} layoutSettings={[numRows, numCols, difficulty]}/>

@@ -321,7 +321,8 @@ function Arena (props) {
 
     if (isLandscape){
         let headerHeight = 10+"vh";
-        let landscapeSpacerStyle = {width: "calc((100vmax - " + squareSize + "vh)/2)", height:squareSize+"vh"};
+        // landscapeSpacerStyle uses 98vmax instead of 100vmax to control for a scrollbar that may appear in desktop
+        let landscapeSpacerStyle = {width: "calc((98vmax - " + squareSize + "vh)/2)", height:squareSize+"vh"};
         let verticalMargin = {height: "calc((100vh - " + squareSize + "vh - " + headerHeight + ") / 2)"};
         
         return (
