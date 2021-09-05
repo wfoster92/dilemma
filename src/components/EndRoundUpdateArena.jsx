@@ -4,7 +4,6 @@ import { updateSingleColor, updateSingleImage} from "../helperFunctions/elementM
 
 function EndRoundUpdateArena(props){
 
-    console.log(`99999 updatecontrol`)
     const {setClassNameDict, setStyleDict} = props.stateDictForEndRoundUpdateArena;
 
     // This is called after a unit is claimed - giving the whole unit one class, and hiding the half units

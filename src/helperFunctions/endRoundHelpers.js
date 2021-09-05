@@ -63,172 +63,163 @@ export function doAnimation(interval) {
 }
 
 
-export function updateControlArray() {
-    // update the control array
-        let data = controlArray;
-        let elementId0, elementId1;
-        let seen = [];
-        let [playerArray0, playerArray1] = playersArray;
+// export function updateControlArray() {
+//     // update the control array
+//         let data = controlArray;
+//         let elementId0, elementId1;
+//         let seen = [];
+//         let [playerArray0, playerArray1] = playersArray;
 
-        let longestPA = Math.max(playerArray0.length, playerArray1.length);
-        for(let i=0; i < longestPA; i++){
-            // if the index i is in the array return the element, else return undefined which is NaN
-            elementId0 = (i < playerArray0.length) ? playerArray0[i] : undefined;
-            elementId1 = (i < playerArray1.length) ? playerArray1[i] : undefined;
-            // elementId0 = playerArray0.shift();
-            // elementId1 = playerArray1.shift();
-            console.log(`from setControlArray, choices -> pid0 ${elementId0} pid1 ${elementId1}`)
-            // if pid0 entered nothing
-            if (isNaN(elementId0)) {
-                if (!seen.includes(elementId1)){
-                    data[elementId1] = 1
-                    seen.push(elementId1)
-                    // updateSingleImage(elementId1, 1);
-                }
-            // if pid0 entered nothing
-            } else if (isNaN(elementId1)) {
-                if (!seen.includes(elementId0)){
-                    data[elementId0] = 0
-                    seen.push(elementId0)
-                    // updateSingleImage(elementId0, 0);
-                }
-                // if pid0 and pid1 entered the same value
-            } else if (!isNaN(elementId0) && !isNaN(elementId1)) {
-                if (elementId0===elementId1){
-                    // remove the classes from do animation
-                    // removeClassFromElementHalf(elementId0, 0) 
-                    // removeClassFromElementHalf(elementId1, 1)
-                    // reset color for next round
-                    // updateSingleColor(elementId0, colorArray[elementId0], 1);
-                } else {
-                    if (!seen.includes(elementId0)) {
-                        data[elementId0] = 0
-                        seen.push(elementId0)
-                        // updateSingleImage(elementId0, 0);
-                    }
-                    if (!seen.includes(elementId1)) {
-                        data[elementId1] = 1
-                        seen.push(elementId1)
-                        // updateSingleImage(elementId1, 1);
-                    } 
-                }
-            }
-            console.log(`end rounds ${i} update control array playersArray ${playersArray}`)
-        }
-    console.log(`from update control array controlArray copy = ${data}`)
-    console.log(`end update control array playersArray ${playersArray}`)
-    return data;           
-}
+//         let longestPA = Math.max(playerArray0.length, playerArray1.length);
+//         for(let i=0; i < longestPA; i++){
+//             // if the index i is in the array return the element, else return undefined which is NaN
+//             elementId0 = (i < playerArray0.length) ? playerArray0[i] : undefined;
+//             elementId1 = (i < playerArray1.length) ? playerArray1[i] : undefined;
 
-export function makeBotMove(difficulty, PAMax) {
-    function getrandomIndexMinMax(difficulty, unitsRemaining){
-        let randomIndexMin, randomIndexMax;
-        switch (difficulty) {
-            case 4:
-                randomIndexMin = 0;
-                randomIndexMax = 0;
-                break;
-            case 3:
-                randomIndexMin = 0;
-                randomIndexMax = (unitsRemaining < 5) ? 1 : Math.floor(unitsRemaining * 0.25) 
-                break
-            case 2:
-                randomIndexMin = 0;
-                randomIndexMax = (unitsRemaining < 5) ? 2 : Math.floor(unitsRemaining * 0.6) 
-                break
-            case 1:
-                randomIndexMin = 0;
-                randomIndexMax = unitsRemaining-1;
-                break
-            default:
-                break;
-        }
-        return [randomIndexMin, randomIndexMax]
-    }
+//             console.log(`from setControlArray, choices -> pid0 ${elementId0} pid1 ${elementId1}`)
+//             // if pid0 entered nothing
+//             if (isNaN(elementId0)) {
+//                 if (!seen.includes(elementId1)){
+//                     data[elementId1] = 1
+//                     seen.push(elementId1)
+//                 }
+//             // if pid0 entered nothing
+//             } else if (isNaN(elementId1)) {
+//                 if (!seen.includes(elementId0)){
+//                     data[elementId0] = 0
+//                     seen.push(elementId0)
+//                 }
+//                 // if pid0 and pid1 entered the same value
+//             } else if (!isNaN(elementId0) && !isNaN(elementId1)) {
+//                 if (elementId0===elementId1){
+
+//                 } else {
+//                     if (!seen.includes(elementId0)) {
+//                         data[elementId0] = 0
+//                         seen.push(elementId0)
+//                     }
+//                     if (!seen.includes(elementId1)) {
+//                         data[elementId1] = 1
+//                         seen.push(elementId1)
+//                     } 
+//                 }
+//             }
+//             console.log(`end rounds ${i} update control array playersArray ${playersArray}`)
+//         }
+//     console.log(`from update control array controlArray copy = ${data}`)
+//     console.log(`end update control array playersArray ${playersArray}`)
+//     return data;           
+// }
+
+// export function makeBotMove(difficulty, PAMax) {
+//     function getrandomIndexMinMax(difficulty, unitsRemaining){
+//         let randomIndexMin, randomIndexMax;
+//         switch (difficulty) {
+//             case 4:
+//                 randomIndexMin = 0;
+//                 randomIndexMax = 0;
+//                 break;
+//             case 3:
+//                 randomIndexMin = 0;
+//                 randomIndexMax = (unitsRemaining < 5) ? 1 : Math.floor(unitsRemaining * 0.25) 
+//                 break
+//             case 2:
+//                 randomIndexMin = 0;
+//                 randomIndexMax = (unitsRemaining < 5) ? 2 : Math.floor(unitsRemaining * 0.6) 
+//                 break
+//             case 1:
+//                 randomIndexMin = 0;
+//                 randomIndexMax = unitsRemaining-1;
+//                 break
+//             default:
+//                 break;
+//         }
+//         return [randomIndexMin, randomIndexMax]
+//     }
 
 
-    let data = playersArray;
-    let tempAreaArray = areaArray;
-    console.log(`area array, no elements filtered out ${tempAreaArray}`);
-    // return the areaArray elements that are still available in the controlArray
-    let availableAreaArray = tempAreaArray.map((element, idx) =>  (controlArray[idx] < 0) ? [element, idx] : [element, -100]);
-    console.log(`unsorted availableAreaArray filtered out control array ${availableAreaArray}`);
-    // sort in descending order by area
-    let sortedAvailableAreaArray = availableAreaArray.sort((a,b) => b[0]-a[0]);
-    console.log(`sortedAvailableAreaArray each element array ${sortedAvailableAreaArray}`);
-    // filter out the elements that are not in the controlArray 
-    sortedAvailableAreaArray = sortedAvailableAreaArray.filter((e) => e[1] > -1);
-    // map the sortedAvailableAreaArray back to and array of index values (sorted by area)
-    sortedAvailableAreaArray = sortedAvailableAreaArray.map((e) => e[1])
-    console.log(`sortedAvailableAreaArray final, no longer array ${sortedAvailableAreaArray}`);
-    // This may be where things break, assigning the hook to a variable
-    let choicesLeft = PAMax;
-    console.log(`in bot move choicesLeft = ${choicesLeft}`);
-    let unitsLeft = sortedAvailableAreaArray.length;
+//     let data = playersArray;
+//     let tempAreaArray = areaArray;
+//     console.log(`area array, no elements filtered out ${tempAreaArray}`);
+//     // return the areaArray elements that are still available in the controlArray
+//     let availableAreaArray = tempAreaArray.map((element, idx) =>  (controlArray[idx] < 0) ? [element, idx] : [element, -100]);
+//     console.log(`unsorted availableAreaArray filtered out control array ${availableAreaArray}`);
+//     // sort in descending order by area
+//     let sortedAvailableAreaArray = availableAreaArray.sort((a,b) => b[0]-a[0]);
+//     console.log(`sortedAvailableAreaArray each element array ${sortedAvailableAreaArray}`);
+//     // filter out the elements that are not in the controlArray 
+//     sortedAvailableAreaArray = sortedAvailableAreaArray.filter((e) => e[1] > -1);
+//     // map the sortedAvailableAreaArray back to and array of index values (sorted by area)
+//     sortedAvailableAreaArray = sortedAvailableAreaArray.map((e) => e[1])
+//     console.log(`sortedAvailableAreaArray final, no longer array ${sortedAvailableAreaArray}`);
+//     // This may be where things break, assigning the hook to a variable
+//     let choicesLeft = PAMax;
+//     console.log(`in bot move choicesLeft = ${choicesLeft}`);
+//     let unitsLeft = sortedAvailableAreaArray.length;
 
-    let [randomIndexMin, randomIndexMax] = getrandomIndexMinMax(difficulty, unitsLeft);
-    let maxminDiff = randomIndexMax - randomIndexMin;
-    // the elementIDs to add to the bot's player array
-    let choices = [];
-    let initialSelection, idxChoice;
-    // make selections until the bot's player array is complete
-    while (choicesLeft > 0) {
-        // choose index at random given the results of the above switch statement
-        initialSelection = Math.floor((Math.random() * maxminDiff ) + randomIndexMin);
-        // make a selection controlling the case in which the initialSelection was out of bounds of the sortedAvailableAreaArray
-        idxChoice = Math.min(initialSelection, unitsLeft-1)
-        // append the elementid to the choices array
-        choices.push(sortedAvailableAreaArray[idxChoice])
-        // remove the elementid from the sortedAvailableAreaArray
-        sortedAvailableAreaArray.splice(idxChoice, 1);
-        unitsLeft--;
-        choicesLeft--;
-        console.log(`maxminDiff ${maxminDiff} randomIndexMin ${randomIndexMin} difficulty ${difficulty}`)
-        console.log(`choices ${choices} initialSelection ${initialSelection} unitsLeft ${unitsLeft}`)
-    }
-    data[1] = choices;
-    console.log(`at end of make bot move, players array -> ${data}`)
-    return data;
-}
+//     let [randomIndexMin, randomIndexMax] = getrandomIndexMinMax(difficulty, unitsLeft);
+//     let maxminDiff = randomIndexMax - randomIndexMin;
+//     // the elementIDs to add to the bot's player array
+//     let choices = [];
+//     let initialSelection, idxChoice;
+//     // make selections until the bot's player array is complete
+//     while (choicesLeft > 0) {
+//         // choose index at random given the results of the above switch statement
+//         initialSelection = Math.floor((Math.random() * maxminDiff ) + randomIndexMin);
+//         // make a selection controlling the case in which the initialSelection was out of bounds of the sortedAvailableAreaArray
+//         idxChoice = Math.min(initialSelection, unitsLeft-1)
+//         // append the elementid to the choices array
+//         choices.push(sortedAvailableAreaArray[idxChoice])
+//         // remove the elementid from the sortedAvailableAreaArray
+//         sortedAvailableAreaArray.splice(idxChoice, 1);
+//         unitsLeft--;
+//         choicesLeft--;
+//         console.log(`maxminDiff ${maxminDiff} randomIndexMin ${randomIndexMin} difficulty ${difficulty}`)
+//         console.log(`choices ${choices} initialSelection ${initialSelection} unitsLeft ${unitsLeft}`)
+//     }
+//     data[1] = choices;
+//     console.log(`at end of make bot move, players array -> ${data}`)
+//     return data;
+// }
 
 
 
-export function updatePlayersArray(elementID, pid, PAMax){
+// export function updatePlayersArray(elementID, pid, PAMax){
 
-    let elementToRemove = -1;
-    let data = playersArray;
-    let idx = data[pid].findIndex((element) => element === elementID);
-    console.log(`in set player array idx ${idx} elementID ${elementID} playerArray[0] ${data[pid]}`);
+//     let elementToRemove = -1;
+//     let data = playersArray;
+//     let idx = data[pid].findIndex((element) => element === elementID);
+//     console.log(`in set player array idx ${idx} elementID ${elementID} playerArray[0] ${data[pid]}`);
 
-    // the elementID is in the current players list and not in first place -> swap the positions of it's index and the one in front
-    if (idx > 0) {
-        let temp = data[pid][idx];
-        data[pid][idx] = data[pid][idx - 1];
-        data[pid][idx - 1] = temp;
-    // the elementID is in first place and needs to be dropped from the playersArray
-    } else if (idx === 0) {
-        elementToRemove = data[pid].shift();
-    // the elementID is not on the list, add it to the end kicking out the last element if the array is full
-    } else if (idx < 0) {
-        if (isPAFull[pid]){
-            elementToRemove = data[pid].pop()
-            updateIsPAFull(pid, false);
-        } 
-        console.log(`About to push ${elementID}`);
-        data[pid].push(elementID);
-        console.log(data[0], data[1]);
-        (data[pid].length === PAMax) && updateIsPAFull(pid, true)
-    }
-    console.log(`playersArray after ${data} elementToRemove ${elementToRemove}`);
+//     // the elementID is in the current players list and not in first place -> swap the positions of it's index and the one in front
+//     if (idx > 0) {
+//         let temp = data[pid][idx];
+//         data[pid][idx] = data[pid][idx - 1];
+//         data[pid][idx - 1] = temp;
+//     // the elementID is in first place and needs to be dropped from the playersArray
+//     } else if (idx === 0) {
+//         elementToRemove = data[pid].shift();
+//     // the elementID is not on the list, add it to the end kicking out the last element if the array is full
+//     } else if (idx < 0) {
+//         if (isPAFull[pid]){
+//             elementToRemove = data[pid].pop()
+//             updateIsPAFull(pid, false);
+//         } 
+//         console.log(`About to push ${elementID}`);
+//         data[pid].push(elementID);
+//         console.log(data[0], data[1]);
+//         (data[pid].length === PAMax) && updateIsPAFull(pid, true)
+//     }
+//     console.log(`playersArray after ${data} elementToRemove ${elementToRemove}`);
 
-    let toRemoveDict = {}
-    // if there is an element remove from the players list (a positive elementToRemove variable) set its color back to the original
-    if(elementToRemove > -1){
-        toRemoveDict = updateSingleColor(elementToRemove, colorArray[elementToRemove], 1);
-    }
-    // console.log("exiting update players array");
-    return [data, toRemoveDict]
-}
+//     let toRemoveDict = {}
+//     // if there is an element remove from the players list (a positive elementToRemove variable) set its color back to the original
+//     if(elementToRemove > -1){
+//         toRemoveDict = updateSingleColor(elementToRemove, colorArray[elementToRemove], 1);
+//     }
+//     // console.log("exiting update players array");
+//     return [data, toRemoveDict]
+// }
 
 function updateIsPAFull(pid, aBoolean) {
     isPAFull[pid] = aBoolean

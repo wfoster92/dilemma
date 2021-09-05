@@ -9,6 +9,7 @@ import {
     Link
   } from "react-router-dom";
 import SetLayout from "./SetLayout";
+import MakeNewControlArray from "./ControlArrayFunctions";
 
 function App() {
     const [numRows, setNumRows] = useState(3);
@@ -40,6 +41,10 @@ function App() {
     const [classNameDict, setClassNameDict] = useState({});
     const [comparisonBool, setComparisonBool] = useState(false);
     const [noChangeRounds, setNoChangeRounds] = useState(0);
+    const [playerArrayHuman, setPlayerArrayHuman] = useState([])
+    const [playerArrayBot, setPlayerArrayBot] = useState([])
+    const [controlArray, setControlArray] = useState(MakeNewControlArray(numUnits));
+    const [isHumanPAFull, setIsHumanPAFull] = useState(false);
 
 
 
@@ -53,7 +58,8 @@ function App() {
         PAMax, setPAMax, animationTimeouts, setAnimationTimeouts, secondsPerRound, setSecondsPerRound, maxNoChangeRounds, 
         choicesLeft, setChoicesLeft, startingPAMax, currentRound, setCurrentRound, timeLeft, isLandscape, squareSize, 
         numUnits, styleDict, setStyleDict, classNameDict, setClassNameDict, comparisonBool, setComparisonBool,
-        noChangeRounds, setNoChangeRounds};
+        noChangeRounds, setNoChangeRounds, playerArrayHuman, setPlayerArrayHuman, playerArrayBot, setPlayerArrayBot,
+        controlArray, setControlArray, isHumanPAFull, setIsHumanPAFull};
     
     const stateDictForHeader = {startNewGame, setIsGameOver, isGameOver, isLive, animationTimeouts, maxNoChangeRounds};
 
