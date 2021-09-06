@@ -10,12 +10,15 @@ import {
   } from "react-router-dom";
 import SetLayout from "./SetLayout";
 import MakeNewControlArray from "./ControlArrayFunctions";
+import MakeArenaContent from "./MakeArenaContent";
 
 function App() {
     const [numRows, setNumRows] = useState(3);
     const [numCols, setNumCols] = useState(3);
     const [numUnits, setNumUnits] = useState(numRows * numCols);
     const [difficulty, setDifficulty] = useState(4);
+    const [initAreaArray, initColorArray, initCompleteArray, initStyleDict, initClassNameDict] = MakeArenaContent({rows:3, cols:3, units:9})
+
 
     const [stateScoreBoard, setStateScoreBoard] = useState([0,0]);
     const [isLive, setIsLive] = useState(true);
@@ -37,15 +40,23 @@ function App() {
 
     const [choicesLeft, setChoicesLeft] = useState(PAMax)
     const [currentRound, setCurrentRound] = useState(1);
-    const [styleDict, setStyleDict] = useState({}); 
-    const [classNameDict, setClassNameDict] = useState({});
     const [comparisonBool, setComparisonBool] = useState(false);
     const [noChangeRounds, setNoChangeRounds] = useState(0);
     const [playerArrayHuman, setPlayerArrayHuman] = useState([])
     const [playerArrayBot, setPlayerArrayBot] = useState([])
     const [controlArray, setControlArray] = useState(MakeNewControlArray(numUnits));
     const [isHumanPAFull, setIsHumanPAFull] = useState(false);
-
+    
+    const [areaArray, setAreaArray] = useState(initAreaArray)
+    const [completeArray, setCompleteArray] = useState(initCompleteArray);
+    const [colorArray, setColorArray] = useState(initColorArray)
+    const [styleDict, setStyleDict] = useState(initStyleDict); 
+    const [classNameDict, setClassNameDict] = useState(initClassNameDict);
+    // const [areaArray, setAreaArray] = useState([])
+    // const [completeArray, setCompleteArray] = useState([]);
+    // const [styleDict, setStyleDict] = useState({}); 
+    // const [classNameDict, setClassNameDict] = useState({});
+    // const [colorArray, setColorArray] = useState([])
 
 
 
@@ -59,7 +70,9 @@ function App() {
         choicesLeft, setChoicesLeft, startingPAMax, currentRound, setCurrentRound, timeLeft, isLandscape, squareSize, 
         numUnits, styleDict, setStyleDict, classNameDict, setClassNameDict, comparisonBool, setComparisonBool,
         noChangeRounds, setNoChangeRounds, playerArrayHuman, setPlayerArrayHuman, playerArrayBot, setPlayerArrayBot,
-        controlArray, setControlArray, isHumanPAFull, setIsHumanPAFull};
+        controlArray, setControlArray, isHumanPAFull, setIsHumanPAFull,
+        areaArray, setAreaArray, completeArray, setCompleteArray, colorArray, setColorArray, styleDict, setStyleDict,
+        classNameDict, setClassNameDict};
     
     const stateDictForHeader = {startNewGame, setIsGameOver, isGameOver, isLive, animationTimeouts, maxNoChangeRounds};
 

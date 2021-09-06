@@ -6,8 +6,8 @@ import Animation from "./Animation";
 import EndRoundUpdateArena from "./EndRoundUpdateArena";
 import BotMove from "./BotMove";
 import {MakeNewControlArray, UpdateControlArray} from "./ControlArrayFunctions";
-import { makeArenaObject } from "../helperFunctions/creationHelp";
-import { makeCompleteArray } from "../helperFunctions/makeCompleteArray";
+// import { makeArenaObject } from "../helperFunctions/creationHelp";
+// import { makeCompleteArray } from "../helperFunctions/makeCompleteArray";
 import { updatePlayersArray, updateControlArray} from "../helperFunctions/endRoundHelpers"
 import { updateColors } from "../helperFunctions/elementModifiers";
 import { resetColors } from "../helperFunctions/resetGameHelp";
@@ -16,10 +16,10 @@ import UpdateColors from "./UpdateColors";
 import HumanMove from "./HumanMove";
 
 // export let controlArray = 0; 
-export let playersArray = [[],[]]; //keeping variable outside Arena
+// export let playersArray = [[],[]]; //keeping variable outside Arena
 // export let isPAFull = [false, false]; // is used in updatePlayersArray fn 
-export let [arenaObject, areaArray] = [0,0];
-export let [completeArray, colorArray] = [0,0];
+// export let [arenaObject, areaArray] = [0,0];
+// export let [completeArray, colorArray] = [0,0];
 
 
 
@@ -41,16 +41,19 @@ function Arena (props) {
         squareSize, isLandscape, numUnits, styleDict, setStyleDict, classNameDict, setClassNameDict,
         comparisonBool, setComparisonBool, noChangeRounds, setNoChangeRounds,
         playerArrayHuman, setPlayerArrayHuman, playerArrayBot, setPlayerArrayBot,
-        controlArray, setControlArray, isHumanPAFull, setIsHumanPAFull} = props.stateDictForArena;
+        controlArray, setControlArray, isHumanPAFull, setIsHumanPAFull, 
+        areaArray, setAreaArray, completeArray, setCompleteArray, colorArray, setColorArray, styleDict, setStyleDict,
+        classNameDict, setClassNameDict} = props.stateDictForArena;
 
         const stateDictForAnimation = {classNameDict, setClassNameDict,  styleDict, setStyleDict, animationTimeouts, setAnimationTimeouts, interval};
         const stateDictForEndRoundUpdateArena = {classNameDict, setClassNameDict, styleDict, setStyleDict};
         const stateDictForScoreTracker = {stateScoreBoard, currentMessage, difficulty, squareSize, isLandscape};
         const stateDictForGameTracker = {choicesLeft, noChangeRounds, maxNoChangeRounds, handleEndRoundClick, timeLeft, squareSize, isLandscape};
         const stateDictForBotMove = {setPlayerArrayBot, PAMax, difficulty, areaArray, controlArray};
-        const stateDictForHumanMove = {elementID, PAMax, isHumanPAFull, setIsHumanPAFull, playerArrayHuman, setPlayerArrayHuman, setChoicesLeft};
+        const stateDictForHumanMove = {elementID, PAMax, isHumanPAFull, setIsHumanPAFull, playerArrayHuman, setPlayerArrayHuman, setChoicesLeft, colorArray};
         const stateDictForUpdateControlArray = {controlArray, setControlArray, playerArrayHuman, playerArrayBot};
         const stateDictForUpdateColors = {playerArrayHuman, PAMax, updateSingleColor};
+        const stateDictForMakeArenaContent = {rows:numRows, cols:numCols, units:numUnits};
 
 
     // set a useState for noChangeRound to pass as a prop and a local variable to keep an accurate endGame calculation
@@ -123,32 +126,35 @@ function Arena (props) {
     }, [styleDict])
 
     function startNextGame() {
-        let tempStyleDict, tempClassNameDict;
+        // let initStyleDict, initClassNameDict;
         console.log(`inside startNewGame finishedFirstGame ${finishedFirstGame}`);
-        [arenaObject, areaArray] = makeArenaObject(numRows, numCols);
-        [completeArray, colorArray, tempStyleDict, tempClassNameDict] = makeCompleteArray(arenaObject, numUnits);
 
+        // try reordering this to initialize everything at once... color and complete array as well
+        // [arenaObject, areaArray] = makeArenaObject(numRows, numCols);
+        // [completeArray, colorArray, initStyleDict, initClassNameDict] = makeCompleteArray(arenaObject, numUnits);
+        const [tempAreaArray, tempColorArray, tempCompleteArray, tempStyleDict, tempClassNameDict] = MakeArenaContent({stateDictForMakeArenaContent:stateDictForMakeArenaContent});
+
+        setAreaArray(tempAreaArray);
+        setColorArray(tempColorArray);
+        setCompleteArray(tempCompleteArray);
         setStyleDict(tempStyleDict); 
         setClassNameDict(tempClassNameDict);
 
         if (finishedFirstGame){
             resetColors(colorArray);
         }
-        controlArray = makeNewControlArray(numUnits);
+        setControlArray(MakeNewControlArray(numUnits));
         resetTopLevelVariables();
         if (animationTimeouts.length > 0){
             animationTimeouts.forEach(timeout => clearTimeout(timeout));
             setAnimationTimeouts([]);
         }
         setTriggerNewGame(false);
-        // if (isFirstGame){
-        //     setIsFirstGame(false);
-        // }
+
     }
 
     function resetTopLevelVariables() {
         console.log("inside resetTopLevelVariables")
-        // playersArray = [[],[]];
         setPlayerArrayHuman([]);
         setPlayerArrayBot([]);
         let newPAMax = startingPAMax();
@@ -161,11 +167,6 @@ function Arena (props) {
         }
         setIsHumanPAFull(false);
         setIsBotPAFull(false);
-        // isPAFull = [false, false];
-    }
-
-    function makeNewControlArray(){
-        return new Array(numUnits).fill(-1);
     }
     
 
@@ -184,7 +185,6 @@ function Arena (props) {
             }
         })
         console.log(`in update scoreboard score board ${sb}`)
-        scoreBoard = sb
         setStateScoreBoard(sb);
     }
 
@@ -199,16 +199,15 @@ function Arena (props) {
     function endRoundA() {
 
         if (botGame) {
-            // playersArray = makeBotMove(difficulty, PAMax);
             BotMove({stateDictForBotMove:stateDictForBotMove});
         } 
 
-        let totalDelay = interval * (1 + Math.max(playersArray[0].length, playersArray[1].length));
+        let totalDelay = interval * (1 + Math.max(playerArrayHuman.length, playerArrayBot.length));
 
         let timeouts = Animation({stateDictForAnimation:stateDictForAnimation});
         setAnimationTimeouts((prevState) => [...prevState, ...timeouts]);
         
-        console.log(`about to runRest, interval ${interval} playersArray ${playersArray}`)
+        console.log(`about to runRest, interval ${interval} playerArrayHuman ${playerArrayHuman} playerArrayBot ${playerArrayBot}`)
         let roundBTimeoutID = setTimeout(endRoundB, totalDelay);
         setAnimationTimeouts((prevState) => [...prevState, roundBTimeoutID]);
     }
@@ -217,12 +216,13 @@ function Arena (props) {
     function endRoundB(){
         // updates the control array
         UpdateControlArray({stateDictForUpdateControlArray:stateDictForUpdateControlArray});
+
         // sets the unit color/background images based on the control array
         EndRoundUpdateArena({stateDictForEndRoundUpdateArena:stateDictForEndRoundUpdateArena});
 
-        console.log(`after updateControl Array, playersArray ${playersArray}`);
         
         updateScoreBoard();
+        
         // In the case where noChangeRounds was 0 and next state is 0, noChangeRounds will not trigger a useEffect
         // We must call endRoundC manually in the case above instead of via useEffect. This is seen with the callEndRoundC boolean
         let callEndRoundC = false;
@@ -250,7 +250,8 @@ function Arena (props) {
         console.log(`in continueGameRoutine`)
         setCurrentRound((prevState) => prevState + 1);
         setPAMax(updatePAMax());
-        playersArray = resetPlayersArray(); 
+        setPlayerArrayHuman([]);
+        setPlayerArrayBot([]);
         setIsLive(true);
         setIsGameOver(false);
         setChoicesLeft(PAMax);
@@ -259,7 +260,7 @@ function Arena (props) {
 
     // check for a round with no score change
     function  noScoreChange() {
-        let [a, b] = playersArray;
+        let [a, b] = [playerArrayHuman, playerArrayBot];
         console.log(`in score change, p1 ${a} p2 ${b}`)
         let result = (a.length === b.length) && a.every((e, idx) => e === b[idx]);
         console.log(`score change are lengths equal ${(a.length === b.length)} are the values equal ${a.every((e, idx) => e === b[idx])}`)
@@ -297,7 +298,7 @@ function Arena (props) {
     }
 
 
-    // sets the players array max to the minimum of the previous paMax and the unclaimed units left
+    // sets the PAMax to the minimum of the previous paMax and the unclaimed units left
     function updatePAMax() {
         let unitsLeft = 0;
         for(let i = 0; i < controlArray.length; i++) {
@@ -308,20 +309,16 @@ function Arena (props) {
         return Math.min(unitsLeft, startingPAMax());
     }
 
-    function resetPlayersArray() {
-        console.log(`in resetPlayersArray before pa = ${playersArray}`);
-        return [[],[]]
-    }
 
-
-    // When a Unit component is clicked, make update the players array and colors or do nothing
+    // When a Unit component is clicked, make update the playerArrayHuman and colors or do nothing
     function handleClick(id){
         console.log(`in handle click index = ${id} is element id ${id} claimed? -> ${!(controlArray[id] === -1)} isGameOver ${isGameOver}`);
 
         if (isLive && (controlArray[id] === -1)) {
             console.log(`inside handleClick if statement id = ${id}`);
             let toRemoveDict, toAddDict;
-            // [toRemoveDict]= updatePlayersArray(id, humanPid, PAMax) 
+            
+            
             toRemoveDict = HumanMove({stateDictForHumanMove:stateDictForHumanMove})
             // setChoicesLeft(PAMax - playerArrayHuman.length);
 

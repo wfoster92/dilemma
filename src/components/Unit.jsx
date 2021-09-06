@@ -25,14 +25,6 @@ function Unit(props) {
         props.handleClick(index);
     }
 
-    // useEffect(() => {
-    //     if (styleDict!=undefined) {
-    //         let numkeys = Object.keys(styleDict).length;
-    //         console.log(`in useEffect Unit numkeys ${numkeys}`);
-    //     } else {
-    //         console.log(`in useEffect Unit styleDict numkeys undefined`);
-    //     }
-    // }, [styleDict])
 
     if (styleDict===undefined || (Object.keys(styleDict).length === 0)){
         console.log(`Style dict is undefined index ${index} width ${fullWidth} height ${height} backgroundColor ${backgroundColor}`)
@@ -63,14 +55,6 @@ function Unit(props) {
         )
     }
 
-            // <span id={index} style={{width:fullWidth, height:height, backgroundColor:color}}>
-            //     <span id={index+"_0"} onClick={clickEvent}
-            //         style={{width:halfWidth, height:height, backgroundColor:color}} >
-            //     </span>
-            //     <span id={index+"_1"} onClick={clickEvent}
-            //         style={{width:halfWidth, height:height, backgroundColor:color}} >
-            //     </span>
-            // </span>
 
 }
 

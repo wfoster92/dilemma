@@ -51,7 +51,7 @@ export function makeCompleteArray(arenaObject, totalUnits){
         let rowLength = row.length;
         // reverse the list if the row is of an odd index
         let currentRow = completeArray.splice(0, rowLength);
-        let colorRow = (idx % 2 === 0) ? currentRow : currentRow.reverse();  
+        let colorRow = (idx % 2 === 0) ? currentRow : currentRow.reverse();
         colorArray = colorArray.concat(colorRow);
         // append a color onto each element in the row
         // row.forEach((element, i) => element.push(colorRow[i]))

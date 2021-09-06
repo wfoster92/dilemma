@@ -12,12 +12,7 @@ export function resetColors(colorArray) {
 } 
 
 function restoreUnit(color, elementID) {
-    // if (document.getElementById(elementID).classList.contains(playerDesigns[0])) {
-    //     document.getElementById(elementID).classList.remove(playerDesigns[0]);
-    // }
-    // if (document.getElementById(elementID).classList.contains(playerDesigns[1])) {
-    //     document.getElementById(elementID).classList.remove(playerDesigns[1]);
-    // }
+
     document.getElementById(elementID).classList.remove(...playerDesigns);
     document.getElementById(`${elementID}_0`).classList.remove(...playerDesigns);
     document.getElementById(`${elementID}_1`).classList.remove(...playerDesigns);
