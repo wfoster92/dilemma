@@ -9,7 +9,7 @@ import {
     Link
   } from "react-router-dom";
 import SetLayout from "./SetLayout";
-import MakeNewControlArray from "./ControlArrayFunctions";
+import {MakeNewControlArray} from "./ControlArrayFunctions";
 import MakeArenaContent from "./MakeArenaContent";
 
 function App() {

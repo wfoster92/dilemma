@@ -97,8 +97,8 @@ function makeContent(numRows, numCols, totalUnits) {
             tempAreaArray.push(c * rows[r]);
             newRow.push(newElement)
             tempStyleDict[index] = {backgroundColor: colorRow[index]};
-            tempStyleDict[`${index}_0`] = {backgroundColor: colorRow[index]};
-            tempStyleDict[`${index}_1`] = {backgroundColor: colorRow[index]};
+            tempStyleDict[`${index}_0`] = {backgroundColor: colorRow[index], display: "inline-block"};
+            tempStyleDict[`${index}_1`] = {backgroundColor: colorRow[index], display: "inline-block"};
             tempClassNameDict[index] = "";
             tempClassNameDict[`${index}_0`] = "";
             tempClassNameDict[`${index}_1`] = "";

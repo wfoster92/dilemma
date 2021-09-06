@@ -1,5 +1,6 @@
 import { playerDesigns } from "./globals";
-import { updateSingleColor } from "./elementModifiers"
+// import { updateSingleColor } from "./elementModifiers"
+import ResetUnitColor from "../components/unitColorChange/ResetUnitColor";
 
 export function resetColors(colorArray) {
     colorArray.forEach((color, idx) => {
@@ -19,6 +20,8 @@ function restoreUnit(color, elementID) {
     document.getElementById(`${elementID}_0`).style.display = "inline-block";
     document.getElementById(`${elementID}_1`).style.display = "inline-block";
 
-    updateSingleColor(elementID, color, 1);
+    stateDictForResetUnitColor = {elementID:e, backgroundColor:colorArray[e], opacity:1}
+    ResetUnitColor({stateDictForResetUnitColor:stateDictForResetUnitColor})
+    // updateSingleColor(elementID, color, 1);
 
 }

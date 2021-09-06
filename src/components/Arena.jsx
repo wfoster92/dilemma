@@ -9,11 +9,13 @@ import {MakeNewControlArray, UpdateControlArray} from "./ControlArrayFunctions";
 // import { makeArenaObject } from "../helperFunctions/creationHelp";
 // import { makeCompleteArray } from "../helperFunctions/makeCompleteArray";
 import { updatePlayersArray, updateControlArray} from "../helperFunctions/endRoundHelpers"
-import { updateColors } from "../helperFunctions/elementModifiers";
+// import { updateColors } from "../helperFunctions/elementModifiers";
+
 import { resetColors } from "../helperFunctions/resetGameHelp";
 import ScoreTracker from "./ScoreTracker";
-import UpdateColors from "./UpdateColors";
+import UpdateColors from "./unitColorChange/UpdateColors";
 import HumanMove from "./HumanMove";
+import ResetColors from "./unitColorChange/ResetColors";
 
 // export let controlArray = 0; 
 // export let playersArray = [[],[]]; //keeping variable outside Arena
@@ -42,8 +44,7 @@ function Arena (props) {
         comparisonBool, setComparisonBool, noChangeRounds, setNoChangeRounds,
         playerArrayHuman, setPlayerArrayHuman, playerArrayBot, setPlayerArrayBot,
         controlArray, setControlArray, isHumanPAFull, setIsHumanPAFull, 
-        areaArray, setAreaArray, completeArray, setCompleteArray, colorArray, setColorArray, styleDict, setStyleDict,
-        classNameDict, setClassNameDict} = props.stateDictForArena;
+        areaArray, setAreaArray, completeArray, setCompleteArray, colorArray, setColorArray} = props.stateDictForArena;
 
         const stateDictForAnimation = {classNameDict, setClassNameDict,  styleDict, setStyleDict, animationTimeouts, setAnimationTimeouts, interval};
         const stateDictForEndRoundUpdateArena = {classNameDict, setClassNameDict, styleDict, setStyleDict};
@@ -141,7 +142,9 @@ function Arena (props) {
         setClassNameDict(tempClassNameDict);
 
         if (finishedFirstGame){
-            resetColors(colorArray);
+            // resetColors(colorArray);
+            const stateDictForResetColors = {colorArray, setStyleDict, setClassNameDict}
+            ResetColors({stateDictForResetColors:stateDictForResetColors})
         }
         setControlArray(MakeNewControlArray(numUnits));
         resetTopLevelVariables();
@@ -222,7 +225,7 @@ function Arena (props) {
 
         
         updateScoreBoard();
-        
+
         // In the case where noChangeRounds was 0 and next state is 0, noChangeRounds will not trigger a useEffect
         // We must call endRoundC manually in the case above instead of via useEffect. This is seen with the callEndRoundC boolean
         let callEndRoundC = false;
@@ -234,7 +237,7 @@ function Arena (props) {
                 return 0;
             }
         );
-        console.log(`noScoreChange ${noScoreChange()} noChangeRounds ${noChangeRounds} endroundB scoreboard ${scoreBoard}`)
+        console.log(`noScoreChange ${noScoreChange()} noChangeRounds ${noChangeRounds} endroundB`)
         callEndRoundC && endRoundC();
     }
 
@@ -269,23 +272,23 @@ function Arena (props) {
 
     // check to see if the game is over, return bool
     function updateIsGameOver() {
-        let winner = (Math.max(...scoreBoard) > 0.5); 
+        let winner = (Math.max(...stateScoreBoard) > 0.5); 
         // count how many open spaces are left on the board
         let openSpaces = controlArray.filter((e) => (e===-1));
         // the game is a draw if the max no change rounds is met OR there is one or fewer openSpaces with no winner
         let draw = (noChangeRounds === maxNoChangeRounds) || ((openSpaces <= 1) && !winner)
         
-        console.log(`in updateIsGameOver control array ${controlArray} winner ${winner} draw ${draw} scoreboard ${scoreBoard} \nmax scoreboard ${Math.max(...scoreBoard)}`);
+        console.log(`in updateIsGameOver control array ${controlArray} winner ${winner} draw ${draw} scoreboard ${stateScoreBoard} \nmax scoreboard ${Math.max(...scoreBoard)}`);
         console.log(`in updateIsGameOver noChangeRounds ${noChangeRounds} maxNoChangeRounds ${maxNoChangeRounds}`)
         return (winner || draw);
     }
 
     function endGameRoutine() {
         setFinishedFirstGame(true);
-        console.log(`in endGameRoutine max = ${Math.max(...scoreBoard)}`)
+        console.log(`in endGameRoutine max = ${Math.max(...stateScoreBoard)}`)
         let msg;
-        if (Math.max(...scoreBoard) > 0.5) {
-            let winner = (scoreBoard[0] > scoreBoard[1]) ? 1 : 2;
+        if (Math.max(...stateScoreBoard) > 0.5) {
+            let winner = (stateScoreBoard[0] > stateScoreBoard[1]) ? 1 : 2;
             console.log(`The winner is player ${winner}`)
             msg = (winner === 1)? "Wow! You Win" : "The Bot Wins!"
         } else {

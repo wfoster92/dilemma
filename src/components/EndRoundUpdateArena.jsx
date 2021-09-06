@@ -1,6 +1,7 @@
 import React from "react";
 import { playersArray, colorArray } from "./Arena"
 import { updateSingleColor, updateSingleImage} from "../helperFunctions/elementModifiers";
+import ResetUnitColor from "./unitColorChange/ResetUnitColor";
 
 function EndRoundUpdateArena(props){
 
@@ -25,7 +26,8 @@ function EndRoundUpdateArena(props){
     // This is called after a draw and resets color for next round
     function callUpdateSingleColor(elementID, backgroundColor, opacity){
         let tempStyleDict = {};
-        tempStyleDict = updateSingleColor(elementID, backgroundColor, opacity);
+        tempStyleDict = ResetUnitColor({elementID, backgroundColor, opacity});
+        // tempStyleDict = updateSingleColor(elementID, backgroundColor, opacity);
         setStyleDict(prevState => ({...prevState, ...tempStyleDict}))   
     }
 

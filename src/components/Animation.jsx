@@ -1,11 +1,12 @@
 import React from "react";
 import { playersArray, colorArray} from "./Arena"
-import { updateSingleColor, updateSingleImage, animateStepUpdateHalfImage } from "../helperFunctions/elementModifiers";
+import { animateStepUpdateHalfImage } from "../helperFunctions/elementModifiers";
+import ResetUnitColor from "./unitColorChange/ResetUnitColor";
+// import { updateSingleColor, updateSingleImage, animateStepUpdateHalfImage } from "../helperFunctions/elementModifiers";
 
 function Animation(props){
     const {classNameDict, setClassNameDict,  styleDict, setStyleDict, animationTimeouts, setAnimationTimeouts, interval} = props.stateDictForAnimation ;
 
-    console.log(`88888 in Animation`);
     function callAnimateStepUpdateHalfImage(elementID, pid, opacity){
         // let tempStyleDict;
         // let tempClassNameDict;
@@ -23,13 +24,17 @@ function Animation(props){
     let resetDict = {}
     let singleReset;
     // reset playersArray colors to their original color
+    const stateDictForResetUnitColor;
     playersArray0.forEach((e) => {
-        singleReset = updateSingleColor(e, colorArray[e], 1);
+        stateDictForResetUnitColor = {elementID:e, backgroundColor:colorArray[e], opacity:1}
+        singleReset = ResetUnitColor({stateDictForResetUnitColor:stateDictForResetUnitColor});
         resetDict = {...resetDict, ...singleReset}
     })
     playersArray1.forEach((e) => {
-        updateSingleColor(e, colorArray[e], 1)
-        singleReset = updateSingleColor(e, colorArray[e], 1);
+        stateDictForResetUnitColor = {elementID:e, backgroundColor:colorArray[e], opacity:1}
+
+        // ResetUnitColor(e, colorArray[e], 1)
+        singleReset = ResetUnitColor({stateDictForResetUnitColor:stateDictForResetUnitColor});
         resetDict = {...resetDict, ...singleReset}
     })
     setStyleDict(prevState => ({...prevState, ...resetDict}));

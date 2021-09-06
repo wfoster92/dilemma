@@ -1,6 +1,5 @@
 import React from "react";
 
-
 function UpdateColors(props) {
     const {playerArrayHuman, PAMax, updateSingleColor} = props.stateDictForUpdateColors;
     // export function updateColors(playersArray, humanPid, PAMax){
