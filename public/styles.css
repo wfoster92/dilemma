@@ -275,6 +275,13 @@ p.gameTrackerLandscapeText{
     height: 5vmin;
 }
 
+.radioInput{
+    text-align: center;
+}
+
+.radioInput input{
+    display: inline-block;
+}
 
 
 .radioLabel{
@@ -282,13 +289,17 @@ p.gameTrackerLandscapeText{
     margin-bottom: 2vmin;
 }
 
-.radioSpan label{
+.radioRowCol{
+    display: inline-block;
+}
+.radioRowCol label{
     font-size: 4vmin;
 }
 
-.radioSpan input{
+.radioRowCol input{
     height: 4vmin;
     width: 4vmin;
+
 }
 
 .gameTracker {
@@ -413,8 +424,11 @@ p.gameTrackerLandscapeText{
     left: 0;
     right: 0;
 }
-.footer, .footer > a{
-    font-size: 3.5vmin;
+.footer{
+    font-size: 4vmin;
+}
+.disclaimer, .disclaimer > *{
+    font-size: 2.5vmin;
 }
 
 

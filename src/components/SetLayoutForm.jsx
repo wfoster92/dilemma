@@ -24,17 +24,21 @@ function SetLayoutForm(props) {
                         <p className="radioLabel">Rows</p>
                         {rowArray.map((num) => {
                             if (num === numRows) {
-                                return (<span className="radioSpan">
+                                return (<div className="radioRowCol">
                                             <label htmlFor={"row".concat(num.toString())}>{num}<br/>
-                                            <input type="radio" id={"row".concat(num.toString())} name="rowCount" value={num.toString()} defaultChecked/>
+                                                <div className="radioInput">
+                                                    <input type="radio" id={"row".concat(num.toString())} name="rowCount" value={num.toString()} defaultChecked/>
+                                                </div>
                                             </label>
-                                        </span>)
+                                        </div>)
                             } else {
-                                return (<span className="radioSpan">
+                                return (<div className="radioRowCol">
                                             <label htmlFor={"row".concat(num.toString())}>{num}<br/>
-                                            <input type="radio" id={"row".concat(num.toString())} name="rowCount" value={num.toString()}/>
+                                                <div className="radioInput">
+                                                    <input type="radio" id={"row".concat(num.toString())} name="rowCount" value={num.toString()}/>
+                                                </div>
                                             </label>
-                                        </span>)
+                                        </div>)
                             }
                         })}
                     </div>
@@ -43,17 +47,21 @@ function SetLayoutForm(props) {
                         <p className="radioLabel">Columns</p>
                         {colArray.map((num) => {
                             if (num === numCols) {
-                                return (<span className="radioSpan">
+                                return (<div className="radioRowCol">
                                             <label htmlFor={"col".concat(num.toString())}>{num}<br/>
-                                            <input type="radio" id={"col".concat(num.toString())} name="colCount" value={num.toString()} defaultChecked/>
+                                                <div className="radioInput">
+                                                    <input type="radio" id={"col".concat(num.toString())} name="colCount" value={num.toString()} defaultChecked/>
+                                                </div>
                                             </label>
-                                        </span>)
+                                        </div>)
                             } else {
-                                return (<span className="radioSpan">
+                                return (<div className="radioRowCol">
                                             <label htmlFor={"col".concat(num.toString())}>{num}<br />
-                                            <input type="radio" id={"col".concat(num.toString())} name="colCount" value={num.toString()}/>
+                                                <div className="radioInput">
+                                                    <input type="radio" id={"col".concat(num.toString())} name="colCount" value={num.toString()}/>
+                                                </div>
                                             </label>
-                                        </span>)
+                                        </div>)
                             }
                         })}
                     </div>
